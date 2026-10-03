@@ -240,6 +240,60 @@ def scene_code():
     return frames
 
 
+def scene_lunch():
+    frames = []
+    for t in range(30):
+        cv = Canvas((255, 235, 210))
+        cv.rect(0, 38, W, 10, (170, 120, 85))   # table
+        cv.rect(0, 37, W, 1, (140, 95, 65))
+        # wall clock at noon
+        cv.d.ellipse([4, 4, 13, 13], fill=WHITE, outline=(140, 95, 65))
+        cv.rect(8, 6, 1, 3, BLACK); cv.rect(9, 8, 1, 1, BLACK)
+        # bowl of rice; the mound shrinks with each bite
+        bites = min(4, t // 6)
+        bx, by = 40, 31
+        mound = 4 - bites
+        if mound > 0:
+            cv.d.ellipse([bx + 1, by - mound - 1, bx + 12, by + 2], fill=WHITE)
+            if bites < 2:
+                cv.rect(bx + 4, by - mound, 3, 2, (230, 100, 80))   # shrimp on top
+            cv.rect(bx + 8, by - mound + 1, 2, 1, (90, 170, 80))    # greens
+        cv.rect(bx, by, 14, 2, (90, 150, 200))
+        cv.rect(bx + 1, by + 2, 12, 2, (90, 150, 200))
+        cv.rect(bx + 3, by + 4, 8, 2, (70, 120, 170))
+        cv.rect(bx + 2, by + 1, 10, 1, WHITE)                       # bowl pattern
+        # little soup cup + steam
+        cv.rect(56, 32, 5, 5, (200, 80, 70)); cv.rect(57, 32, 3, 1, (240, 190, 90))
+        if t % 6 < 4:
+            cv.px(58 + (t % 2), 29 - (t % 6) // 2, (220, 220, 220))
+        full = t >= 24
+        phase = t % 6
+        eating = not full and phase in (2, 3, 4)
+        clawd(cv, 12, 23,
+              eyes="happy" if full or phase in (3, 4) else "open",
+              arms="up" if full and t % 2 else ("right_up" if eating else "down"),
+              squash=1 if phase == 4 and not full else 0)
+        # chopsticks: dip into bowl, then lift a bite to the mouth
+        if not full:
+            if eating:
+                cv.d.line([37, 20, 29, 15], fill=(150, 100, 60))
+                cv.d.line([38, 22, 30, 17], fill=(150, 100, 60))
+                if phase == 2:
+                    cv.rect(27, 14, 3, 2, WHITE)          # rice in chopsticks
+            else:
+                cv.d.line([40, 29, 50, 22], fill=(150, 100, 60))
+                cv.d.line([41, 30, 52, 24], fill=(150, 100, 60))
+            if phase in (3, 4):                           # nom nom
+                cv.sprite(16, 14 - phase + 3, ["1.1", ".1.", "1.1"], {"1": (230, 120, 60)})
+                cv.px(6, 20, WHITE); cv.px(31, 19, WHITE)
+        else:
+            k = t - 24
+            cv.sprite(22, 12 - k, [".1.1.", "11111", ".111.", "..1.."], {"1": (230, 80, 100)})
+            cv.sprite(30, 14 - k // 2, [".1.1.", "11111", ".111.", "..1.."], {"1": (230, 80, 100)})
+        frames.append(cv)
+    return frames
+
+
 def scene_garden():
     frames = []
     for t in range(28):
@@ -338,9 +392,10 @@ def main():
         ("01_wake_up.gif", scene_wake, 140, "07:00 起床啦！"),
         ("02_coffee.gif", scene_coffee, 150, "08:00 来杯咖啡"),
         ("03_coding.gif", scene_code, 130, "10:00 认真敲代码"),
-        ("04_garden.gif", scene_garden, 150, "14:00 给小花浇水"),
-        ("05_walk.gif", scene_walk, 130, "18:00 傍晚散步"),
-        ("06_sleep.gif", scene_sleep, 180, "23:00 晚安 Zzz"),
+        ("04_lunch.gif", scene_lunch, 150, "12:00 干饭时间！"),
+        ("05_garden.gif", scene_garden, 150, "14:00 给小花浇水"),
+        ("06_walk.gif", scene_walk, 130, "18:00 傍晚散步"),
+        ("07_sleep.gif", scene_sleep, 180, "23:00 晚安 Zzz"),
     ]
     day = []
     for name, fn, dur, cap in scenes:

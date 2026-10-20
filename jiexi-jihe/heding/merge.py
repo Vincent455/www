@@ -22,6 +22,20 @@ for b in plan:
     for i in range(b['start'],b['n']):
         k+=1
         pg=r.pages[i]; pg.merge_page(overlay(k)); w.add_page(pg)
+# 目录跳转：front.links 每行 = 目录所在页(abspage) 左端x 基线y 右端x 目标页码(sp 单位)
+from pypdf.generic import ArrayObject, NumberObject, NameObject, DictionaryObject, FloatObject, NullObject
+nlink=0
+for line in open('front.links'):
+    pg,xl,y,xr,tgt=line.split()
+    xl,y,xr=(int(v)/65536 for v in (xl,y,xr))
+    ann=DictionaryObject({NameObject('/Type'):NameObject('/Annot'),NameObject('/Subtype'):NameObject('/Link'),
+        NameObject('/Rect'):ArrayObject([FloatObject(v) for v in (xl-1,y-3,xr+1,y+10)]),
+        NameObject('/Border'):ArrayObject([NumberObject(0)]*3),
+        NameObject('/Dest'):ArrayObject([w.pages[nf+int(tgt)-1].indirect_reference,NameObject('/XYZ'),NullObject(),NullObject(),NullObject()])})
+    page=w.pages[int(pg)-1]
+    if '/Annots' not in page: page[NameObject('/Annots')]=ArrayObject()
+    page['/Annots'].append(w._add_object(ann)); nlink+=1
+print('toc links',nlink)
 # page labels: front roman, content arabic
 w.set_page_label(0,nf-1,style='/r')
 w.set_page_label(nf,nf+k-1,style='/D',start=1)

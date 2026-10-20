@@ -1,0 +1,263 @@
+% ================= §7.5 射影映射和射影变换 =================
+\Needspace{12\baselineskip}
+\section{射影映射和射影变换}
+
+\subsection{射影映射的定义和性质}
+
+\begin{defbox}{定义 5.1（射影映射、射影变换）}
+射影平面 $\mathscr P_1$ 的点集到射影平面 $\mathscr P_2$ 的点集的一个\key{双射}，如果把\key{共线三点映成共线三点}，则称为\key{射影映射}。射影平面到自身的射影映射称为\key{射影变换}。中心投影是射影映射。
+\end{defbox}
+
+\begin{thmbox}{性质 1–7}
+1. 射影映射的乘积是射影映射。\quad 2. 不共线三点 $\mapsto$ 不共线三点。\quad 3. 逆映射也是射影映射。\\
+4. 线 $\mapsto$ 线（于是诱导“线集”之间保持关联的双射）。\quad 5. 一般位置四点 $\mapsto$ 一般位置四点。\\
+6. 保持共线四点的交比。\quad 7. 保持共点四线的交比。
+\end{thmbox}
+
+性质 2 的证明值得一看：若 $A,B,C$ 不共线而像 $A',B',C'$ 在一条线 $l'$ 上，则对任一点 $M$，过 $M$ 作直线交 $AB,AC$ 于 $P,Q$，由 $M,P,Q$ 共线知 $M'$ 也在 $P'Q'=l'$ 上——整个平面都被映到 $l'$ 上，与满射矛盾。
+
+\begin{thmbox}{射影映射基本定理}
+\textbf{定理 5.1}：射影映射 $\tau$ 把一般位置的四点 $A_1,A_2,A_3,E$ 映成一般位置的四点 $A_1',A_2',A_3',E'$，并且任一点 $M$ 在基底 I$[A_1,A_2,A_3,E]$ 中的射影坐标\key{等于}它的像在基底 I$'[A_1',A_2',A_3',E']$ 中的射影坐标。\\[3pt]
+\textbf{定理 5.2}：任给两组一般位置的四点 $A_1,A_2,A_3,E$ 与 $A_1',A_2',A_3',E'$，\key{存在唯一}的射影映射把前者依次映成后者。\\[3pt]
+\textbf{定理 5.3}：在基底 I、II 下，射影映射的公式为
+\begin{equation}
+\rho\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix},\qquad |A|\neq0;
+\end{equation}
+反之，这种形式（$A$ 非奇异）的映射一定是射影映射。
+\end{thmbox}
+
+\begin{gdbox}{高代联动：$PGL(3,\R)$，8 个参数}
+射影变换 $\leftrightarrow$ 可逆矩阵 $A$，且 $A$ 与 $kA$ 给出同一个变换：射影变换群 $\cong GL(3,\R)/\{kI\}=PGL(3,\R)$，维数 $9-1=8$。一个点的像有 2 个自由度，所以要\key{4 对点}才能定下一个射影变换（$4\times2=8$）——与仿射变换“3 对点”（$6$ 个参数）、平面上的射影直线“3 对点”（$PGL(2)$，3 个参数）对照。
+\end{gdbox}
+
+\begin{mtbox}{求射影变换的“两次标准化”法}
+要求把 $A,B,C,D$（一般位置）依次映成 $A',B',C',D'$ 的射影变换：
+\begin{enumerate}
+\item 解 $\vv d=\lambda_1\vv a+\lambda_2\vv b+\lambda_3\vv c$，令 $S=(\lambda_1\vv a,\lambda_2\vv b,\lambda_3\vv c)$——$S$ 把标准基底 $[\vv e_1,\vv e_2,\vv e_3,(1,1,1)\T]$ 映成 $[A,B,C,D]$；
+\item 同样由 $A',B',C',D'$ 得 $T$；
+\item 所求变换的矩阵为 $T\,S^{-1}$（先用 $S^{-1}$ 拉回标准基底，再用 $T$ 推到目标）。
+\end{enumerate}
+\end{mtbox}
+
+\begin{mtbox}{例 5.1}
+求把 $A(1,0,1)\T,B(2,1,1)\T,C(3,-1,0)\T,D(3,5,2)\T$ 分别映成 $A'(-1,0,3)\T,B'(1,1,3)\T,C'(2,3,8)\T,D'(2,1,-2)\T$ 的射影变换 $\sigma$。\\[2pt]
+\textbf{解}：$\vv d=-2\vv a+4\vv b-\vv c$，$S=(-2\vv a,\ 4\vv b,\ -\vv c)$；$\vv d'=-\frac32\vv a'-\frac12\vv b'+\frac12\vv c'$，乘 2 得 $T=(-3\vv a',\ -\vv b',\ \vv c')$。计算 $TS^{-1}$ 并约去公因子得
+\[
+\lambda\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}-3&23&-21\\-13&9&13\\-53&-31&125\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}.
+\]
+检验：$A\mapsto(-24,0,72)\T\sim A'$，$B\mapsto(-4,-4,-12)\T\sim B'$，$C\mapsto(-32,-48,-128)\T\sim C'$，$D\mapsto(64,32,-64)\T\sim D'$。\checkmark\\
+（教材用转置后解矩阵方程、化简化行阶梯形求 $\lambda_i$，结果相同；“两次标准化”更机械、不易错。）
+\end{mtbox}
+
+\paragraph{应用：矫正照片。}航拍时底片 $\pi_1$ 与地面 $\pi_0$ 不平行，像会变形。由基本定理，只要在底片和一张地形图上找出\key{四对}对应点，就唯一确定了矫正所需的射影映射。今天手机“扫描文档”把斜拍的纸拉成矩形，原理完全相同。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.55]
+  % left: square grid
+  \fill[defbg] (0,0) rectangle (1,1);
+  \foreach \t in {0,0.25,0.5,0.75,1}{\draw[defblue] (\t,0)--(\t,1); \draw[defblue] (0,\t)--(1,\t);}
+  \node[below] at (0.5,0) {\small 地面上的正方形格子};
+  \draw[->,thick] (1.3,0.5)--(2.2,0.5) node[midway,above] {\small $\sigma$};
+  % right: image x'=2x/(y+1), y'=2y/(y+1)
+  \begin{scope}[xshift=2.5cm]
+  \fill[thmbg] (0,0)--(2,0)--(1,1)--(0,1)--cycle;
+  \foreach \c in {0,0.25,0.5,0.75,1}{\draw[thmred] ({2*\c},0)--(\c,1);}
+  \foreach \d in {0,0.25,0.5,0.75,1}{\pgfmathsetmacro{\yy}{2*\d/(\d+1)}\pgfmathsetmacro{\xx}{2/(\d+1)}\draw[thmred] (0,\yy)--(\xx,\yy);}
+  \draw[figgray,dashed] (0,1)--(0,2); \draw[figgray,dashed] (1,1)--(0,2); \draw[figgray,dashed] (0.5,1)--(0,2);
+  \draw[figor,dashed] (-0.3,2)--(2.3,2) node[right] {\small 地平线 $y'=2$};
+  \fill[figor] (0,2) circle (1.2pt) node[above left] {\small 灭点 $(0,2)$};
+  \node[below] at (1,0) {\small 照片上的像};
+  \end{scope}
+\end{tikzpicture}
+\caption{射影变换 $x'=\dfrac{2x}{y+1},\ y'=\dfrac{2y}{y+1}$（矩阵 $\begin{psmallmatrix}2&0&0\\0&2&0\\0&1&1\end{psmallmatrix}$）把正方形格子变成“透视地砖”：竖线汇聚于灭点，横线越远越密}
+\end{figure}
+
+\begin{intbox}{直觉}
+上图中竖直线 $x=c$ 的像是过 $(2c,0)$ 与 $(c,1)$ 的直线，它们都经过 $(0,2)$；横线 $y=d$ 的像 $y'=\frac{2d}{d+1}$ 间距越来越小。\key{平行性、等距性都没了，但直线仍是直线、交比仍不变}——这就是“射影几何”与“仿射几何”的分界。
+\end{intbox}
+
+\subsection{射影变换、不动点与不变直线}
+射影平面到自身的射影映射构成\key{射影变换群}，交比是射影不变量。
+
+\begin{thmbox}{二级结论：不动点 = 特征向量}
+设 $\sigma:\ \lambda X'=AX$。
+\begin{itemize}
+\item 点 $X$ 不动 $\iff AX=kX$：\key{不动点}就是 $A$ 的特征向量。
+\item 直线 $\vv u\T X=0$ 的像是 $\vv u\T A^{-1}X'=0$，即线坐标 $\vv u\mapsto (A^{-1})\T\vv u$；直线不变 $\iff A\T\vv u=k\vv u$：\key{不变直线}就是 $A\T$ 的特征向量。
+\item 属于同一特征值的二维特征子空间 = 一整条\key{逐点不动}的直线。
+\end{itemize}
+\end{thmbox}
+
+\subsection{分式线性变换}
+用非齐次射影坐标 $x=\frac{x_1}{x_3},y=\frac{x_2}{x_3}$ 表达，射影变换是
+\begin{equation}
+x'=\frac{a_{11}x+a_{12}y+a_{13}}{a_{31}x+a_{32}y+a_{33}},\qquad y'=\frac{a_{21}x+a_{22}y+a_{23}}{a_{31}x+a_{32}y+a_{33}},\qquad |A|\neq0 .
+\end{equation}
+
+\begin{thmbox}{二级结论：射影直线上的射影变换}
+一条射影直线到自身的射影变换（非齐次坐标）为 $x'=\dfrac{ax+b}{cx+d}$，$ad-bc\neq0$（Möbius 变换），由\key{三对}点唯一确定，求法：令 $(x_1,x_2;x_3,x)=(x_1',x_2';x_3',x')$ 解出 $x'$。\\
+\textbf{例}：$0\mapsto1,\ 1\mapsto2,\ \infty\mapsto0$。由 $\infty\mapsto0$ 得 $a=0$，$x'=\frac{b}{cx+d}$；$0\mapsto1$ 得 $b=d$；$1\mapsto2$ 得 $c=-\frac b2$。取 $b=2$：$x'=\dfrac{2}{2-x}$。
+\end{thmbox}
+
+\subsection{仿射-射影变换}
+把无穷远直线映成无穷远直线的射影变换叫\key{仿射-射影变换}。取 $A_1,A_2$ 为无穷远点的基底（即齐次坐标），$x_3=0$ 上的点映成 $x_3'=0$ 上的点，代入 $(1,0,0)\T,(0,1,0)\T$ 得 $a_{31}=a_{32}=0$，于是 $a_{33}\neq0$，除以 $a_{33}$：
+\[
+\lambda'\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}c_{11}&c_{12}&c_{13}\\c_{21}&c_{22}&c_{23}\\0&0&1\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}
+\ \Longrightarrow\
+\begin{cases}x'=c_{11}x+c_{12}y+c_{13}\\y'=c_{21}x+c_{22}y+c_{23}\end{cases},\quad\begin{vmatrix}c_{11}&c_{12}\\c_{21}&c_{22}\end{vmatrix}\neq0 .
+\]
+限制在 $\pi_0$ 上就是第六章的仿射变换——\key{仿射变换 = 保持无穷远直线的射影变换}。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[rounded corners=8pt,thick,figpur,fill=gdbg] (0,0) rectangle (13,5.0);
+  \draw[rounded corners=8pt,thick,defblue,fill=defbg] (0.3,0.3) rectangle (9.6,3.9);
+  \draw[rounded corners=8pt,thick,figgreen,fill=mtbg] (0.6,0.6) rectangle (6.4,2.85);
+  \draw[rounded corners=8pt,thick,thmred,fill=thmbg] (0.9,0.9) rectangle (3.4,2.0);
+  \node[thmred,align=center] at (2.15,1.45) {\small\textbf{欧氏（正交）}\\[-1pt]\scriptsize 长度、面积};
+  \node[figgreen!70!black,align=left,anchor=west] at (3.6,1.75) {\small\textbf{相似}\\[-1pt]\scriptsize 角度、长度比、圆};
+  \node[defblue,align=left,anchor=west] at (6.6,2.05) {\small\textbf{仿射}\\[-1pt]\scriptsize 平行、分比、中点\\[-1pt]\scriptsize 面积比、椭圆/双/抛之分};
+  \node[figpur,align=left,anchor=west] at (9.8,2.6) {\small\textbf{射影}\\[-1pt]\scriptsize 共线、共点、交比\\[-1pt]\scriptsize 调和、二次曲线、配极};
+  \node[figpur] at (6.5,4.45) {\small 变换群越大 $\Rightarrow$ 不变性质越少（Klein 的 Erlangen 纲领）};
+\end{tikzpicture}
+\caption{几何的层次：欧氏 $\subset$ 相似 $\subset$ 仿射 $\subset$ 射影（按变换群），不变性质则逐层减少}
+\end{figure}
+
+% ---------------- 习题 7.5 ----------------
+\xiti{7.5}
+
+\begin{ex}{7.5.1}
+在射影平面上，取一个基底 $[A_1,A_2,A_3,E]$，求把点 $B_1(1,0,1)\T$，$B_2(2,0,1)\T$，$B_3(0,1,1)\T$，$F(0,2,1)\T$ 分别映成基点 $A_1,A_2,A_3,E$ 的射影变换 $\sigma$ 的公式。
+\end{ex}
+\jie \key{先求反方向}：把标准基底映成 $B_1,B_2,B_3,F$ 的变换 $\tau=\sigma^{-1}$ 最好求。解 $\vv f=\lambda_1\vv b_1+\lambda_2\vv b_2+\lambda_3\vv b_3$：
+\begin{gather*}
+(0,2,1)\T=\lambda_1(1,0,1)\T+\lambda_2(2,0,1)\T+\lambda_3(0,1,1)\T\\
+\Rightarrow\ \lambda_3=2,\ \lambda_1+2\lambda_2=0,\ \lambda_1+\lambda_2=-1\ \Rightarrow\ \lambda_1=-2,\ \lambda_2=1 .
+\end{gather*}
+$\tau$ 的矩阵 $T=(-2\vv b_1,\ \vv b_2,\ 2\vv b_3)=\begin{pmatrix}-2&2&0\\0&0&2\\-2&1&2\end{pmatrix}$，$\sigma$ 的矩阵为 $T^{-1}$（乘以 $-2$ 化为整数）：
+\[
+\lambda\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}-1&-2&2\\-2&-2&2\\0&-1&0\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}.
+\]
+检验：$B_1\mapsto(1,0,0)\T$，$B_2\mapsto(0,-2,0)\T$，$B_3\mapsto(0,0,-1)\T$，$F\mapsto(-2,-2,-2)\T$。\checkmark
+
+\begin{ex}{7.5.2}
+在射影平面上，取一个基底 $[A_1,A_2,A_3,E]$，设 $B_i\ (i=1,2,3)$ 为坐标三角形的顶点 $A_i$ 和单位点 $E$ 的连线 $A_iE$ 与对边的交点，求把 $A_1,A_2,A_3$ 分别映成 $B_1,B_2,B_3$ 的射影变换公式的一般形式。
+\end{ex}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.05]
+  \coordinate (A1) at (0,0); \coordinate (A2) at (5,0); \coordinate (A3) at (2,3.4); \coordinate (E) at (2.4,1.2);
+  \coordinate (B1) at (intersection of A1--E and A2--A3);
+  \coordinate (B2) at (intersection of A2--E and A3--A1);
+  \coordinate (B3) at (intersection of A3--E and A1--A2);
+  \fill[defbg] (A1)--(A2)--(A3)--cycle; \draw[defblue,thick] (A1)--(A2)--(A3)--cycle;
+  \fill[thmbg] (B1)--(B2)--(B3)--cycle; \draw[thmred,thick] (B1)--(B2)--(B3)--cycle;
+  \draw[figgray] (A1)--(B1) (A2)--(B2) (A3)--(B3);
+  \foreach \p/\l/\pos in {A1/A_1/below left,A2/A_2/below right,A3/A_3/above,B1/B_1/right,B2/B_2/left,B3/B_3/below}{\fill (\p) circle (1.5pt) node[\pos] {$\l$};}
+  \fill (E) circle (1.5pt) node[above right=-1pt] {\small $E$};
+\end{tikzpicture}
+\caption{$B_1=(0,1,1)\T,\ B_2=(1,0,1)\T,\ B_3=(1,1,0)\T$}
+\end{figure}
+
+\jie $A_1E:\ x_2=x_3$ 与 $A_2A_3:\ x_1=0$ 交于 $B_1=(0,1,1)\T$；同理 $B_2=(1,0,1)\T$，$B_3=(1,1,0)\T$。$\sigma(A_i)=B_i$ 意味着矩阵第 $i$ 列 $\propto\vv b_i$：
+\[
+\lambda\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}0&\lambda_2&\lambda_3\\\lambda_1&0&\lambda_3\\\lambda_1&\lambda_2&0\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix},\qquad \lambda_1,\lambda_2,\lambda_3\ \text{为任意非零实数}.
+\]
+（行列式 $=2\lambda_1\lambda_2\lambda_3\neq0$。）\key{参数计数}：只给 3 对点，$8-3\times2=2$ 个自由度——正是 $\lambda_1:\lambda_2:\lambda_3$ 的两个比值；再指定单位点的像就唯一了。
+
+\begin{ex}{7.5.3}
+在扩大的欧氏平面上，求出把直线 $x_1=0,\ x_2=0,\ x_3=0$ 分别映成直线 $a_ix_1+b_ix_2+c_ix_3=0\ (i=1,2,3)$ 的射影变换公式的一般形式。
+\end{ex}
+\jie 设 $\sigma:\ \lambda X'=AX$。直线 $\vv u\T X=0$ 的像是 $\vv u\T A^{-1}X'=0$，线坐标为 $(A^{-1})\T\vv u$。要求 $x_i=0$（$\vv u=\vv e_i$）的像是 $\vv l_i=(a_i,b_i,c_i)\T$：
+\[
+(A^{-1})\T\vv e_i=\rho_i\vv l_i\ (i=1,2,3)\ \Longleftrightarrow\ A^{-1}=\begin{pmatrix}\rho_1&0&0\\0&\rho_2&0\\0&0&\rho_3\end{pmatrix}\begin{pmatrix}a_1&b_1&c_1\\a_2&b_2&c_2\\a_3&b_3&c_3\end{pmatrix}=:DR .
+\]
+所以
+\[
+A=R^{-1}D^{-1}=\begin{pmatrix}a_1&b_1&c_1\\a_2&b_2&c_2\\a_3&b_3&c_3\end{pmatrix}^{-1}\begin{pmatrix}\rho_1^{-1}&0&0\\0&\rho_2^{-1}&0\\0&0&\rho_3^{-1}\end{pmatrix},
+\]
+$\rho_i$ 为任意非零实数，前提是三条像直线不共点（$|R|\neq0$）。\key{直觉}：线坐标按\key{逆转置} $(A^{-1})\T$ 变换——对偶空间的“反步变换”（高代：对偶基的过渡矩阵是 $(A\T)^{-1}$）。
+
+\begin{ex}{7.5.4}
+证明：在射影平面上，以坐标三角形的三个顶点为不动点的射影变换公式的一般形式是
+\[
+\lambda\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}a&0&0\\0&b&0\\0&0&c\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix},
+\]
+其中 $a,b,c$ 均可取任意非零实数。
+\end{ex}
+\zheng $A_1=(1,0,0)\T$ 不动 $\iff A\vv e_1=k_1\vv e_1\iff$ $A$ 的第一列为 $(k_1,0,0)\T$；同理第二、三列为 $(0,k_2,0)\T,(0,0,k_3)\T$。于是 $A=\operatorname{diag}(a,b,c)$，$|A|=abc\neq0$ 要求三者非零。反之这样的变换显然以 $A_1,A_2,A_3$ 为不动点。\qed\quad\gd $\vv e_1,\vv e_2,\vv e_3$ 都是特征向量 $\iff$ $A$ 是对角阵。
+
+\begin{ex}{7.5.5}
+在射影平面上，设射影变换 $\sigma$ 的公式为
+$\lambda\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}0&1&1\\-1&2&1\\-2&2&3\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}$，求 $\sigma$ 的不动点和不变直线。
+\end{ex}
+\jie\textbf{不动点 = $A$ 的特征向量}。$|\lambda I-A|=(\lambda-1)^2(\lambda-3)$。
+\begin{itemize}
+\item $\lambda=3$：$(3I-A)X=0$ 得 $X=(1,1,2)\T$；
+\item $\lambda=1$：$(I-A)X=0$ 只有一个方程 $x_1-x_2-x_3=0$，解空间 2 维，基为 $(1,1,0)\T,(1,0,1)\T$。
+\end{itemize}
+所以不动点为 $(1,1,2)\T$ 以及 $k_1(1,1,0)\T+k_2(1,0,1)\T$（$k_1,k_2$ 不全为零）——后者就是直线 $x_1-x_2-x_3=0$ 上的\key{所有点}。
+
+\textbf{不变直线 = $A\T$ 的特征向量}。$A\T$ 的特征值同为 $3,1,1$：
+\begin{itemize}
+\item $\lambda=3$：$\vv u=(1,-1,-1)\T$，直线 $x_1-x_2-x_3=0$；
+\item $\lambda=1$：$(I-A\T)\vv u=\vv 0$ 的解 $\vv u=c_1(-1,1,0)\T+c_2(-2,0,1)\T$，直线 $(c_1+2c_2)x_1-c_1x_2-c_2x_3=0$（$c_1,c_2$ 不全为零）。
+\end{itemize}
+
+\begin{intbox}{看清结构：这是一个“透射”}
+\begin{itemize}
+\item 直线 $l_0:\ x_1-x_2-x_3=0$ \key{逐点不动}（透射轴），点 $A=(1,1,2)\T$ 不动且不在 $l_0$ 上（透射中心）；
+\item 第二族不变直线 $(c_1+2c_2)x_1-c_1x_2-c_2x_3=0$ 都过 $(1,1,2)$（代入：$c_1+2c_2-c_1-2c_2=0$）——\key{过中心的直线都不变}。
+\end{itemize}
+对 $l_0$ 外一点 $P=\vv a+\vv p_0$（$P_0\in l_0$），$\sigma(P)=3\vv a+\vv p_0$，于是 $(A,P_0;P,P')=\frac{3}{1}=3$ 为常数——正是下一题的“透射”，特征比 $e=3$（两个特征值之比）。
+\end{intbox}
+
+\begin{ex}{7.5.6$^*$}
+设射影平面上的一个点变换 $\sigma$ 有不动点 $A$ 和不动直线 $l_0$（$l_0$ 上每点均不动），$A$ 不在 $l_0$ 上，并且对于每个其他点 $P$，$\sigma$ 把 $P$ 映成 $AP$ 上的点 $P'$，使得 $(A,P_0;P,P')=e$，其中 $P_0$ 是 $AP$ 和 $l_0$ 的交点，$e$ 是常数（$\neq0,1$），证明：$\sigma$ 是射影变换。此时称 $\sigma$ 为\key{透射}，$A$ 为\key{透射中心}，$l_0$ 为\key{透射轴}。
+\end{ex}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \draw[thick,figgreen] (-0.5,0)--(7,0) node[right] {$l_0$（逐点不动）};
+  \coordinate (A) at (2.2,3.6);
+  \fill[keyred] (A) circle (2pt) node[above,keyred] {$A$（中心）};
+  \foreach \x/\t in {0.6/0.55,3.4/0.45,5.8/0.6}{
+    \coordinate (P0) at (\x,0);
+    \coordinate (P) at ($(A)!\t!(P0)$);
+    \coordinate (Pp) at ($(A)!{\t/(\t+3*(1-\t))}!(P0)$);
+    \draw[figgray] (A)--(P0);
+    \fill (P0) circle (1.4pt);
+    \fill[figblue] (P) circle (1.6pt);
+    \fill[figred] (Pp) circle (1.6pt);
+    \draw[->,figpur,thick,shorten >=2pt,shorten <=2pt] (P)--(Pp);}
+  \node[figblue] at (3.02,1.92) {\small $P$};
+  \node[figred] at (2.76,2.86) {\small $P'$};
+  \node at (3.4,-0.3) {\small $P_0$};
+  \node[align=left,right] at (7.1,1.8) {\small 每个点沿“射线 $AP$”移动\\\small 交比 $(A,P_0;P,P')=e$ 固定};
+\end{tikzpicture}
+\caption{透射：中心 $A$、轴 $l_0$、特征交比 $e$（图中 $e=3$）}
+\end{figure}
+
+\zheng 在 $l_0$ 上取两点 $A_2,A_3$，取基底 I$[A,A_2,A_3,E]$（$E$ 为一般位置点）。于是 $A=(1,0,0)\T$，$l_0:\ x_1=0$。
+
+设 $P=(x_1,x_2,x_3)\T$ 不是 $A$ 也不在 $l_0$ 上（$x_1\neq0$）。直线 $AP$ 上的点为 $\lambda\vv a+\mu\vv p$，与 $x_1=0$ 的交点为
+\[
+P_0=(0,x_2,x_3)\T,\qquad\text{于是}\quad \vv p=x_1\vv a+\vv p_0 .
+\]
+设 $P'=\alpha\vv a+\beta\vv p_0$。由交比公式，$(A,P_0;P,P')=\dfrac{\alpha/\beta}{x_1/1}=e$，所以 $\alpha/\beta=ex_1$，取 $\beta=1$：
+\[
+P'=(ex_1,\ x_2,\ x_3)\T .
+\]
+对 $l_0$ 上的点（$x_1=0$）此式给出 $P'=P$，对 $A$ 给出 $(e,0,0)\T\sim A$，都与已知相符。所以 $\sigma$ 在基底 I 中的公式为
+\[
+\lambda\begin{pmatrix}x_1'\\x_2'\\x_3'\end{pmatrix}=\begin{pmatrix}e&0&0\\0&1&0\\0&0&1\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix},
+\]
+系数矩阵非奇异（$e\neq0$），由定理 5.3，$\sigma$ 是射影变换。\qed
+
+\begin{gdbox}{高代：透射的矩阵}
+透射 $\iff$ 矩阵可对角化为 $\operatorname{diag}(e,1,1)$：一个单特征值（中心）+ 一个二重特征值且几何重数为 2（轴）。若二重特征值只有 1 维特征向量（不可对角化），对应的是“中心在轴上”的退化情形（称为\key{射影平移}或 elation，如 $\begin{psmallmatrix}1&1&0\\0&1&0\\0&0&1\end{psmallmatrix}$）——Jordan 标准形在几何中的样子。
+\end{gdbox}

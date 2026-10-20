@@ -1,0 +1,469 @@
+% ================= §7.6 配极，二次曲线的射影分类 =================
+\Needspace{12\baselineskip}
+\section{配极，二次曲线的射影分类}
+
+\subsection{射影平面上的二次曲线}
+
+\begin{defbox}{二次曲线}
+射影坐标满足二次齐次方程
+\begin{equation}
+a_{11}x_1^2+a_{22}x_2^2+a_{33}x_3^2+2a_{12}x_1x_2+2a_{13}x_1x_3+2a_{23}x_2x_3=0
+\quad\Longleftrightarrow\quad X\T AX=0\ \ (A\T=A)
+\end{equation}
+的点的集合称为\key{二次曲线} $\Sb$。$|A|\neq0$ 称为\key{非退化}的，否则为\key{退化}的。换基底时 $A\mapsto H\T AH$（合同），方程仍是二次齐次的。
+\end{defbox}
+
+\begin{gdbox}{与第五章记号对照}
+第五章 $F(x,y)=a_{11}x^2+2a_{12}xy+a_{22}y^2+2a_1x+2a_2y+a_0$，矩阵 $P=\begin{psmallmatrix}a_{11}&a_{12}&a_1\\a_{12}&a_{22}&a_2\\a_1&a_2&a_0\end{psmallmatrix}$。齐次化（$x=\frac{x_1}{x_3},y=\frac{x_2}{x_3}$，乘 $x_3^2$）就是本章的 $A$：$a_{13}=a_1,\ a_{23}=a_2,\ a_{33}=a_0$，$|A|=I_3$。第五章“$I_3\neq0$”的曲线就是这里的非退化二次曲线。
+\end{gdbox}
+
+在直角坐标系的齐次坐标下：
+\begin{itemize}
+\item \textbf{情形 1}（$a_{11},a_{12},a_{22}$ 不全为零）：通常点满足原来的 $F(x,y)=0$；无穷远点 $(x_1,x_2,0)\T$ 在 $\Sb$ 上 $\iff a_{11}x_1^2+2a_{12}x_1x_2+a_{22}x_2^2=0$，即 $(x_1,x_2)$ 是\key{渐近方向}。所以 $\Sb$ = 欧氏二次曲线 + 它的渐近方向对应的无穷远点。
+\item \textbf{情形 2}（$a_{11}=a_{12}=a_{22}=0$）：$x_3(2a_{13}x_1+2a_{23}x_2+a_{33}x_3)=0$——一条射影直线和无穷远直线，或一对重合的无穷远直线。
+\end{itemize}
+所以 $\pib$ 上的二次曲线共 \key{11 种}：第五章的 9 种（补上渐近方向的无穷远点）+ 上面 2 种。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+  \foreach \sh/\d/\name/\n/\col in {0/1.75/椭圆/0 个实交点/figblue, 5/1.2/抛物线/1 个交点（相切）/figgreen, 10/0.55/双曲线/2 个交点/figred}{
+    \begin{scope}[xshift=\sh cm]
+      \fill[\col!10] (0,0) circle (1.2); \draw[\col,thick] (0,0) circle (1.2);
+      \draw[figor,very thick] (-1.9,\d)--(1.9,\d) node[right,figor] {\small $l_\infty$};
+      \node at (0,-1.65) {\small\textbf{\name}};
+      \node at (0,-2.15) {\small 与 $l_\infty$：\n};
+    \end{scope}}
+  \fill[figgreen] (5,1.2) circle (1.8pt);
+  \fill[figred] ({10-0.99},0.55) circle (1.8pt) ({10+0.99},0.55) circle (1.8pt);
+\end{tikzpicture}
+\caption{射影眼中三种圆锥曲线是\key{同一条}非退化二次曲线（画成圆），区别只在无穷远直线的位置：椭圆与 $l_\infty$ 不交，抛物线与 $l_\infty$ 相切，双曲线与 $l_\infty$ 交于两点（两个渐近方向）}
+\end{figure}
+
+\begin{mtbox}{例：用无穷远点判断类型}
+$x^2-3xy+2y^2+x-1=0$：令 $x_3=0$，$x_1^2-3x_1x_2+2x_2^2=(x_1-x_2)(x_1-2x_2)=0$，两个实无穷远点 $(1,1,0)\T,(2,1,0)\T$，且 $|A|=-\frac14\neq0$，所以是\key{双曲线}，渐近方向 $(1,1)$ 与 $(2,1)$。\\
+$x^2+2xy+y^2+x=0$：$(x_1+x_2)^2=0$，一个二重无穷远点 $(1,-1,0)\T$，$|A|=-\frac14\neq0$，\key{抛物线}（与 $l_\infty$ 相切）。
+\end{mtbox}
+
+\subsection{二次曲线的切线}
+把直线 $PQ$ 的参数方程 $\vv x=\lambda\vv p+\mu\vv q$ 代入 $X\T AX=0$：
+\begin{equation}
+\lambda^2F(\vv p)+2\lambda\mu\,\overline F(\vv p;\vv q)+\mu^2F(\vv q)=0,\qquad \overline F(\vv p;\vv q):=\vv p\T A\vv q .
+\end{equation}
+三个系数全为零时整条直线在 $\Sb$ 上；否则它确定 $\lambda:\mu$ 的两个值（相异、重合或虚），即直线与 $\Sb$ 有两个交点。
+
+\begin{defbox}{定义 6.1（切线）、奇点}
+直线 $L$ 与 $\Sb$ 有\key{重合的两个交点}或 $L$ 整个在 $\Sb$ 上，称 $L$ 为\key{切线}，交点为切点。\\
+设切点 $P\in\Sb$。由判别式 $\overline F(\vv p;\vv q)^2-F(\vv p)F(\vv q)=0$ 及 $F(\vv p)=0$ 得 $\overline F(\vv p;\vv q)=0$，所以切线方程为
+\begin{equation}
+\vv p\T AX=0 .
+\end{equation}
+若 $\vv p\T A=\vv0$，过 $P$ 的每条直线都是切线，$P$ 称为\key{奇点}。非退化二次曲线没有奇点。
+\end{defbox}
+
+\begin{thmbox}{二级结论：“半代换”写切线}
+$\vv p\T AX=0$ 展开就是第五章的切线公式：$x^2\to x_0x$，$xy\to\frac{x_0y+xy_0}{2}$，$x\to\frac{x+x_0}{2}$，$y\to\frac{y+y_0}2$，常数不变。例如椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 在 $(x_0,y_0)$ 处切线 $\frac{x_0x}{a^2}+\frac{y_0y}{b^2}=1$；抛物线 $y^2=2px$：$y_0y=p(x+x_0)$。
+\end{thmbox}
+
+\subsection{极点和极线}
+
+\begin{defbox}{极线（用调和共轭定义）}
+$P\notin\Sb$。过 $P$ 任作直线交 $\Sb$ 于 $G,H$，作 $P$ 关于 $G,H$ 的调和共轭点 $Q$：$(G,H;P,Q)=-1$。$Q$ 的轨迹称为 $P$ 关于 $\Sb$ 的\key{配极}（\key{极线}），$P$ 叫\key{极点}。其方程为
+\begin{equation}
+\vv p\T AX=0\qquad\Big(\text{即}\ \sum_{i,j}a_{ij}p_ix_j=0\Big).
+\end{equation}
+$P\in\Sb$ 时，把在 $P$ 的切线也叫 $P$ 的极线（方程同形）。
+\end{defbox}
+
+\noindent\textbf{推导}：$G,H$ 对应 (6.6) 的两根 $\frac{\lambda_1}{\mu_1},\frac{\lambda_2}{\mu_2}$，$(P,Q;G,H)=\frac{\lambda_2/\mu_2}{\lambda_1/\mu_1}=-1$ 即 $\frac{\lambda_1}{\mu_1}+\frac{\lambda_2}{\mu_2}=0$——两根之和为零，由 Vieta，一次项系数 $2\overline F(\vv p;\vv q)=0$。\qed
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.25]
+  \fill[defbg] (0,0) ellipse (2 and 1); \draw[thick,defblue] (0,0) ellipse (2 and 1);
+  \coordinate (P) at (4,0); \coordinate (T1) at (1,0.866); \coordinate (T2) at (1,-0.866);
+  \draw[figgreen,thick] ($(P)!-0.1!(T1)$)--($(P)!1.35!(T1)$); \draw[figgreen,thick] ($(P)!-0.1!(T2)$)--($(P)!1.35!(T2)$);
+  \draw[figred,very thick] (1,-1.45)--(1,1.45) node[above,figred] {\small 极线 $x=1$};
+  \coordinate (G) at (1.843,0.388); \coordinate (H) at (-0.925,0.886); \coordinate (Q) at (1,0.54);
+  \draw[figpur] (P)--($(P)!1.08!(H)$);
+  \fill (P) circle (1.7pt) node[right] {$P(4,0)$};
+  \foreach \p/\pos in {T1/above left,T2/below left}{\fill[figgreen] (\p) circle (1.6pt);}
+  \node[figgreen,above left] at (T1) {\small $T_1$}; \node[figgreen,below left] at (T2) {\small $T_2$};
+  \fill[figpur] (G) circle (1.5pt) node[above right=-1pt,figpur] {\small $G$};
+  \fill[figpur] (H) circle (1.5pt) node[above left,figpur] {\small $H$};
+  \fill[keyred] (Q) circle (1.6pt) node[above left=-1pt,keyred] {\small $Q$};
+  \node at (-1.2,-0.3) {\small $\frac{x^2}{4}+y^2=1$};
+\end{tikzpicture}
+\caption{$P(4,0)$ 关于椭圆 $\frac{x^2}4+y^2=1$ 的极线 $x=1$：它是切点弦 $T_1T_2$，也是每条割线上 $P$ 的调和共轭点 $Q$ 的轨迹，$(G,H;P,Q)=-1$}
+\end{figure}
+
+\begin{mtbox}{例：椭圆 $\frac{x^2}{4}+y^2=1$，$P(4,0)$}
+$A=\operatorname{diag}(\frac14,1,-1)$，$\vv p\T A=(4,0,1)\,A=(1,0,-1)$，极线 $x_1-x_3=0$，即 $x=1$。它交椭圆于 $T_{1,2}=(1,\pm\frac{\sqrt3}2)$，在 $T_1$ 的切线 $\frac{x}{4}+\frac{\sqrt3}{2}y=1$ 确实过 $(4,0)$。随便一条割线 $y=-0.18(x-4)$ 交椭圆于 $G(1.843,0.388),H(-0.925,0.886)$，交极线于 $Q(1,0.54)$，用横坐标验算：$(G,H;P,Q)=\frac{(4-1.843)(1+0.925)}{(4+0.925)(1-1.843)}=-1$。\checkmark
+\end{mtbox}
+
+\begin{thmbox}{极线的两条基本性质（配极原理）}
+(1) \key{对称性}：$Q$ 在 $P$ 的极线上 $\iff$ $P$ 在 $Q$ 的极线上。（因为 $\vv p\T A\vv q=\vv q\T A\vv p$，$A$ 对称。此时称 $P,Q$ \key{共轭}。）\\
+(2) $P$ 的极线过 $P$ $\iff$ $P\in\Sb$。\\[2pt]
+\textbf{推论（切点弦）}：$P$ 在 $\Sb$ 外时，从 $P$ 引的两条切线的切点 $T_1,T_2$ 都在 $P$ 的极线上（$T_i$ 的切线过 $P$ $\Rightarrow$ $P$ 在 $T_i$ 的极线上 $\Rightarrow$ $T_i$ 在 $P$ 的极线上），所以极线就是\key{切点弦}。
+\end{thmbox}
+
+\begin{defbox}{定义 6.2（配极映射）}
+$\Sb$ 非退化时，每点 $P$ 有唯一极线 $L_P$（线坐标 $A\vv p$）；每条直线 $\vv b\T X=0$ 有唯一极点 $\vv p=A^{-1}\vv b$。对应 $P\leftrightarrow L_P$ 称为关于 $\Sb$ 的\key{配极映射}，它把点变成线、线变成点，\key{保持关联}（由性质 (1)）——对偶原理的一个“具体实现”。
+\end{defbox}
+
+\begin{gdbox}{高代联动：配极 = 非退化对称双线性型}
+$\langle\vv p,\vv q\rangle_A:=\vv p\T A\vv q$ 是 $\R^3$ 上的对称双线性型。极线 = “$A$-正交补” $\vv p^{\perp_A}$；共轭点 = $A$-正交向量；二次曲线上的点 = \key{迷向向量}（$\langle\vv p,\vv p\rangle_A=0$）。$A$ 非退化 $\iff$ $\vv p\mapsto\langle\vv p,\cdot\rangle_A$ 是同构 $V\to V^*$——这就是“点 $\leftrightarrow$ 线”的配极映射。
+\end{gdbox}
+
+\begin{thmbox}{用配极统一第五章的概念（证明见习题 7.6）}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.33\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+第五章的概念 & 射影的说法\\\midrule
+切线 & 曲线上的点的极线\\
+中心 & \key{无穷远直线的极点}（第 5 题）\\
+共轭于方向 $\vv v$ 的直径 & \key{无穷远点 $\vv v$ 的极线}（第 4 题）\\
+渐近线 & 曲线上无穷远点处的切线（第 6 题）\\
+抛物线没有中心 & \key{无穷远直线与抛物线相切}，极点在 $l_\infty$ 上（第 7 题）\\
+准线 & \key{焦点的极线}（第 8 题）\\
+两直径互相共轭 & 两个无穷远点关于 $\Sb$ 共轭\\\bottomrule
+\end{tabularx}
+\end{thmbox}
+
+\subsection{自配极三角形}
+
+\begin{defbox}{定义 6.3、定理 6.1}
+$\triangle ABC$ 的每条边是对顶点的极线，称为关于 $\Sb$ 的\key{自配极三角形}。\key{任一二次曲线都存在自配极三角形}。\\[2pt]
+\textbf{构造}：在 $\Sb$ 外取 $A$，作极线 $L_A$（$A\notin L_A$）；在 $L_A$ 上取不在 $\Sb$ 上的 $B$，作极线 $L_B$（$B\in L_A\Rightarrow A\in L_B$）；令 $C=L_A\cap L_B$。则 $C$ 在 $L_A,L_B$ 上 $\Rightarrow$ $A,B$ 都在 $C$ 的极线上 $\Rightarrow$ $L_C=AB$。（$L_A$ 整个在 $\Sb$ 上时，$\Sb$ 是一对重合直线，$L_A$ 上任取两点即可。）
+\end{defbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.5]
+  \fill[defbg] (0,0) circle (1); \draw[thick,defblue] (0,0) circle (1);
+  \coordinate (A) at (2,0); \coordinate (B) at (0.5,2); \coordinate (C) at (0.5,0.375);
+  \draw[figred,thick] (0.5,-1.2)--(0.5,2.3) node[above,figred] {\small $L_A$};
+  \draw[figgreen,thick] ($(A)!-0.15!(B)$)--($(A)!1.2!(B)$) node[left,figgreen] {\small $L_C=AB$};
+  \draw[figpur,thick] ($(A)!-0.12!(C)$)--($(A)!1.45!(C)$) node[left,figpur] {\small $L_B$};
+  \fill[thmred!15,opacity=0.6] (A)--(B)--(C)--cycle;
+  \foreach \p/\pos in {A/right,B/above left,C/below right}{\fill (\p) circle (1.5pt) node[\pos] {$\p$};}
+\end{tikzpicture}
+\caption{单位圆的自配极三角形：$A(2,0)$ 的极线 $x=\frac12$，$B(\frac12,2)$ 的极线 $\frac x2+2y=1$，$C=(\frac12,\frac38)$；$C$ 的极线 $\frac x2+\frac{3y}8=1$ 恰是 $AB$}
+\end{figure}
+
+\begin{gdbox}{高代联动：自配极三角形 = 合同对角化}
+以自配极三角形 $ABC$ 为坐标三角形，“$BC$ 是 $A$ 的极线”给出 $a_{12}^*=a_{13}^*=0$，同理 $a_{23}^*=0$：方程变为 $a_{11}^*x_1^2+a_{22}^*x_2^2+a_{33}^*x_3^2=0$。三顶点 = 三个两两 $A$-正交的向量，以它们为列的矩阵 $C$ 使 $C\T AC$ 对角——这就是\key{二次型的合同对角化}的几何图像。
+\end{gdbox}
+
+\subsection{二次曲线的射影分类}
+对角化后再作 $\rho x_i^*=\tilde x_i/\sqrt{|\lambda_i|}$，并适当排列顶点、整体乘 $-1$，得到：
+
+\begin{thmbox}{定理 6.2（射影分类：5 类）}
+射影平面上的二次曲线分成五个射影类，代表为
+\begin{equation}
+x_1^2+x_2^2+x_3^2=0,\quad x_1^2+x_2^2-x_3^2=0,\quad x_1^2+x_2^2=0,\quad x_1^2-x_2^2=0,\quad x_1^2=0 .
+\end{equation}
+前两类非退化，后三类退化。分类依据：$A$ 的\key{秩}和\key{符号差的绝对值}（$A$ 与 $-A$ 是同一条曲线）。
+\end{thmbox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}>{\centering\arraybackslash}p{3.2cm}>{\centering\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+射影类代表 & 秩，$|$符号差$|$ & $\pib$ 上的 11 种二次曲线中属于此类的\\\midrule
+$x_1^2+x_2^2+x_3^2=0$ & 3，\ 3 & 虚椭圆（无轨迹）\\
+$x_1^2+x_2^2-x_3^2=0$ & 3，\ 1 & \key{椭圆、双曲线、抛物线}\\
+$x_1^2+x_2^2=0$ & 2，\ 2 & 一对虚相交直线（只有一个实点）、一对虚平行直线\\
+$x_1^2-x_2^2=0$ & 2，\ 0 & 一对相交直线、一对平行直线、一条射影直线 + $l_\infty$\\
+$x_1^2=0$ & 1，\ 1 & 一对重合直线、一对重合的无穷远直线\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{gdbox}{高代联动：惯性定理}
+实对称矩阵在合同变换下的全系不变量是\key{秩}与\key{正惯性指数}（等价地，秩与符号差）。射影类再把 $A$ 与 $-A$ 视为同一（方程两边乘 $-1$），所以只看 $|$符号差$|$：秩 3 有 $|s|=3,1$；秩 2 有 $|s|=2,0$；秩 1 有 $|s|=1$——共 5 类。对比：仿射分类（第六章）9 类，因为仿射变换必须保持 $l_\infty$，多了“与 $l_\infty$ 的位置关系”这个不变量。
+\end{gdbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \coordinate (V) at (0,0);
+  \draw[thick] (-2.2,2.6)--(2.2,-2.6); \draw[thick] (2.2,2.6)--(-2.2,-2.6);
+  \draw[thick] (0,2.6) ellipse (2.2 and 0.35); \draw[thick,dashed] (0,-2.6) ellipse (2.2 and 0.35);
+  \draw[figblue,very thick] (-1.387,1.637)--(1.919,2.265) node[right,figblue] {\small 椭圆};
+  \draw[figgreen,very thick] (0.424,0.5)--(-1.356,2.6) node[above left,figgreen] {\small 抛物线（平行于母线）};
+  \draw[figred,very thick] (0.75,-2.4)--(1.25,2.4) node[above right,figred] {\small 双曲线（截两叶）};
+  \fill (V) circle (1.6pt) node[left] {\small 顶点 $O$};
+  \node[align=left,right] at (2.9,-0.6) {\small 以 $O$ 为中心的中心投影\\\small 把一种截线变成另一种：\\\small 三者射影等价};
+\end{tikzpicture}
+\caption{圆锥截线（侧视示意）：同一圆锥面被不同平面所截，得到椭圆、抛物线、双曲线}
+\end{figure}
+
+\subsection{Steiner 定理，Pascal 定理，Brianchon 定理$^*$}
+（本节的非退化二次曲线都指有实轨迹的。）
+
+\begin{thmbox}{Steiner（斯坦纳）定理}
+非退化二次曲线 $\Sb$ 上给定四个不同的点 $A_1,A_2,A_3,A_4$，则 $\Sb$ 上任一点 $P$ 与它们的连线的交比 $(PA_1,PA_2;PA_3,PA_4)$ 是常数；$P$ 与某个 $A_i$（如 $A_4$）重合时，用该点的切线 $A_4T$ 代替 $PA_4$，交比仍等于这个常数。
+\end{thmbox}
+\noindent\textbf{证明要点}：$A_1,\dots,A_4$ 一般位置，取基底 $[A_1,A_2,A_3,A_4]$。$\Sb$ 过 $A_1,A_2,A_3$ 得 $a_{11}=a_{22}=a_{33}=0$，过 $A_4=(1,1,1)$ 得 $a_{12}+a_{13}+a_{23}=0$，可设方程为 $x_2x_3-kx_1x_3+(k-1)x_1x_2=0$（$k\neq0,1$）。对 $\Sb$ 上的 $P(x_1,x_2,x_3)$，直接算出 $(PA_1,PA_2;PA_3,PA_4)=\frac{x_2(x_1-x_3)}{x_1(x_2-x_3)}$，由方程它恒等于 $k$。$P\to A_4$ 时割线 $PA_4\to$ 切线，取极限即得后半部分。（圆的情形就是习题 7.3 第 10 题。）
+
+\begin{thmbox}{Pascal（巴斯卡）定理}
+非退化二次曲线的\key{内接六角形的三对对边的交点共线}：若 $A,B,C,A',B',C'$ 在 $\Sb$ 上，$AB'\cap A'B=P$，$AC'\cap A'C=Q$，$BC'\cap B'C=R$，则 $P,Q,R$ 共线（\key{Pascal 线}）。\\[2pt]
+\textbf{Brianchon（布里昂香）定理}（Pascal 的对偶）：非退化二次曲线的\key{外切六边形的三对对顶点连线共点}。
+\end{thmbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.25]
+  \draw[thick,defblue] (0,0) ellipse (2.6 and 1.5);
+  \coordinate (A) at (-1.992,0.964); \coordinate (B) at (1.099,1.359); \coordinate (C) at (2.511,0.388);
+  \coordinate (A') at (-2.511,-0.388); \coordinate (B') at (-0.889,-1.410); \coordinate (C') at (1.671,-1.149);
+  \coordinate (P) at (intersection of A--B' and A'--B);
+  \coordinate (Q) at (intersection of A--C' and A'--C);
+  \coordinate (R) at (intersection of B--C' and B'--C);
+  \draw[figblue!70] (A)--(B') (A')--(B);
+  \draw[figgreen!80!black] (A)--(C') (A')--(C);
+  \draw[figred!80] (B)--(C') (B')--(C);
+  \draw[keyred,very thick] ($(P)!-0.35!(R)$)--($(P)!1.3!(R)$) node[right,keyred] {\small Pascal 线};
+  \foreach \p/\pos in {A/above left,B/above,C/right,A'/left,B'/below,C'/below right}{\fill (\p) circle (1.6pt) node[\pos] {$\p$};}
+  \foreach \p/\pos in {P/above left,Q/below,R/above}{\fill[keyred] (\p) circle (1.8pt) node[\pos,keyred] {\small $\p$};}
+\end{tikzpicture}
+\caption{Pascal 定理：内接六角形 $AB'CA'BC'$ 的三对对边交点 $P,Q,R$ 共线}
+\end{figure}
+
+\noindent\textbf{Pascal 定理的证明要点}：设 $BC'$ 交 $PQ$ 于 $R_1$，要证 $R_1=R$。记 $H=BC'\cap A'C$，$G=AC'\cap A'B$。四次换“视点”：
+\begin{align*}
+(B,H;C',R_1)&\overset{Q}{=}(B,A';G,P)\overset{A}{=}(AB,AA';AC',AB')\\
+&\overset{\text{Steiner}}{=}(CB,CA';CC',CB')\overset{C}{=}(B,H;C',R),
+\end{align*}
+于是 $R_1=R$。\qed
+
+\begin{intbox}{直觉：Pascal 退化 = Pappus}
+把二次曲线退化成两条直线 $l_1\cup l_2$（$A,B,C\in l_1$，$A',B',C'\in l_2$），Pascal 定理就变成习题 7.4 第 5 题的 Pappus 定理。Pascal 还给出了“五点作二次曲线”的直尺作图法：已知五点，任作过其中一点的直线，用 Pascal 线就能作出它与曲线的第二个交点。
+\end{intbox}
+
+\begin{thmbox}{二级结论：完备四点形的调和性（习题 7.6 第 9、12 题要用）}
+完备四点形 $ABCD$ 的一边（如 $AC$）上：两个顶点 $A,C$ 被该边上的对角点 $F=AC\cap BD$ 和该边与另两个对角点连线的交点 $F_1=AC\cap GH$ \key{调和分割}：$(A,C;F,F_1)=-1$。\\[2pt]
+\textbf{证明}：基底 $[A,B,C,D]$，$F=(1,0,1)\T=\vv a+\vv c$，$G=AD\cap BC=(0,1,1)\T$，$H=AB\cap CD=(1,1,0)\T$，$GH:\ -x_1+x_2-x_3=0$，$F_1=GH\cap AC=(1,0,-1)\T=\vv a-\vv c$，故交比为 $-1$。\qed
+\end{thmbox}
+
+% ---------------- 习题 7.6 ----------------
+\xiti{7.6}
+
+\begin{ex}{7.6.1}
+在射影平面上给了下列五个点，求由它们所确定的二次曲线：$A(1,-1,0)\T$，$B(2,0,-1)\T$，$C(0,2,-1)\T$，$D(1,4,-2)\T$，$E(2,3,-2)\T$。
+\end{ex}
+\jie 设 $\Sb:\ a_{11}x_1^2+a_{22}x_2^2+a_{33}x_3^2+2a_{12}x_1x_2+2a_{13}x_1x_3+2a_{23}x_2x_3=0$，代入五点得 5 个关于 6 个系数的齐次线性方程：
+\begin{align*}
+A:&\ a_{11}+a_{22}-2a_{12}=0, \qquad B:\ 4a_{11}+a_{33}-4a_{13}=0, \qquad C:\ 4a_{22}+a_{33}-4a_{23}=0,\\
+D:&\ a_{11}+16a_{22}+4a_{33}+8a_{12}-4a_{13}-16a_{23}=0,\\
+E:&\ 4a_{11}+9a_{22}+4a_{33}+12a_{12}-8a_{13}-12a_{23}=0 .
+\end{align*}
+系数矩阵秩为 5，解空间 1 维：$a_{11}=a_{22}=a_{12}=\frac49a_{23},\ a_{33}=\frac{20}9a_{23},\ a_{13}=a_{23}$。取 $a_{23}=\frac92$：
+\[
+2x_1^2+2x_2^2+10x_3^2+4x_1x_2+9x_1x_3+9x_2x_3=0 .
+\]
+
+\begin{intbox}{看清本质：它是两条直线}
+左边可分解：$2x_1^2+\dots=(x_1+x_2+2x_3)(2x_1+2x_2+5x_3)$。验证：$A,B,C$ 都满足 $x_1+x_2+2x_3=0$——\key{三点共线}！$D,E$ 满足 $2x_1+2x_2+5x_3=0$。\\
+原因：二次曲线与一条直线最多两个交点，除非整条直线在曲线上（\S7.6.2）。所以过 $A,B,C$ 的二次曲线必须包含直线 $ABC$，剩下部分是一条过 $D,E$ 的直线——答案唯一而且退化。这说明第 13 题“\key{一般位置}五点”的条件不能去掉。
+\end{intbox}
+
+\begin{ex}{7.6.2}
+求经过点 $A(1,0,1)\T$，$B(0,1,1)\T$，$C(0,-1,1)\T$ 且以直线 $l_1:\ x_1-x_3=0$ 和直线 $l_2:\ x_3-x_2=0$ 为切线的二次曲线。
+\end{ex}
+\jie $A\in l_1$，所以 $l_1$ 是以 $A$ 为切点的切线；$B\in l_2$，$l_2$ 是以 $B$ 为切点的切线。由切线方程 $\vv p\T AX=0$：
+\begin{itemize}
+\item 过 $A,B,C$：$a_{11}+2a_{13}+a_{33}=0$，$a_{22}+2a_{23}+a_{33}=0$，$a_{22}-2a_{23}+a_{33}=0$ $\Rightarrow a_{23}=0,\ a_{22}=-a_{33}$；
+\item 在 $A$ 的切线 $(1,0,1)A=(a_{11}+a_{13},\ a_{12}+a_{23},\ a_{13}+a_{33})\propto(1,0,-1)$ $\Rightarrow a_{12}=0$；
+\item 在 $B$ 的切线 $(0,1,1)A=(a_{12}+a_{13},\ a_{22}+a_{23},\ a_{23}+a_{33})\propto(0,-1,1)$ $\Rightarrow a_{13}=0$。
+\end{itemize}
+再由第一式 $a_{11}=-a_{33}$。取 $a_{33}=-1$：
+\[
+x_1^2+x_2^2-x_3^2=0 .
+\]
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \fill[defbg] (0,0) circle (1); \draw[thick,defblue] (0,0) circle (1);
+  \draw[figred,thick] (1,-1.5)--(1,1.6) node[above,figred] {\small $l_1:x=1$};
+  \draw[figgreen,thick] (-1.6,1)--(1.8,1) node[right,figgreen] {\small $l_2:y=1$};
+  \foreach \p/\l/\pos in {{(1,0)}/A/right,{(0,1)}/B/above left,{(0,-1)}/C/below}{\fill \p circle (1.6pt) node[\pos] {$\l$};}
+  \draw[->] (-1.6,0)--(1.6,0); \draw[->] (0,-1.5)--(0,1.5);
+\end{tikzpicture}
+\caption{就是单位圆 $x^2+y^2=1$}
+\end{figure}
+
+\noindent\textbf{仿射验算}：单位圆 $x^2+y^2=1$ 过 $(1,0),(0,1),(0,-1)$，在 $(1,0)$ 的切线是 $x=1$，在 $(0,1)$ 的切线是 $y=1$。\checkmark\quad 条件计数：3 个点 + 2 条切线（每条“已知切点的切线”比单纯过该点多 1 个条件）$=5$ 个线性条件，恰好定出一条二次曲线。
+
+\begin{ex}{7.6.3}
+求点 $P(1,2,1)\T$ 关于二次曲线 $\Sb:\ x_1^2-x_2^2+x_3^2-2x_1x_2-4x_1x_3=0$ 的极线。
+\end{ex}
+\jie $A=\begin{pmatrix}1&-1&-2\\-1&-1&0\\-2&0&1\end{pmatrix}$，$\vv p\T A=(1,2,1)A=(1-2-2,\ -1-2+0,\ -2+0+1)=(-3,-3,-1)$。极线：
+\[
+3x_1+3x_2+x_3=0 .
+\]
+（$F(\vv p)=1-4+1-4-4=-10\neq0$，$P$ 不在 $\Sb$ 上，极线不过 $P$：$3+6+1\neq0$。）
+
+\begin{ex}{7.6.4}
+证明：不在二次曲线 $\Sb$ 上的每个无穷远点的极线是共轭于此无穷远点所对应的方向的直径。
+\end{ex}
+\zheng\textbf{代数}：无穷远点 $\infty_1=(\mu,\nu,0)\T$，极线
+\[
+(\mu,\nu,0)AX=\mu(a_{11}x_1+a_{12}x_2+a_{13}x_3)+\nu(a_{12}x_1+a_{22}x_2+a_{23}x_3)=0,
+\]
+回到仿射坐标即 $\mu F_1(x,y)+\nu F_2(x,y)=0$，正是第五章\key{共轭于方向 $(\mu,\nu)$ 的直径}的方程（$\infty_1\notin\Sb$ 说明 $(\mu,\nu)$ 不是渐近方向）。
+
+\textbf{几何}：以 $(\mu,\nu)$ 为方向的弦 $AB$ 上，$\infty_1$ 关于 $A,B$ 的调和共轭点是\key{弦的中点}（中点 $\leftrightarrow$ 无穷远点）。所以 $\infty_1$ 的极线 = 这组平行弦中点的轨迹 = 共轭于该方向的直径。\qed
+
+\begin{ex}{7.6.5}
+证明：非退化二次曲线 $\Sb$ 的中心（若有的话）的极线是无穷远直线。
+\end{ex}
+\zheng 中心 $O(x_0,y_0)$ 满足 $F_1(x_0,y_0)=F_2(x_0,y_0)=0$（第五章）。其极线
+\[
+(x_0,y_0,1)AX=F_1(x_0,y_0)x_1+F_2(x_0,y_0)x_2+F_3(x_0,y_0)x_3=F_3(x_0,y_0)\,x_3=0,
+\]
+其中 $F_3=a_{13}x+a_{23}y+a_{33}$。若 $F_3(x_0,y_0)=0$，则 $(x_0,y_0,1)A=\vv0$，与 $A$ 非奇异矛盾。所以极线是 $x_3=0$，即无穷远直线。
+
+\textbf{几何}：过中心的弦被中心平分，中心关于弦两端的调和共轭点是无穷远点，所以中心的极线由无穷远点组成。\qed\quad（等价说法：\key{中心 = 无穷远直线的极点}，方程 $A\vv c\propto(0,0,1)\T$ 正是第五章的中心方程组 $A_0\vv\alpha_0=-\vv\delta$。）
+
+\begin{ex}{7.6.6}
+证明：双曲线上的无穷远点的极线是它的渐近线，从而双曲线上无穷远点处的切线是渐近线。
+\end{ex}
+\zheng 设 $\infty$ 是双曲线上的无穷远点（渐近方向）。
+\begin{itemize}
+\item 由第 5 题，中心 $O$ 的极线是 $l_\infty$，而 $\infty\in l_\infty$，由配极原理，$O$ 在 $\infty$ 的极线上；
+\item $\infty$ 在双曲线上，所以它的极线经过它自身（性质 (2)）。
+\end{itemize}
+于是 $\infty$ 的极线是过中心、沿渐近方向的直线——\key{渐近线}。又曲线上点的极线就是该点处的切线，故渐近线是双曲线在无穷远点处的切线。\qed
+
+\begin{intbox}{直觉}
+“渐近线是在无穷远处与曲线相切的直线”——这句话在欧氏平面里只是比喻，在射影平面里是字面意思。
+\end{intbox}
+
+\begin{ex}{7.6.7}
+证明：抛物线上的无穷远点的极线是无穷远直线，从而无穷远直线是抛物线的切线。
+\end{ex}
+\zheng 设抛物线上的无穷远点为 $\infty_0$（唯一的渐近方向）。$\infty_0$ 在曲线上，其极线过 $\infty_0$。再证这条极线还过另一个无穷远点：任取不在抛物线上的无穷远点 $\infty$，由第 4 题，$\infty$ 的极线是共轭于它的直径，而\key{抛物线的每条直径都沿渐近方向}（第五章），即都过 $\infty_0$；由配极原理，$\infty$ 在 $\infty_0$ 的极线上。所以 $\infty_0$ 的极线含两个不同的无穷远点，就是 $l_\infty$。于是 $l_\infty$ 是抛物线在 $\infty_0$ 处的切线。\qed
+
+\textbf{代数验证}：$y^2=2px$，$A=\begin{psmallmatrix}0&0&-p\\0&1&0\\-p&0&0\end{psmallmatrix}$，$\infty_0=(1,0,0)\T$，$(1,0,0)A=(0,0,-p)$，极线 $x_3=0$。\checkmark
+
+\begin{ex}{7.6.8}
+证明：圆锥曲线（即椭圆、双曲线和抛物线）的焦点的极线是准线。
+\end{ex}
+\zheng 取标准方程逐一计算（用“半代换”）：
+\begin{itemize}
+\item 椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$，焦点 $(c,0)$：极线 $\frac{cx}{a^2}=1$，即 $x=\frac{a^2}c$——准线；
+\item 双曲线 $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$，焦点 $(c,0)$：极线 $\frac{cx}{a^2}=1$，即 $x=\frac{a^2}c$——准线；
+\item 抛物线 $y^2=2px$，焦点 $(\frac p2,0)$：极线 $0\cdot y=p\left(x+\frac p2\right)$，即 $x=-\frac p2$——准线。
+\end{itemize}
+另一焦点由对称性同理。\qed
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.3]
+  \fill[defbg] (0,0) ellipse (2 and 1.2); \draw[thick,defblue] (0,0) ellipse (2 and 1.2);
+  \coordinate (F) at (1.6,0); \coordinate (M1) at (1.886,0.400); \coordinate (M2) at (0.818,-1.095); \coordinate (T) at (2.5,-0.643);
+  \draw[figred,very thick] (2.5,-1.5)--(2.5,1.5) node[above,figred] {\small 准线 $x=\frac{a^2}{c}$};
+  \draw[figpur,thick] ($(M2)!-0.1!(M1)$)--($(M2)!1.15!(M1)$);
+  \draw[figgreen,thick] ($(M1)!-0.4!(T)$)--($(M1)!1.25!(T)$);
+  \draw[figgreen,thick] ($(M2)!-0.2!(T)$)--($(M2)!1.15!(T)$);
+  \fill (F) circle (1.6pt) node[below left=-1pt] {\small $F$};
+  \fill[figpur] (M1) circle (1.5pt) node[above left=-1pt,figpur] {\small $M_1$};
+  \fill[figpur] (M2) circle (1.5pt) node[below,figpur] {\small $M_2$};
+  \fill[keyred] (T) circle (1.8pt) node[right,keyred] {\small $T$};
+\end{tikzpicture}
+\caption{焦点的极线是准线 $\Rightarrow$ 过焦点的弦 $M_1M_2$ 两端的切线交于准线上（$T$ 是弦的极点）}
+\end{figure}
+
+\begin{intbox}{推论（常考）}
+过焦点作任一弦 $M_1M_2$，两端切线的交点 $T$ 在准线上：$F$ 在 $T$ 的极线 $M_1M_2$ 上 $\Rightarrow$ $T$ 在 $F$ 的极线（准线）上。配极原理一句话就证完了。
+\end{intbox}
+
+\begin{ex}{7.6.9}
+从圆锥曲线外一点 $P$ 作圆锥曲线的切线的方法为：从 $P$ 作任意两条直线 $L_1,L_2$，使得 $L_i\ (i=1,2)$ 与圆锥曲线交于 $G_i,H_i$，连接 $H_2G_1$，$H_2H_1$；连接 $G_1G_2$，它与 $H_2H_1$ 交于 $A$；连接 $H_1G_2$，它与 $H_2G_1$ 交于 $B$；连接 $AB$，它与 $L_1,L_2$ 分别交于 $Q_1,Q_2$，与圆锥曲线交于 $C_1,C_2$；连接 $PC_1,PC_2$，它们就是从 $P$ 所引的圆锥曲线的两条切线。说出这种方法的理由。
+\end{ex}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \fill[defbg] (0,0) ellipse (2 and 1.2); \draw[thick,defblue] (0,0) ellipse (2 and 1.2);
+  \coordinate (P) at (2.6,2.4); \coordinate (A) at (6.320,-1.865); \coordinate (B) at (0.852,0.268);
+  \coordinate (G1) at (0.849,1.087); \coordinate (G2) at (1.711,0.622);
+  \coordinate (H1) at (-1.580,-0.735); \coordinate (H2) at (0.858,-1.084);
+  \coordinate (C1) at (-1.065,1.016); \coordinate (C2) at (1.979,-0.172);
+  \coordinate (Q1) at (0.132,0.549); \coordinate (Q2) at (1.423,0.045);
+  \draw (P)--($(P)!1.08!(H1)$) node[below left] {\small $L_1$}; \draw (P)--($(P)!1.12!(H2)$) node[below] {\small $L_2$};
+  \draw[figgray] (G1)--(A) (H1)--(A);
+  \draw[figgray] (H1)--(G2) (H2)--(G1);
+  \draw[figred,very thick] ($(A)!-0.08!(C1)$)--($(A)!1.12!(C1)$);
+  \draw[figgreen,thick] (P)--($(P)!1.35!(C1)$); \draw[figgreen,thick] (P)--($(P)!1.3!(C2)$);
+  \foreach \p/\l/\pos in {G1/G_1/above,G2/G_2/right,H1/H_1/left,H2/H_2/below,Q1/Q_1/above left,Q2/Q_2/below left}{\fill (\p) circle (1.4pt) node[\pos] {\scriptsize $\l$};}
+  \fill (P) circle (1.7pt) node[above] {$P$};
+  \fill[keyred] (A) circle (1.7pt) node[right,keyred] {$A$};
+  \fill[keyred] (B) circle (1.6pt) node[below=2pt,keyred] {\small $B$};
+  \fill[figgreen] (C1) circle (1.8pt) node[left,figgreen] {$C_1$};
+  \fill[figgreen] (C2) circle (1.8pt) node[below right,figgreen] {$C_2$};
+\end{tikzpicture}
+\caption{只用直尺作切线：$AB$ 是 $P$ 的极线（红），它交曲线于切点 $C_1,C_2$}
+\end{figure}
+
+\zheng 看内接于曲线的完备四点形 $G_1H_1G_2H_2$，它的三个对角点是
+\[
+G_1H_1\cap G_2H_2=L_1\cap L_2=P,\qquad G_1G_2\cap H_1H_2=A,\qquad H_1G_2\cap H_2G_1=B .
+\]
+由上面的“完备四点形调和性”，在边 $L_1=G_1H_1$ 上：$Q_1=L_1\cap AB$ 满足 $(G_1,H_1;P,Q_1)=-1$，即 $Q_1$ 是 $P$ 关于 $G_1,H_1$ 的第四调和点，所以 $Q_1$ 在 $P$ 的极线上；同理 $Q_2$ 也在。故 $AB=Q_1Q_2$ \key{就是 $P$ 的极线}。
+
+$C_i$ 在 $P$ 的极线上，由配极原理 $P$ 在 $C_i$ 的极线上；而 $C_i$ 在曲线上，其极线就是 $C_i$ 处的切线。所以切线过 $P$，即 $PC_i$ 是切线。\qed
+
+\begin{ex}{7.6.10$^*$}
+怎样用直尺作过圆锥曲线上给定点的切线？
+\end{ex}
+\jie\textbf{方法一（用极线）}：设 $C$ 是曲线上的点。过 $C$ 作任一直线 $L_1$ 与曲线再交于 $D$；在 $L_1$ 上任取两点 $Q_1,Q_2$（不在曲线上），用第 9 题的方法分别作出它们的极线，设交于 $F$；则 $FC$ 就是过 $C$ 的切线。
+
+\textbf{理由}：$F$ 在 $Q_1,Q_2$ 的极线上 $\Rightarrow$ $Q_1,Q_2$ 在 $F$ 的极线上 $\Rightarrow$ $F$ 的极线是 $Q_1Q_2=L_1$。$C\in L_1$ 是 $F$ 的极线上的点 $\Rightarrow$ $F$ 在 $C$ 的极线（即 $C$ 处的切线）上，所以切线是 $FC$。（$F$ 也在 $D$ 处的切线上：$F$ 是弦 $CD$ 的极点。）
+
+\textbf{方法二（Pascal 的退化）}：在曲线上另取四点 $B,D,E,G$，对“六角形” $CCBDEG$（$CC$ 表示 $C$ 处的切线）用 Pascal 定理：$CB\cap EG=X$、$BD\cap GC=Y$ 两点确定 Pascal 线，它与 $DE$ 交于 $Z$，则 $CZ$ 是切线（切线 $CC$ 与对边 $DE$ 的交点也在 Pascal 线上）。
+
+\begin{ex}{7.6.11$^*$}
+对于非退化二次曲线 $\Sb$，给了一个配极映射 $\tau$，它把点 $P(x_1,x_2,x_3)\T$ 对应于点 $P$ 的极线 $L_P(\zeta_1,\zeta_2,\zeta_3)\T$，设 $\tau$ 的公式为
+$\rho\begin{pmatrix}\zeta_1\\\zeta_2\\\zeta_3\end{pmatrix}=\begin{pmatrix}2&0&-1\\0&1&1\\-1&1&0\end{pmatrix}\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}$。(1) 求直线 $L:\ x_1+x_2+x_3=0$ 的极点；(2) 求自共轭点的轨迹（若一个点 $P$ 的极线经过 $P$，则称 $P$ 是关于 $\Sb$ 的\key{自共轭点}）。
+\end{ex}
+\jie 配极映射的矩阵就是 $\Sb$ 的系数矩阵 $A$（极线坐标 $=A\vv p$）。
+
+(1) 解 $A\vv p=\rho(1,1,1)\T$：
+\[
+\begin{cases}2p_1-p_3=\rho\\p_2+p_3=\rho\\-p_1+p_2=\rho\end{cases}\Rightarrow\ \vv p=\tfrac\rho3(1,4,-1)\T,
+\]
+极点为 $(1,4,-1)\T$。检验：$A(1,4,-1)\T=(3,3,3)\T$。\checkmark
+
+(2) $P$ 自共轭 $\iff$ $L_P$ 过 $P$ $\iff$ $\zeta_1x_1+\zeta_2x_2+\zeta_3x_3=0\iff \rho^{-1}X\T AX=0$：
+\[
+2x_1^2+x_2^2-2x_1x_3+2x_2x_3=0 ,
+\]
+正是 $\Sb$ 本身——\key{配极映射决定了二次曲线}：曲线就是“在自己极线上”的点的轨迹。
+
+\begin{ex}{7.6.12$^*$}
+证明：如果一个完备四点形内接于一条二次曲线 $\Sb$，那么它的三对对边的交点形成一个自配极三角形。
+\end{ex}
+\zheng 设完备四点形 $ABCD$ 内接于 $\Sb$，对角点 $H=AB\cap CD$，$F=AC\cap BD$，$G=AD\cap BC$。
+
+在边 $AC$ 上：由完备四点形的调和性，$F_1=AC\cap GH$ 满足 $(A,C;F,F_1)=-1$，而 $A,C\in\Sb$，所以 $F_1$ 在 $F$ 的极线上。同理在边 $BD$ 上，$F_2=BD\cap GH$ 满足 $(B,D;F,F_2)=-1$，$F_2$ 也在 $F$ 的极线上。$F_1\neq F_2$（$AC\neq BD$），所以 $F$ 的极线是 $F_1F_2=GH$。
+
+同理 $G$ 的极线是 $FH$，$H$ 的极线是 $FG$。所以 $\triangle FGH$ 是自配极三角形。\qed
+
+（第 9 题的图正是例子：内接四点形 $G_1H_1G_2H_2$ 的对角三角形 $PAB$ 是自配极的，$AB$ 是 $P$ 的极线。）
+
+\begin{ex}{7.6.13$^*$}
+证明：对于射影平面上任给一般位置的五个点（即其中任意三点不共线），有且只有一条二次曲线经过它们。
+\end{ex}
+\zheng\textbf{存在性}：二次曲线有 6 个系数（差一个倍数），过一点是关于系数的一个齐次线性方程。5 个方程、6 个未知量的齐次线性方程组必有非零解（\gd 未知量个数 $>$ 方程个数）。
+
+\textbf{唯一性}：取基底使 $P_1=(1,0,0)\T,P_2=(0,1,0)\T,P_3=(0,0,1)\T,P_4=(1,1,1)\T$，设 $P_5=(p,q,r)\T$。过 $P_1,P_2,P_3$ 得 $a_{11}=a_{22}=a_{33}=0$，方程为 $a_{12}x_1x_2+a_{13}x_1x_3+a_{23}x_2x_3=0$；再过 $P_4,P_5$：
+\[
+\begin{cases}a_{12}+a_{13}+a_{23}=0,\\ pq\,a_{12}+pr\,a_{13}+qr\,a_{23}=0 .\end{cases}
+\]
+一般位置意味着 $P_5$ 不在 $P_iP_j$ 上：$p,q,r\neq0$（不在坐标三角形的边上），$p\neq q,\ q\neq r,\ r\neq p$（不在 $P_3P_4,P_1P_4,P_2P_4$ 上）。若系数矩阵 $\begin{psmallmatrix}1&1&1\\pq&pr&qr\end{psmallmatrix}$ 的秩为 1，则 $pq=pr=qr$，由 $p\neq0$ 得 $q=r$，矛盾。所以秩为 2，解空间 1 维，二次曲线唯一。\qed
+
+\begin{intbox}{对照第 1 题}
+第 1 题的五点中 $A,B,C$ 共线，不是一般位置，虽然二次曲线仍唯一，但它是退化的（两条直线）。若五点中有\key{四点}共线，则过它们的二次曲线就不唯一了（那条直线 + 过第五点的任一直线）。
+\end{intbox}

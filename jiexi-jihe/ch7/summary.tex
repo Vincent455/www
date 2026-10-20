@@ -1,0 +1,54 @@
+% ================= 第七章总结 =================
+\clearpage
+\zongjie{第七章\ 总结}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+\textbf{\sffamily 内容} & \textbf{\sffamily 结论 / 方法} & \textbf{\sffamily 高代对应}\\\midrule
+射影平面 & 欧氏平面 + 无穷远直线；任两线必交；点 $=\spn{\vv\alpha}$，线 $=\spn{\vv\beta,\vv\gamma}$ & 子空间格，维数公式\\
+齐次坐标 & $(x,y)\to(x,y,1)$；方向 $(u,v)\to(u,v,0)$；差一个非零倍数 & 1 维子空间的生成元\\
+连线 / 交点 & 都是叉积；三点共线 / 三线共点 $\iff$ 行列式 $=0$ & 线性相关；基础解系\\
+对偶原理 & 点 $\leftrightarrow$ 线、共线 $\leftrightarrow$ 共点，定理成对出现 & 对偶空间 $V^*$\\
+Desargues / Pappus & 证明都归结为 $\vv p+\vv q+\vv r=\vv0$ & 线性相关\\
+交比 & $\dfrac{(c-a)(d-b)}{(c-b)(d-a)}=\dfrac{\lambda_2/\mu_2}{\lambda_1/\mu_1}$；24 种排列 6 个值 & $2\times2$ 行列式之比\\
+调和 & $(A,B;C,D)=-1$；中点 $\leftrightarrow$ 无穷远点；完备四点形作图 & \\
+射影坐标 & 基底 = 一般位置 4 点 $[A_1,A_2,A_3,E]$；变换 $\rho X=HX'$ & 基 + 单位点；过渡矩阵\\
+射影变换 & $\lambda X'=AX$，$|A|\ne0$；4 对点唯一确定；保交比 & $PGL(3,\R)$，8 维\\
+不动点 / 不变线 & $A$ 的特征向量 / $A\T$ 的特征向量；透射 $\sim\operatorname{diag}(e,1,1)$ & 特征值、可对角化\\
+仿射变换 & = 保持 $l_\infty$ 的射影变换（第三行 $(0,0,1)$） & 子群\\
+二次曲线 & $X\T AX=0$；与 $l_\infty$ 交 0/1/2 点 $\iff$ 椭圆/抛物线/双曲线 & 三元二次型\\
+切线 / 极线 & $\vv p\T AX=0$；$(G,H;P,Q)=-1$；配极原理（对称性） & 对称双线性型，$A$-正交\\
+中心、直径、准线 & 中心 = $l_\infty$ 的极点；直径 = 无穷远点的极线；准线 = 焦点的极线 & \\
+自配极三角形 & 每边是对顶点的极线；内接四点形的对角三角形 & 合同对角化\\
+射影分类 & 5 类：按秩与 $|$符号差$|$；椭圆、双曲线、抛物线同类 & 惯性定理\\
+Steiner / Pascal & 曲线上看四定点交比为常数；内接六角形对边交点共线 & \\\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{intbox}{全章一张图：几何 = 变换群 + 不变量}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llll@{}}
+\toprule
+几何 & 变换（矩阵） & 典型不变量 & 二次曲线的分类数\\\midrule
+欧氏 & 正交 $\begin{psmallmatrix}Q&\vv b\\0&1\end{psmallmatrix}$ & 距离、角度 & 无穷多（含 $a,b$ 等参数）\\
+仿射 & $\begin{psmallmatrix}A_0&\vv b\\0&1\end{psmallmatrix}$ & 平行、分比 & 9 类（实）\\
+射影 & 任意可逆 $A$（差倍数） & 共线、交比 & 5 类（实）\\\bottomrule
+\end{tabular}
+\end{center}
+变换越多，能区分的图形越少：欧氏几何里大小不同的圆不同；仿射几何里所有椭圆相同；射影几何里椭圆、双曲线、抛物线都相同。
+\end{intbox}
+
+\begin{ckbox}{易错点清单}
+\begin{enumerate}
+\item 齐次坐标 $(0,0,0)$ 不代表任何点；坐标只确定到非零倍数，比较时看是否\key{成比例}。
+\item 交比的“系数比”公式要先把 $C,D$ \key{同时}用 $A,B$ 表示；$C,D$ 的倍数可以乱取，但 $A,B$ 的向量在两次表示中必须是\key{同一组}。
+\item 一般射影基底下，$x_3=0$ \key{不是}无穷远直线。
+\item 求射影变换要 \key{4 对}一般位置点；只给 3 对点时答案含 2 个自由参数（习题 7.5.2）。
+\item 点按 $A$ 变，线坐标按 $(A^{-1})\T$ 变（习题 7.5.3）；不变直线找 $A\T$ 的特征向量。
+\item 过五点的二次曲线：先检查是否有三点共线（习题 7.6.1 的退化答案）。
+\item 极线与切线同一个公式 $\vv p\T AX=0$，但 $P$ 在曲线外时它不是切线，而是切点弦。
+\end{enumerate}
+\end{ckbox}

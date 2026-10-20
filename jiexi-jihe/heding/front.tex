@@ -1,0 +1,35 @@
+\documentclass[11pt,a4paper,oneside,openany,fontset=none]{ctexbook}
+\input{style}
+\pagestyle{plain}
+\newcommand{\tocchap}[3]{\par\addvspace{8pt}\noindent{\sffamily\bfseries\color{mainblue}第 #1 章\quad #2\hfill #3}\par\addvspace{2pt}}
+\newcommand{\tocsec}[2]{\par\noindent\hspace*{2em}#1\leaders\hbox to 0.8em{\hss.\hss}\hfill\makebox[2em][r]{#2}\par}
+\begin{document}
+\pagenumbering{roman}
+\begin{titlepage}
+\centering
+\vspace*{0.22\textheight}
+{\sffamily\bfseries\huge 丘维声《解析几何》（第三版）\par}
+\vspace{1.6em}
+{\sffamily\bfseries\Large 知识点讲解与习题详解\par}
+\vspace{1.2em}
+{\sffamily\bfseries\large 合订本：第一章 — 第七章\par}
+\vspace{2.5em}
+{\color{mainblue}\rule{0.55\textwidth}{0.8pt}}\par\vspace{1.2em}
+{\small\begin{tabular}{@{}ll@{}}
+第 1 批 & 第一章\quad 几何空间的线性结构和度量结构\\
+第 2 批 & 第二章\quad 空间的平面和直线\\
+第 3 批 & 第三章\quad 常见曲面\\
+第 4 批 & 第四章\quad 坐标变换\\
+ & 第五章\quad 二次曲线方程的化简及其类型和性质\\
+第 5 批 & 第六章\quad 正交变换和仿射变换\\
+第 6 批 & 第七章\quad 射影平面和它的射影变换\\
+\end{tabular}}
+\vfill
+{\large 数形结合 · 高代联动 · 空间直觉\par}
+\vspace*{2cm}
+\end{titlepage}
+\setcounter{page}{2}
+{\centering\sffamily\bfseries\Huge\color{mainblue} 目\quad 录\par}
+\vspace{6pt}\noindent{\color{mainblue}\rule{\textwidth}{0.8pt}}\par\vspace{10pt}
+\input{toc_entries}
+\end{document}

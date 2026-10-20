@@ -1,0 +1,204 @@
+% ================= §7.2 射影平面上的对偶原理 =================
+\Needspace{12\baselineskip}
+\section{射影平面上的对偶原理}
+
+上一节看到：$\vv\eta\T\vv x=0$ 对“点坐标 $\vv x$”和“线坐标 $\vv\eta$”是对称的。于是点和线在射影平面上地位对等。
+
+\begin{defbox}{对偶命题}
+设 $\varphi(\text{点},\text{线})$ 是关于射影平面上一些点和直线的\key{关联关系}的命题。把其中的“点”都改成“线”、“线”都改成“点”，保持关联关系及其他表述不变，得到的命题 $\varphi(\text{线},\text{点})$ 称为原命题的\key{对偶命题}。
+\end{defbox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{\sffamily 原命题} & \textbf{\sffamily 对偶命题}\\\midrule
+(1) 三点共线 $\iff$ 它们的齐次坐标组成的 3 阶行列式为零 & (1)$'$ 三线共点 $\iff$ 它们的齐次坐标组成的 3 阶行列式为零\\
+(2) 若三点 $P_1,P_2,P_3$ 不共线，则三线 $P_1P_2,P_2P_3,P_3P_1$ 不共点 & (2)$'$ 若三线 $p_1,p_2,p_3$ 不共点，则三点 $p_1p_2,p_2p_3,p_3p_1$ 不共线\\
+(3) \key{Desargues 定理}：两个三角形对应顶点的连线共点 $\Rightarrow$ 对应边的交点共线 & (3)$'$ \key{Desargues 逆定理}：两个三角形对应边的交点共线 $\Rightarrow$ 对应顶点的连线共点\\
+(4) 直线（看成点列）的点方程是三元一次齐次方程 & (4)$'$ 点（看成线束）的线方程是三元一次齐次方程\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{mtbox}{对偶词典}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{@{}XXX@{}}
+点 $\leftrightarrow$ 线 & 共线 $\leftrightarrow$ 共点 & 两点的连线 $\leftrightarrow$ 两线的交点\\
+点列（一条线上的点） $\leftrightarrow$ 线束（过一点的线） & 三角形 $\leftrightarrow$ 三角形（自对偶） & 完备四点形 $\leftrightarrow$ 完备四边形\\
+点在曲线上 $\leftrightarrow$ 线与曲线相切（\S7.6 配极） & $\vv x=\lambda\vv a+\mu\vv b$ $\leftrightarrow$ $\vv\eta=\lambda\vv u+\mu\vv v$ & 行列式 $=0$ $\leftrightarrow$ 行列式 $=0$
+\end{tabularx}
+\end{mtbox}
+
+\begin{thmbox}{射影平面上的对偶原理}
+射影平面上，如果命题 $\varphi(\text{点},\text{线})$ 是定理，则它的对偶命题 $\varphi(\text{线},\text{点})$ 也是定理。
+\end{thmbox}
+
+\textbf{证明思路}：取坐标系，把 $\varphi(\text{点},\text{线})$ 的证明用齐次坐标写出来。在这个证明中把点的坐标都看作线的坐标、线的坐标都看作点的坐标——所有表示关联关系的方程 $\vv\eta\T\vv x=0$ 原封不动，仍然成立，而结论恰好变成了 $\varphi(\text{线},\text{点})$。\qed
+
+\begin{gdbox}{高代联动：对偶空间}
+点坐标是\key{列向量} $\vv x\in V=\R^3$，线坐标是\key{行向量} $\vv\eta\T\in V^*$（线性函数），“点在线上”就是 $\vv\eta\T(\vv x)=0$。$V$ 的 1 维子空间（点）$\leftrightarrow$ $V^*$ 的 2 维子空间（零化它的线性函数，即过它的线束）；$V$ 的 2 维子空间（线）$\leftrightarrow$ $V^*$ 的 1 维子空间。对偶原理就是 $V$ 与 $V^*$ 之间这个\key{反序}的一一对应（零化子 $U\mapsto U^\circ$）。
+\end{gdbox}
+
+\subsection*{Desargues（德沙格）定理}
+\begin{thmbox}{Desargues 定理}
+射影平面上，如果两个三角形 $ABC$ 与 $A'B'C'$ 的对应顶点的连线 $AA',BB',CC'$ 共点 $D$，那么它们的对应边的交点
+\[
+P=AB\cap A'B',\qquad Q=AC\cap A'C',\qquad R=BC\cap B'C'
+\]
+共线。由对偶原理，它的逆定理（对偶命题）也成立。
+\end{thmbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+  \coordinate (D) at (0,0);
+  \coordinate (A) at (2.33,1.18); \coordinate (B) at (2.98,-0.33); \coordinate (C) at (2.06,-1.24);
+  \coordinate (A') at (3.4,1.71); \coordinate (B') at (5.45,-0.6); \coordinate (C') at (4.93,-2.97);
+  \coordinate (P) at (intersection of A--B and A'--B');
+  \coordinate (Q) at (intersection of A--C and A'--C');
+  \coordinate (R) at (intersection of B--C and B'--C');
+  \draw[figgray,dashed] (D)--(A') (D)--(B') (D)--(C');
+  \fill[figblue!12] (A)--(B)--(C)--cycle; \fill[figred!12] (A')--(B')--(C')--cycle;
+  \draw[figblue,thick] (A)--(B)--(C)--cycle; \draw[figred,thick] (A')--(B')--(C')--cycle;
+  \draw[figblue!70,dotted,thick] (B)--(P) (C)--(Q) (C)--(R);
+  \draw[figred!70,dotted,thick] (B')--(P) (C')--(Q) (C')--(R);
+  \draw[figgreen,very thick] ($(P)!-0.12!(R)$)--($(P)!1.12!(R)$);
+  \foreach \p/\pos in {D/left,A/above left,B/below left,C/below left,A'/above,B'/right,C'/right}{\fill (\p) circle (1.6pt) node[\pos] {$\p$};}
+  \foreach \p in {P,Q,R}{\fill[figgreen] (\p) circle (2pt) node[above right,figgreen] {$\p$};}
+  \node[figgreen,rotate=-12,above] at ($(Q)!0.5!(R)+(0,0.12)$) {\small Desargues 轴};
+\end{tikzpicture}
+\caption{Desargues 定理：透视中心 $D$ $\Rightarrow$ 透视轴 $PQR$}
+\end{figure}
+
+\zheng 若某对对应顶点重合（如 $A=A'$），则 $P=Q=A$，结论显然。设对应顶点都不重合，各点齐次坐标记为小写黑体。$D$ 在 $AA',BB',CC'$ 上，故存在不全为零的数使
+\begin{equation}
+\vv d=\lambda\vv a+\lambda'\vv a'=\mu\vv b+\mu'\vv b'=\nu\vv c+\nu'\vv c'.
+\end{equation}
+移项（“把带撇的放一边”）：
+\[
+\vv p:=\lambda\vv a-\mu\vv b=-\lambda'\vv a'+\mu'\vv b',\quad
+\vv q:=-\lambda\vv a+\nu\vv c=\lambda'\vv a'-\nu'\vv c',\quad
+\vv r:=\mu\vv b-\nu\vv c=-\mu'\vv b'+\nu'\vv c'.
+\]
+$\vv p$ 既是 $\vv a,\vv b$ 的组合又是 $\vv a',\vv b'$ 的组合，所以它表示 $AB\cap A'B'=P$；同理 $\vv q$ 表示 $Q$，$\vv r$ 表示 $R$。而
+\[
+\vv p+\vv q+\vv r=\vv0,
+\]
+三个向量线性相关，故 $P,Q,R$ 共线。\qed
+
+\begin{intbox}{空间直觉：Desargues 是“空间里显然的事”的投影}
+如果两个三角形在空间中\key{两个不同平面} $\sigma,\sigma'$ 上，且 $AA',BB',CC'$ 交于 $D$：$AB$ 与 $A'B'$ 都在平面 $DAB$ 内，必相交，交点 $P$ 既在 $\sigma$ 上又在 $\sigma'$ 上——即在交线 $\sigma\cap\sigma'$ 上。$Q,R$ 同理，所以 $P,Q,R$ 都在 $\sigma\cap\sigma'$ 这条直线上。把整个图形投影到一个平面上，就是平面 Desargues 定理。上面的代数证明 $\vv p+\vv q+\vv r=\vv0$ 正是这个空间图形的“影子”。
+\end{intbox}
+
+% ---------------- 习题 7.2 ----------------
+\xiti{7.2}
+
+\begin{ex}{7.2.1}
+证明：射影平面上，若 $P_1,P_2,P_3$ 三点不共线，则 $P_1P_2,P_2P_3,P_3P_1$ 三线不共点。
+\end{ex}
+\zheng\textbf{方法一（关联性质）}：若三线共点 $Q$。$P_1P_2\neq P_2P_3$（否则三点共线），两条不同直线只有一个交点，而 $P_2$ 是它们的公共点，故 $Q=P_2$；同理由 $P_2P_3,P_3P_1$ 得 $Q=P_3$。于是 $P_2=P_3$，矛盾。
+
+\textbf{方法二（坐标，提示所说的“两个矩阵的关系”）}：设 $\Pi=(\vv p_1,\vv p_2,\vv p_3)$，$|\Pi|\neq0$。三条线的坐标
+\[
+\vv u_1=\vv p_2\times\vv p_3\ (P_2P_3),\quad \vv u_2=\vv p_3\times\vv p_1\ (P_3P_1),\quad \vv u_3=\vv p_1\times\vv p_2\ (P_1P_2).
+\]
+由混合积，$\vv u_i\T\vv p_j=\delta_{ij}|\Pi|$，即 $U\T\Pi=|\Pi|\,I$（$U=(\vv u_1,\vv u_2,\vv u_3)$）。取行列式：$|U|\cdot|\Pi|=|\Pi|^3$，所以
+\[
+|U|=|\Pi|^2\neq0,
+\]
+三线不共点。\qed
+
+\begin{gdbox}{高代}
+$U\T=|\Pi|\,\Pi^{-1}=\Pi^*$（伴随矩阵），$|\Pi^*|=|\Pi|^{n-1}=|\Pi|^2$。“三角形三边的坐标”就是“三顶点坐标矩阵的伴随”——这就是对偶的矩阵形式。
+\end{gdbox}
+
+\begin{ex}{7.2.2}
+设命题 $\varphi(\text{点},\text{线})$ 为：在射影平面上，$A,B,C$ 和 $A',B',C'$ 分别是直线 $l_1$ 和 $l_2$ 上的三个点，并且均与 $l_1$ 和 $l_2$ 的交点 $D$ 不重合。设 $AB'$ 与 $A'B$ 交于点 $P$，$BC'$ 与 $B'C$ 交于点 $Q$，$CA'$ 与 $C'A$ 交于点 $R$，则 $P,Q,R$ 三点共线。试写出这个命题的对偶命题 $\varphi(\text{线},\text{点})$。
+\end{ex}
+\jie 原命题就是 \key{Pappus 定理}（习题 7.4 第 5 题证明）。逐词对偶：“直线 $l_1,l_2$ 上的点”$\to$“过点 $P,P'$ 的线”；“与交点 $D$ 不重合”$\to$“与连线 $PP'$ 不重合”；“$AB'$ 与 $A'B$ 的交点”$\to$“$l_1\cap l_2'$ 与 $l_1'\cap l_2$ 的连线”；“共线”$\to$“共点”。
+
+\begin{thmbox}{对偶命题（Pappus 定理的对偶）}
+在射影平面上，$l_1,l_2,l_3$ 和 $l_1',l_2',l_3'$ 分别是过点 $P$ 和 $P'$ 的三条直线，并且均与直线 $PP'$ 不重合。设
+\[
+A=l_1\cap l_2',\ A'=l_1'\cap l_2,\quad B=l_2\cap l_3',\ B'=l_2'\cap l_3,\quad C=l_3\cap l_1',\ C'=l_3'\cap l_1,
+\]
+则 $AA',\ BB',\ CC'$ 三线共点。
+\end{thmbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \coordinate (P) at (0,0); \coordinate (P') at (8,-0.76);
+  \coordinate (A) at (4.63,2.87); \coordinate (A') at (2.37,2.07);
+  \coordinate (B) at (5.36,4.68); \coordinate (B') at (2.29,5.39);
+  \coordinate (C) at (1.14,2.69); \coordinate (C') at (5.86,3.64);
+  \coordinate (O) at (intersection of A--A' and B--B');
+  \foreach \t/\n in {31.8/1,41.1/2,66.9/3}{\draw[figblue] (P)--++(\t:{\n==1?7.2:(\n==2?7.6:6.3)}) node[right,figblue] {\small $l_\n$};}
+  \foreach \t/\n in {153.3/1,132.9/2,115.9/3}{\draw[figred] (P')--++(\t:{\n==1?8.3:(\n==2?8.1:7.0)}) node[left,figred] {\small $l'_\n$};}
+  \draw[figgray,dashed] (P)--(P');
+  \draw[figgreen,thick] ($(A')!-0.25!(O)$)--($(A')!1.08!(O)$);
+  \draw[figgreen,thick] ($(B')!-0.08!(O)$)--($(B')!1.08!(O)$);
+  \draw[figgreen,thick] ($(C)!-0.08!(O)$)--($(C)!1.08!(O)$);
+  \foreach \p/\pos in {P/below left,P'/below right,A/below,A'/below left,B/above,B'/above left,C/left,C'/below right}{\fill (\p) circle (1.6pt) node[\pos] {\small $\p$};}
+  \fill[keyred] (O) circle (2.2pt) node[above=3pt,keyred] {\small 共点};
+\end{tikzpicture}
+\caption{Pappus 定理的对偶：两个线束 $P,P'$ 交出的六点，$AA',BB',CC'$ 共点}
+\end{figure}
+
+\begin{ex}{7.2.3}
+设射影平面上直线 $l_i$ 的齐次坐标为 $(\eta_{i1},\eta_{i2},\eta_{i3})\T$ $(i=1,2,3)$，并且 $l_1\neq l_2$。证明：$l_1,l_2,l_3$ 共点的充分必要条件是，存在不全为零的实数 $\lambda$ 和 $\mu$，使得 $\eta_{3j}=\lambda\eta_{1j}+\mu\eta_{2j}$，$j=1,2,3$。
+\end{ex}
+\zheng 记 $\vv\eta_i=(\eta_{i1},\eta_{i2},\eta_{i3})\T$。
+
+\textbf{充分性}：设 $\vv\eta_3=\lambda\vv\eta_1+\mu\vv\eta_2$。$l_1,l_2$ 的交点 $X$ 满足 $\vv\eta_1\T\vv x=\vv\eta_2\T\vv x=0$，于是 $\vv\eta_3\T\vv x=\lambda\cdot0+\mu\cdot0=0$，$X$ 也在 $l_3$ 上。
+
+\textbf{必要性}：设三线共点 $X(\vv x)$。则 $\vv\eta_1,\vv\eta_2,\vv\eta_3$ 都属于
+\[
+W=\{\vv u\in\R^3:\ \vv u\T\vv x=0\},
+\]
+它是一个齐次线性方程的解空间，$\dim W=3-1=2$。$l_1\neq l_2$ 说明 $\vv\eta_1,\vv\eta_2$ 线性无关，因而是 $W$ 的一个基，所以 $\vv\eta_3=\lambda\vv\eta_1+\mu\vv\eta_2$；又 $\vv\eta_3\neq\vv0$，故 $\lambda,\mu$ 不全为零。\qed
+
+\begin{intbox}{直觉}
+这正是“点 $X$ 在直线 $AB$ 上 $\iff \vv x=\lambda\vv a+\mu\vv b$”（直线的参数方程）的对偶：\key{过一点的线束} $=\{\lambda\vv\eta_1+\mu\vv\eta_2\}$。在仿射图形里，$\lambda(A_1x+B_1y+C_1)+\mu(A_2x+B_2y+C_2)=0$ 就是第二章熟悉的“过两直线交点的直线系”（两直线平行时是平行线系——交于无穷远点）。
+\end{intbox}
+
+\begin{ex}{7.2.4$^*$}
+设 $M$ 是欧氏平面 $\pi_0$ 上的一点，$l_1$ 和 $l_2$ 是 $\pi_0$ 上的两条直线，它们相交于一个不可到达的点 $N$（非常远或被物体阻隔）。试用直尺作经过点 $M$ 和 $N$ 的直线。
+\end{ex}
+\fenxi 想让“$l_1,l_2$ 和所求直线 $MM'$ 共点于 $N$”——这是“对应顶点连线共点”，用 \key{Desargues 逆定理}：只要造一个三角形 $A'B'M'$ 与 $\triangle ABM$ 的\key{对应边交点共线}，其中 $A,A'\in l_1$，$B,B'\in l_2$，那么 $AA'=l_1$、$BB'=l_2$、$MM'$ 三线共点。
+
+\jie\textbf{作法}：
+\begin{enumerate}
+\item 在 $l_1,l_2$ 外取一点 $P$，过 $P$ 作两条直线，分别交 $l_1,l_2$ 于 $A,B$ 和 $A',B'$（于是 $AB\cap A'B'=P$）；
+\item 过 $P$ 再作一条直线 $s$（作为“透视轴”），设 $AM$ 交 $s$ 于 $X$，$BM$ 交 $s$ 于 $Y$；
+\item 连 $A'X$、$B'Y$，交于 $M'$；
+\item 直线 $MM'$ 即为所求。
+\end{enumerate}
+\textbf{理由}：$\triangle ABM$ 与 $\triangle A'B'M'$ 的对应边交点 $AB\cap A'B'=P$，$AM\cap A'M'=X$，$BM\cap B'M'=Y$ 都在 $s$ 上（共线）。由 Desargues 逆定理，对应顶点连线 $AA'=l_1$、$BB'=l_2$、$MM'$ 共点，即 $MM'$ 过 $N$。\qed
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \begin{scope}
+  \clip (-0.4,-2.1) rectangle (7.6,4.4);
+  \coordinate (N) at (14.02,2.89);
+  \coordinate (M) at (1.9,2.18); \coordinate (P) at (3.23,-0.67);
+  \coordinate (A) at (3.03,0.63); \coordinate (B) at (2.59,3.47);
+  \coordinate (A') at (4.49,0.93); \coordinate (B') at (6.35,3.28);
+  \coordinate (X) at (4.72,-1.69); \coordinate (Y) at (1.15,0.76);
+  \coordinate (M') at (intersection of A'--X and B'--Y);
+  \draw[thick] (0,0)--(N); \draw[thick] (0,3.6)--(N);
+  \draw[figgray] ($(P)!-0.15!(B)$)--($(P)!1.12!(B)$);
+  \draw[figgray] ($(P)!-0.15!(B')$)--($(P)!1.1!(B')$);
+  \draw[figor,thick] ($(Y)!-0.25!(X)$)--($(Y)!1.15!(X)$);
+  \draw[figblue] (A)--(M)--(B) (A)--(X) (B)--(Y);
+  \draw[figred] (A')--(M')--(B') (A')--(X) (B')--(Y);
+  \draw[figgreen,very thick,dashed] (M)--($(M)!3.2!(M')$);
+  \foreach \p/\pos in {M/above left,P/below left,A/below right,B/above,A'/below right,B'/above,X/below,Y/left,M'/above}{\fill (\p) circle (1.6pt) node[\pos] {\small $\p$};}
+  \end{scope}
+  \node at (7.85,1.7) {\small $l_1$}; \node at (7.85,3.85) {\small $l_2$};
+  \node[figor] at (0.4,1.55) {\small $s$};
+  \draw[->,keyred,thick] (7.6,2.6)--(8.5,2.75) node[right,keyred,align=left] {\small 交点 $N$\\\small 在纸外};
+\end{tikzpicture}
+\caption{用 Desargues 逆定理作过不可到达点 $N$ 的直线（绿色虚线）}
+\end{figure}

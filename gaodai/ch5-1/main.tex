@@ -1,0 +1,336 @@
+\documentclass[11pt,a4paper,oneside,openany,fontset=none]{ctexbook}
+\input{style}
+\hypersetup{pdftitle={高等代数第五章§1 二次型及其矩阵表示 · 图解}}
+\fancyhead[R]{\small 第五章\quad 二次型\quad §1 二次型及其矩阵表示}
+\renewcommand{\thefigure}{\arabic{figure}}
+\begin{document}
+\pagestyle{fancy}
+
+\begin{center}
+{\sffamily\bfseries\LARGE\color{mainblue} 第五章\ 二次型\quad §1\ 二次型及其矩阵表示\par}
+\vspace{4pt}
+{\sffamily\large 图解 · 与解析几何联动\par}
+\vspace{4pt}{\color{mainblue}\rule{\textwidth}{0.8pt}}
+\end{center}
+
+\begin{intbox}{这一节一句话}
+二次型 $f(x_1,\dots,x_n)=X\T AX$（$A$ 对称）就是解析几何里“二次曲线 / 曲面方程的二次部分”。
+\key{非退化线性替换 $X=CY$ = 换一个坐标系}，二次型的矩阵随之变成 $C\T AC$（\key{合同}）。
+化标准形 = 找一个坐标系，让方程里\key{没有交叉项}——几何上就是让坐标轴沿着\key{一对共轭方向}（转轴时恰好是\key{对称轴}）。
+\end{intbox}
+
+\begin{gdbox}{联动对照表}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{\sffamily 高等代数 第五章} & \textbf{\sffamily 解析几何（合订本）}\\\midrule
+二次型 $f=X\T AX$，$x_ix_j$ 的系数写成 $2a_{ij}$ & 二次曲线 $a_{11}x^2+2a_{12}xy+a_{22}y^2+\cdots$ 的二次部分 $\varphi(x,y)$（第五章）\\
+线性替换 $X=CY$，$|C|\ne0$ & 仿射坐标变换 $\alpha=A\alpha'$（第四章 \S4.1）\\
+$C$ 为正交矩阵 & 直角坐标变换、转轴（第四章 \S4.3）\\
+$A\mapsto C\T AC$（合同） & 换坐标后二次曲线矩阵变为 $A\T MA$（第四章总结）\\
+化标准形（只剩平方项） & 转轴消去 $xy$ 项（第五章 \S5.1）；坐标轴取共轭直径（\S5.4）\\
+二元 / 三元二次型的正负性 & 椭圆型 / 双曲型 / 抛物型；椭球面、双曲面（第三章）\\
+三元二次型 $=0$ & 射影平面上的二次曲线（第七章 \S7.6）\\
+\bottomrule
+\end{tabularx}
+\end{gdbox}
+
+% ============================================================
+\section*{一、课本开头的例子：转轴把交叉项转没了}
+\addcontentsline{toc}{section}{一、转轴消去交叉项}
+
+以 $5x^2+4xy+2y^2=6$ 为例（$a=5,\ b=2,\ c=2,\ f=6$）。矩阵 $A=\begin{psmallmatrix}5&2\\2&2\end{psmallmatrix}$，特征值 $6,1$，单位特征向量 $\frac1{\sqrt5}(2,1)\T,\ \frac1{\sqrt5}(-1,2)\T$。取 $\tan\theta=\frac12$（$\theta\approx26.57^\circ$）作转轴（课本式 (2)），方程变成 $6x'^2+y'^2=6$，即 $x'^2+\dfrac{y'^2}{6}=1$。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.05]
+  % ---- 左图：原坐标系 ----
+  \begin{scope}
+    \draw[step=0.5,figgray!25] (-2.6,-2.6) grid (2.6,2.6);
+    \draw[->,thick] (-2.7,0)--(2.8,0) node[right] {$x$};
+    \draw[->,thick] (0,-2.7)--(0,2.8) node[above] {$y$};
+    \fill[defblue!15,rotate=26.565] (0,0) ellipse (1 and 2.449);
+    \draw[defblue,very thick,rotate=26.565] (0,0) ellipse (1 and 2.449);
+    \node[defblue,fill=white,inner sep=1pt] at (1.25,-2.25) {\small $5x^2+4xy+2y^2=6$};
+    \node[align=center] at (0,-3.25) {\small 旧坐标系：方程有交叉项 $4xy$\\[-1pt]\small 椭圆是“歪”的};
+  \end{scope}
+  \draw[->,very thick,figor] (3.1,0)--(4.2,0) node[midway,above,figor] {\small 转轴 $\theta$};
+  % ---- 右图：新坐标系 ----
+  \begin{scope}[xshift=7.3cm]
+    \draw[step=0.5,figgray!25] (-2.6,-2.6) grid (2.6,2.6);
+    \draw[->,figgray] (-2.7,0)--(2.8,0) node[right] {\scriptsize $x$};
+    \draw[->,figgray] (0,-2.7)--(0,2.8) node[above] {\scriptsize $y$};
+    \begin{scope}[rotate=26.565]
+      \draw[thmred!25] (-2.4,-2.4) grid[step=0.5] (2.4,2.4);
+      \fill[defblue!15] (0,0) ellipse (1 and 2.449);
+      \draw[defblue,very thick] (0,0) ellipse (1 and 2.449);
+      \draw[->,thick,thmred] (-2.6,0)--(2.7,0) node[right] {$x'$};
+      \draw[->,thick,thmred] (0,-2.7)--(0,2.8) node[above] {$y'$};
+      \draw[thmred,->] (0,0)--(1,0); \draw[thmred,->] (0,0)--(0,1);
+      \fill[keyred] (1,0) circle (1.5pt) node[below right=-1pt] {\scriptsize $(1,0)$};
+      \fill[keyred] (0,2.449) circle (1.5pt) node[left] {\scriptsize $(0,\sqrt6)$};
+    \end{scope}
+    \draw[figor,thick] (0.9,0) arc (0:26.565:0.9); \node[figor] at (1.15,0.25) {\scriptsize $\theta$};
+    \node[defblue,fill=white,inner sep=1pt] at (1.35,-2.25) {\small $x'^2+\frac{y'^2}{6}=1$};
+    \node[align=center] at (0,-3.25) {\small 新坐标轴沿对称轴（特征向量）\\[-1pt]\small 方程只剩平方项};
+  \end{scope}
+\end{tikzpicture}
+\caption{同一个椭圆，换个坐标系方程就变简单：$x'$ 轴沿特征向量 $(2,1)$（特征值 6），$y'$ 轴沿 $(-1,2)$（特征值 1）}
+\end{figure}
+
+\begin{thmbox}{代数上发生了什么}
+转轴就是线性替换 $X=CY$，$C=\begin{psmallmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{psmallmatrix}=\frac1{\sqrt5}\begin{psmallmatrix}2&-1\\1&2\end{psmallmatrix}$（正交矩阵，$|C|=1$）。代入：
+\[
+f=X\T AX=(CY)\T A(CY)=Y\T(C\T AC)Y,\qquad C\T AC=\begin{pmatrix}6&0\\0&1\end{pmatrix}.
+\]
+\ji 新矩阵 $=C\T AC$——这就是本节要引入的\key{合同}。$C$ 正交时 $C\T=C^{-1}$，合同 = 相似，所以对角线上恰是特征值（第九章）。
+\end{thmbox}
+
+% ============================================================
+\section*{二、线性替换 $X=CY$ = 换一套坐标网格}
+\addcontentsline{toc}{section}{二、线性替换就是换坐标网格}
+
+课本定义 1 的关系式 (4) 写成矩阵就是 $X=CY$。\key{读法}：点不动，$Y$ 是同一点在新坐标系里的坐标；$C$ 的\key{第 $j$ 列} = 第 $j$ 个新基向量在旧坐标系里的坐标（解析几何第四章“过渡矩阵”）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  % 新坐标的方格：Y 平面
+  \begin{scope}
+    \draw[defblue!35] (-2,-2) grid (2,2);
+    \fill[defblue!20] (0,0) rectangle (1,1);
+    \draw[->,thick] (-2.3,0)--(2.4,0) node[right] {$y_1$};
+    \draw[->,thick] (0,-2.3)--(0,2.4) node[above] {$y_2$};
+    \draw[->,very thick,thmred] (0,0)--(1,0) node[below] {\scriptsize $\vv e_1$};
+    \draw[->,very thick,figgreen] (0,0)--(0,1) node[left] {\scriptsize $\vv e_2$};
+    \fill[figpur] (1,1) circle (1.8pt) node[above right=-1pt,figpur] {\scriptsize $Y=(1,1)$};
+    \node at (0,-2.9) {\small 新坐标 $Y$：标准方格};
+  \end{scope}
+  \draw[->,very thick,figor] (2.7,0.3)--(3.9,0.3) node[midway,above,figor] {\small $X=CY$};
+  % X 平面中的新网格
+  \begin{scope}[xshift=6.9cm,cm={1.2,0.4,-0.5,1,(0,0)}]
+    \draw[defblue!35] (-2,-2) grid (2,2);
+    \fill[defblue!20] (0,0) rectangle (1,1);
+  \end{scope}
+  \begin{scope}[xshift=6.9cm]
+    \draw[->,thick,figgray] (-2.9,0)--(3.1,0) node[right,black] {$x_1$};
+    \draw[->,thick,figgray] (0,-2.6)--(0,2.7) node[above,black] {$x_2$};
+    \draw[->,very thick,thmred] (0,0)--(1.2,0.4) node[below right=-2pt] {\scriptsize $C\vv e_1=\begin{psmallmatrix}1.2\\0.4\end{psmallmatrix}$};
+    \draw[->,very thick,figgreen] (0,0)--(-0.5,1) node[above left=-2pt] {\scriptsize $C\vv e_2=\begin{psmallmatrix}-0.5\\1\end{psmallmatrix}$};
+    \fill[figpur] (0.7,1.4) circle (1.8pt) node[right,figpur] {\scriptsize $X=(0.7,1.4)$};
+    \node at (0,-2.9) {\small 旧坐标 $X$：新方格变成平行四边形网格};
+  \end{scope}
+\end{tikzpicture}
+\caption{$C=\begin{psmallmatrix}1.2&-0.5\\0.4&1\end{psmallmatrix}$：$C$ 的两列就是两条新坐标轴的方向；阴影平行四边形的面积 $=|\det C|=1.4$}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+  \begin{scope}[cm={1,0.5,2,1,(0,0)}]
+    \foreach \t in {-1.5,-1,...,1.5}{\draw[thmred!50] (\t,-1.5)--(\t,1.5); \draw[figgreen!50] (-1.5,\t)--(1.5,\t);}
+  \end{scope}
+  \draw[->,figgray] (-4.6,0)--(4.8,0) node[right,black] {$x_1$};
+  \draw[->,figgray] (0,-2.4)--(0,2.5) node[above,black] {$x_2$};
+  \draw[keyred,very thick] (-4.5,-2.25)--(4.5,2.25);
+  \node[align=left,right] at (5.9,0.6) {\small $C=\begin{psmallmatrix}1&2\\0.5&1\end{psmallmatrix}$，$|C|=0$：\\\small 整张网格被\key{压扁到一条直线}上，\\\small 不同的 $Y$ 对应同一个 $X$，\\\small 无法“换回去”——这就是\key{退化}替换。};
+\end{tikzpicture}
+\caption{为什么要求“非退化”：$|C|=0$ 时两列共线，坐标系塌缩，信息丢失}
+\end{figure}
+
+\begin{ckbox}{对应课本的概念}
+\begin{itemize}
+\item \textbf{非退化线性替换}（$|C|\neq0$）$\iff$ 新的“坐标网格”真的铺满整个平面 $\iff$ 可以换回去：$Y=C^{-1}X$。
+\item \textbf{替换的乘积}：先 $X=C_1Y$，再 $Y=C_2Z$，得 $X=(C_1C_2)Z$——连续换两次坐标系。
+\item 解析几何第四章用的正是这套语言：仿射坐标变换 $\alpha=A\alpha'+\alpha_0$，过渡矩阵 $A$ 的列是新基向量的旧坐标。二次型只关心齐次部分，所以没有平移 $\alpha_0$。
+\end{itemize}
+\end{ckbox}
+
+% ============================================================
+\section*{三、二次型怎样“装进”对称矩阵}
+\addcontentsline{toc}{section}{三、二次型的矩阵表示}
+
+课本特意把 $x_ix_j\ (i<j)$ 的系数写成 $2a_{ij}$：这样令 $a_{ji}=a_{ij}$，交叉项\key{对半分}到矩阵中两个对称位置，$f=X\T AX$ 且 $A$ \key{对称、唯一}。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \node[anchor=west] at (-0.6,3.0) {$f={\color{figblue}x_1^2}+{\color{figred}x_1x_2}+{\color{figgreen}3x_1x_3}+{\color{figblue}2x_2^2}+{\color{figpur}4x_2x_3}+{\color{figblue}3x_3^2}$};
+  \node[anchor=west,font=\small] at (-0.6,2.45) {交叉项系数对半分：${\color{figred}1=2\cdot\tfrac12}$，${\color{figgreen}3=2\cdot\tfrac32}$，${\color{figpur}4=2\cdot2}$};
+  \begin{scope}[xshift=3.2cm,yshift=-2.2cm]
+    \foreach \i/\r in {0/x_1,1/x_2,2/x_3}{\node at (-0.6,{2-\i+0.5}) {$\r$}; \node at ({\i+0.5},3.45) {$\r$};}
+    \fill[figblue!20] (0,2) rectangle (1,3); \fill[figblue!20] (1,1) rectangle (2,2); \fill[figblue!20] (2,0) rectangle (3,1);
+    \fill[figred!20] (1,2) rectangle (2,3); \fill[figred!20] (0,1) rectangle (1,2);
+    \fill[figgreen!20] (2,2) rectangle (3,3); \fill[figgreen!20] (0,0) rectangle (1,1);
+    \fill[figpur!20] (2,1) rectangle (3,2); \fill[figpur!20] (1,0) rectangle (2,1);
+    \draw[thick] (0,0) grid (3,3);
+    \node at (0.5,2.5) {$1$}; \node at (1.5,2.5) {$\frac12$}; \node at (2.5,2.5) {$\frac32$};
+    \node at (0.5,1.5) {$\frac12$}; \node at (1.5,1.5) {$2$}; \node at (2.5,1.5) {$2$};
+    \node at (0.5,0.5) {$\frac32$}; \node at (1.5,0.5) {$2$}; \node at (2.5,0.5) {$3$};
+    \draw[dashed,figgray] (-0.15,3.15)--(3.15,-0.15);
+    \node[left] at (-1.0,1.5) {$A=$};
+    \fill[figblue!40] (3.6,2.55) rectangle +(0.22,0.22); \node[right,font=\small] at (3.9,2.66) {对角线：平方项系数};
+    \fill[figred!40] (3.6,1.85) rectangle +(0.22,0.22); \fill[figgreen!40] (3.85,1.85) rectangle +(0.22,0.22); \fill[figpur!40] (4.1,1.85) rectangle +(0.22,0.22);
+    \node[right,font=\small,align=left] at (4.4,1.75) {交叉项系数\key{对半}，放在\\关于对角线对称的两格};
+    \node[right,font=\small] at (3.6,0.8) {沿虚线对折完全重合：$A\T=A$};
+  \end{scope}
+\end{tikzpicture}
+\caption{课本里的例子 $x_1^2+x_1x_2+3x_1x_3+2x_2^2+4x_2x_3+3x_3^2$ 的矩阵}
+\end{figure}
+
+\begin{thmbox}{为什么 $X\T AX$ 恰好还原 $f$}
+$X\T AX=\sum_{i,j}a_{ij}x_ix_j$：对角格给出 $a_{ii}x_i^2$；一对对称格 $(i,j),(j,i)$ 合起来给出 $a_{ij}x_ix_j+a_{ji}x_jx_i=2a_{ij}x_ix_j$。\\
+\ji 若不要求对称，$\begin{psmallmatrix}1&1\\0&2\end{psmallmatrix}$ 和 $\begin{psmallmatrix}1&0\\1&2\end{psmallmatrix}$ 都给出 $x_1^2+x_1x_2+2x_2^2$——矩阵不唯一。规定对称后，二次型与对称矩阵\key{一一对应}。
+\end{thmbox}
+
+\begin{gdbox}{联动：解析几何里早就这样写了}
+解析几何第五章把二次曲线写成 $a_{11}x^2+2a_{12}xy+a_{22}y^2+2a_1x+2a_2y+a_0=0$，同样用“$2a_{12}$”。它的二次部分 $\varphi(x,y)=(x,y)\begin{psmallmatrix}a_{11}&a_{12}\\a_{12}&a_{22}\end{psmallmatrix}\begin{psmallmatrix}x\\y\end{psmallmatrix}$ 就是一个二元二次型；整个方程齐次化后 $(x,y,1)P(x,y,1)\T$ 是一个\key{三元}二次型（第七章 \S7.6 的 $X\T AX=0$）。
+\end{gdbox}
+
+% ============================================================
+\section*{四、合同：同一条曲线，两种坐标，两个矩阵}
+\addcontentsline{toc}{section}{四、合同与共轭方向}
+
+化标准形不一定要转轴。对图 1 的二次型\key{配方}（本章 \S2 的方法）：
+\[
+5x^2+4xy+2y^2=5\Big(x+\tfrac25y\Big)^2+\tfrac65y^2 .
+\]
+令 $y_1=x+\frac25y,\ y_2=y$，即 $X=CY$，$C=\begin{psmallmatrix}1&-\frac25\\0&1\end{psmallmatrix}$，得 $f=5y_1^2+\frac65y_2^2$，$C\T AC=\operatorname{diag}(5,\frac65)$。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \begin{scope}
+    \clip (-2.7,-2.7) rectangle (2.7,2.7);
+    \foreach \c in {-3,-2.5,...,3}{\draw[figgreen!35] (-3,\c)--(3,\c);}
+    \foreach \c in {-3,-2.5,...,3}{\draw[thmred!35] ({\c+1.2},-3)--({\c-1.2},3);}
+  \end{scope}
+  \fill[defblue!15,rotate=26.565] (0,0) ellipse (1 and 2.449);
+  \draw[defblue,very thick,rotate=26.565] (0,0) ellipse (1 and 2.449);
+  \draw[->,thick,thmred] (-2.7,0)--(2.8,0) node[right] {$y_1$ 轴（$y_2=0$）};
+  \draw[->,thick,figgreen!70!black] (1.08,-2.7)--(-1.12,2.8) node[above] {$y_2$ 轴（$y_1=0$）};
+  \fill[keyred] (1.095,0) circle (1.6pt); \fill[keyred] (-1.095,0) circle (1.6pt);
+  \draw[keyred,dashed,thick] ($(1.095,0)+(0.6,-1.5)$)--($(1.095,0)+(-0.6,1.5)$);
+  \draw[keyred,dashed,thick] ($(-1.095,0)+(0.6,-1.5)$)--($(-1.095,0)+(-0.6,1.5)$);
+  \node[keyred,align=left,right] at (2.8,1.6) {\small 在 $y_1$ 轴与椭圆的交点处，\\\small 切线平行于 $y_2$ 轴};
+  \node[defblue,fill=white,inner sep=1pt] at (-1.75,-2.35) {\small $5y_1^2+\frac65y_2^2=6$};
+\end{tikzpicture}
+\caption{斜坐标系（红、绿网格）里同一个椭圆的方程也没有交叉项。$y_1$ 轴与 $y_2$ 轴不垂直，但它们是椭圆的\key{一对共轭直径}}
+\end{figure}
+
+\begin{thmbox}{几何解释：标准形 = 坐标轴沿一对共轭方向}
+$y_1$ 轴方向 $\vv u=(1,0)\T$，$y_2$ 轴方向 $\vv v=(-\frac25,1)\T$（$C$ 的两列）。它们满足
+\[
+\vv u\T A\vv v=(1,0)\begin{pmatrix}5&2\\2&2\end{pmatrix}\begin{pmatrix}-2/5\\1\end{pmatrix}=0,
+\]
+即 \key{$C\T AC$ 的非对角元 $=$ 两列关于 $A$ 的“内积” $=0$}。在解析几何第五章 \S5.4 的语言里，这正是“\key{两直径互相共轭}”：平行于 $y_2$ 轴的弦，中点都在 $y_1$ 轴上，反之亦然。\\[2pt]
+\textbf{两种化法的对比}：
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & 转轴（图 1） & 配方（图 5）\\\midrule
+$C$ & 正交矩阵 & 一般可逆矩阵\\
+新坐标轴 & 互相垂直的共轭方向 = 对称轴 & 一般的共轭方向\\
+标准形 & $6y_1^2+y_2^2$（系数是特征值） & $5y_1^2+\frac65y_2^2$\\\bottomrule
+\end{tabular}
+\end{center}
+标准形\key{不唯一}，但正、负平方项的个数（这里都是 2 正 0 负）不变——这就是 \S3 的\key{惯性定理}；再把系数缩放成 1，椭圆在适当坐标下就是单位圆（解析几何第六章：椭圆仿射等价于圆）。
+\end{thmbox}
+
+% ============================================================
+\section*{五、二元二次型的“地形图”}
+\addcontentsline{toc}{section}{五、二元二次型的三种形状}
+
+把 $z=f(x,y)$ 画成曲面，等高线 $f=c$ 就是解析几何里的二次曲线。三种标准形对应三种地形：
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[name=p1,width=5.6cm,height=5.4cm,view={35}{30},axis lines=none,
+  domain=0:1.6,y domain=0:360,samples=18,samples y=36,z buffer=sort,colormap/cool]
+  \addplot3[surf,shader=faceted,opacity=0.85,draw opacity=0.25] ({x*cos(y)},{x*sin(y)},{x^2});
+  \foreach \r in {0.6,1.0,1.4}{\addplot3[domain=0:360,samples=60,samples y=1,z buffer=none,figred,thick] ({\r*cos(x)},{\r*sin(x)},{-1.2});}
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]p1.south) {\small $z=x^2+y^2$\\\small \key{正定}：碗\\\small 等高线：椭圆（圆）};
+\begin{axis}[name=p2,at={(p1.east)},anchor=west,xshift=0.2cm,width=5.6cm,height=5.4cm,view={35}{30},axis lines=none,
+  domain=-1.3:1.3,y domain=-1.3:1.3,samples=20,z buffer=sort,colormap/hot2]
+  \addplot3[surf,shader=faceted,opacity=0.85,draw opacity=0.25] {x^2-y^2};
+  \foreach \c in {0.4,1.0}{
+    \addplot3[domain=-0.9:0.9,samples=30,samples y=1,z buffer=none,figred,thick] ({sqrt(\c)*cosh(x)},{sqrt(\c)*sinh(x)},{-1.7});
+    \addplot3[domain=-0.9:0.9,samples=30,samples y=1,z buffer=none,figred,thick] ({-sqrt(\c)*cosh(x)},{sqrt(\c)*sinh(x)},{-1.7});
+    \addplot3[domain=-0.9:0.9,samples=30,samples y=1,z buffer=none,figblue,thick] ({sqrt(\c)*sinh(x)},{sqrt(\c)*cosh(x)},{-1.7});
+    \addplot3[domain=-0.9:0.9,samples=30,samples y=1,z buffer=none,figblue,thick] ({sqrt(\c)*sinh(x)},{-sqrt(\c)*cosh(x)},{-1.7});}
+  \addplot3[domain=-1.3:1.3,samples=2,samples y=1,z buffer=none,black] ({x},{x},{-1.7});
+  \addplot3[domain=-1.3:1.3,samples=2,samples y=1,z buffer=none,black] ({x},{-x},{-1.7});
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]p2.south) {\small $z=x^2-y^2$\\\small \key{不定}：马鞍\\\small 等高线：双曲线};
+\begin{axis}[name=p3,at={(p2.east)},anchor=west,xshift=0.2cm,width=5.6cm,height=5.4cm,view={35}{30},axis lines=none,
+  domain=-1.3:1.3,y domain=-1.5:1.5,samples=20,z buffer=sort,colormap/greenyellow]
+  \addplot3[surf,shader=faceted,opacity=0.85,draw opacity=0.25] {x^2};
+  \foreach \c in {0.5,1.0}{
+    \addplot3[domain=-1.5:1.5,samples=2,samples y=1,z buffer=none,figred,thick] ({\c},{x},{-0.8});
+    \addplot3[domain=-1.5:1.5,samples=2,samples y=1,z buffer=none,figred,thick] ({-\c},{x},{-0.8});}
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]p3.south) {\small $z=x^2$\\\small \key{半正定（退化）}：槽\\\small 等高线：平行直线};
+\end{tikzpicture}
+\caption{二元二次型的三种基本形状（红、蓝曲线是投影到底面的等高线 $f=c$）}
+\end{figure}
+
+\begin{gdbox}{联动：解析几何第五章的三种“型”}
+二次曲线二次部分 $\varphi$ 的矩阵 $A$ 的行列式 $I_2=|A|$：
+$I_2>0$（$\varphi$ 正定或负定）——\key{椭圆型}；$I_2<0$（$\varphi$ 不定）——\key{双曲型}；$I_2=0$（$\varphi$ 退化）——\key{抛物型}。
+例如图 1 的 $5x^2+4xy+2y^2$：$I_2=6>0$，碗形，所以等高线是椭圆。渐近方向（$\varphi(\mu,\nu)=0$ 的方向）就是马鞍面上“高度为 0”的两条直线。
+\end{gdbox}
+
+% ============================================================
+\section*{六、三元二次型 $=1$：二次曲面}
+\addcontentsline{toc}{section}{六、三元二次型与二次曲面}
+
+三元二次型化成标准形后，$f=1$ 只有几种样子——正、负平方项的个数决定一切（惯性定理的几何意义）：
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[name=q1,width=4.9cm,height=5.2cm,view={30}{20},axis lines=none,unit vector ratio=1 1 1,
+  domain=0:360,y domain=-90:90,samples=24,samples y=14,z buffer=sort,colormap/cool]
+  \addplot3[surf,shader=faceted,opacity=0.8,draw opacity=0.25] ({1.4*cos(x)*cos(y)},{cos(y)*sin(x)},{0.8*sin(y)});
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]q1.south) {\small $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$\\\small 三正\\\small 椭球面};
+\begin{axis}[name=q2,at={(q1.east)},anchor=west,xshift=0.1cm,width=4.9cm,height=5.2cm,view={30}{20},axis lines=none,unit vector ratio=1 1 1,
+  domain=0:360,y domain=-1.2:1.2,samples=28,samples y=10,z buffer=sort,colormap/hot2]
+  \addplot3[surf,shader=faceted,opacity=0.8,draw opacity=0.25] ({cosh(y)*cos(x)},{cosh(y)*sin(x)},{sinh(y)});
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]q2.south) {\small $x^2+y^2-z^2=1$\\\small 两正一负\\\small 单叶双曲面};
+\begin{axis}[name=q3,at={(q2.east)},anchor=west,xshift=0.1cm,width=4.9cm,height=5.2cm,view={30}{20},axis lines=none,unit vector ratio=1 1 1,
+  domain=0:360,y domain=0:1.2,samples=28,samples y=10,z buffer=sort,colormap/greenyellow]
+  \addplot3[surf,shader=faceted,opacity=0.8,draw opacity=0.25] ({sinh(y)*cos(x)},{sinh(y)*sin(x)},{cosh(y)});
+  \addplot3[surf,shader=faceted,opacity=0.8,draw opacity=0.25] ({sinh(y)*cos(x)},{sinh(y)*sin(x)},{-cosh(y)});
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]q3.south) {\small $z^2-x^2-y^2=1$\\\small 一正两负\\\small 双叶双曲面};
+\begin{axis}[name=q4,at={(q3.east)},anchor=west,xshift=0.1cm,width=4.9cm,height=5.2cm,view={30}{20},axis lines=none,unit vector ratio=1 1 1,
+  domain=0:360,y domain=-1.3:1.3,samples=28,samples y=10,z buffer=sort,colormap/violet]
+  \addplot3[surf,shader=faceted,opacity=0.8,draw opacity=0.25] ({y*cos(x)},{y*sin(x)},{y});
+  \addplot3[domain=0:360,samples=60,samples y=1,z buffer=none,figred,very thick] ({cos(x)},{sin(x)},{1});
+\end{axis}
+\node[align=center,below] at ([yshift=-2pt]q4.south) {\small $x^2+y^2-z^2=0$\\\small 两正一负，$=0$\\\small 二次锥面};
+\end{tikzpicture}
+\caption{三元二次型的几何形状（三负 $f=1$ 无轨迹，即虚椭球面）}
+\end{figure}
+
+\begin{intbox}{两个值得一看的联系}
+\begin{itemize}
+\item 课本例子 $x_1^2+x_1x_2+3x_1x_3+2x_2^2+4x_2x_3+3x_3^2$ 的矩阵（图 4）特征值约为 $5.11,\ 0.94,\ -0.05$——两正一负，所以 $f=1$ 是一个（被拉伸、旋转了的）\key{单叶双曲面}。光看系数全是正数，很难猜到它“不定”；化成标准形就一目了然。
+\item 最右边的\key{锥面} $x^2+y^2-z^2=0$：过原点的每条母线是射影平面上的一个“点”，用平面 $z=1$ 去截就得到红色的圆。所以\key{三元二次型 $=0$ 就是射影平面上的二次曲线}（解析几何第七章）：用不同的平面去截这个锥面，得到椭圆、抛物线、双曲线——它们射影等价。
+\end{itemize}
+\end{intbox}
+
+\begin{ckbox}{本节要记住的三件事}
+\begin{enumerate}
+\item 二次型 $\leftrightarrow$ 对称矩阵：$f=X\T AX$，$x_ix_j$ 的系数对半分给 $a_{ij}=a_{ji}$（图 4）。
+\item 非退化线性替换 $X=CY$ 就是换坐标网格，$C$ 的列是新坐标轴方向（图 2）。
+\item 换坐标后矩阵变为 $C\T AC$（合同）；化标准形就是让新坐标轴两两“$A$-正交”（共轭），正交矩阵时它们就是对称轴（图 1、图 5）。
+\end{enumerate}
+\end{ckbox}
+
+\end{document}

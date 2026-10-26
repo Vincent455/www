@@ -1,0 +1,381 @@
+% ================= §7.1 射影平面，齐次坐标 =================
+\begin{intbox}{本章一句话}
+前六章都在“欧氏平面”里做几何。本章给平面\key{添上一条无穷远直线}：每一组平行线共有一个“无穷远点”，于是\key{任意两条直线都相交}，平行的概念消失，点与线的地位完全对称（对偶原理）。用\key{齐次坐标} $(x_1,x_2,x_3)\T$ 记点（成比例看作同一点），则
+“点 = $\R^3$ 的 1 维子空间，线 = 2 维子空间”，射影变换 = 可逆 3 阶矩阵（差一个非零倍数），
+\key{交比}是射影变换下唯一的“数值”不变量，二次曲线 = 三元二次型 $X\T AX=0$ 的零点集——在射影眼里，
+\key{椭圆、双曲线、抛物线是同一种曲线}，区别只在它与无穷远直线交于 0、2、1 个点。
+\end{intbox}
+
+\begin{gdbox}{高代联动：本章与高等代数的对照}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{\sffamily 射影几何} & \textbf{\sffamily 高等代数}\\\midrule
+射影平面的点 $\spn{\vv\alpha}$ & $\R^3$ 的 1 维子空间（非零向量，差一个倍数）\\
+射影直线 $\spn{\vv\beta,\vv\gamma}$；方程 $\vv u\T X=0$ & 2 维子空间；齐次线性方程的解空间\\
+两点 / 两线唯一确定一线 / 一点 & 维数公式 $\dim(U\cap W)=\dim U+\dim W-\dim(U+W)$\\
+三点共线 $\iff$ 三阶行列式 $=0$ & 三个向量线性相关\\
+两点连线、两线交点 = 叉积 & 2 个方程 3 个未知量的齐次方程组的基础解系\\
+对偶原理（点 $\leftrightarrow$ 线） & 对偶空间 $V^*$：列向量 $\leftrightarrow$ 行向量\\
+射影坐标系 $[A_1,A_2,A_3,E]$ & 基 + “单位点”把各基向量的比例固定\\
+射影坐标变换 $\rho X=HX'$ & 基变换的过渡矩阵（再差一个数乘）\\
+射影变换 $\lambda X'=AX$，$|A|\neq0$ & 可逆线性变换模去纯量：$PGL(3,\R)$\\
+不动点 / 不变直线 & $A$ 的特征向量 / $A\T$ 的特征向量\\
+二次曲线 $X\T AX=0$ & 三元二次型\\
+极线 $\vv p\T AX=0$，配极 & 对称双线性型；非退化型诱导的同构 $V\to V^*$\\
+自配极三角形 & 合同对角化 $C\T AC=\operatorname{diag}$\\
+二次曲线的射影分类（5 类） & 实二次型的惯性定理（秩 + 符号差）\\
+\bottomrule
+\end{tabularx}
+\end{gdbox}
+
+\section{射影平面，齐次坐标}
+
+\subsection{中心投影与扩大的欧氏平面}
+
+\begin{defbox}{中心投影}
+设 $\pi_0,\pi_1$ 是两个平面，$O$ 是不在它们上的点。把 $\pi_0$ 上的点 $P$ 对应到直线 $OP$ 与 $\pi_1$ 的交点 $P'$，称为平面 $\pi_0$ 到 $\pi_1$ 上\key{以 $O$ 为中心的中心投影}。中心投影把共线三点变成共线三点（共线关系保持），但\key{长度、角度、平行、分比都可能改变}。
+\end{defbox}
+
+航空摄影就是中心投影：地面 $\pi_0$ 上的景物经镜头 $O$ 投到底片 $\pi_1$ 上。$\pi_0,\pi_1$ 平行时它就是相似变换（第六章），不平行时就出现了新现象：
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x={(1cm,0cm)},y={(0.55cm,0.38cm)},z={(0cm,1cm)},scale=0.95,line join=round]
+  % pi0 : z=0
+  \fill[defbg] (-3,-0.6,0)--(6,-0.6,0)--(6,3,0)--(-3,3,0)--cycle;
+  \draw[defblue] (-3,-0.6,0)--(6,-0.6,0)--(6,3,0)--(-3,3,0)--cycle;
+  % pi1 : z=1.2(x-2)
+  \fill[thmbg,opacity=0.85] (2,-0.6,0)--(5,-0.6,3.6)--(5,3,3.6)--(2,3,0)--cycle;
+  \draw[thmred] (2,-0.6,0)--(5,-0.6,3.6)--(5,3,3.6)--(2,3,0)--cycle;
+  \node[defblue] at (-2.6,-0.3,0) {$\pi_0$};
+  \node[thmred] at (4.75,2.7,3.0) {$\pi_1$};
+  % vanishing line x=-2 in pi0
+  \draw[figor,very thick,dashed] (-2,-0.6,0)--(-2,3,0);
+  \node[figor,below] at (-2,-0.6,0) {\small 没有像的点组成的直线};
+  % O
+  \coordinate (O) at (0.5,1,3);
+  \fill (O) circle (1.5pt) node[above left] {$O$};
+  % P -> P'
+  \coordinate (P) at (5,1.5,0); \coordinate (Pp) at (3.071,1.286,1.286);
+  \draw[thick] (O)--(P);
+  \fill (P) circle (1.5pt) node[below right] {$P$};
+  \fill[thmred] (Pp) circle (1.5pt) node[above right] {$P'$};
+  % M : OM parallel to pi1
+  \coordinate (M) at (-2,1.8,0);
+  \draw[figor,thick] (O)--(M); \fill[figor] (M) circle (1.5pt) node[left] {$M$};
+  % N : ON parallel to pi0
+  \coordinate (N) at (4.5,1.6,3);
+  \draw[figgreen,thick] (O)--(N); \fill[figgreen] (N) circle (1.5pt) node[above] {$N$};
+\end{tikzpicture}
+\caption{中心投影。$OM\parallel\pi_1$，$M$ 没有像；$ON\parallel\pi_0$，$N$ 没有原像}
+\end{figure}
+
+\begin{itemize}
+\item $\pi_0$ 上使 $OM\parallel\pi_1$ 的点 $M$ \key{没有像}——它们组成一条直线（过 $O$ 平行于 $\pi_1$ 的平面与 $\pi_0$ 的交线）；
+\item $\pi_1$ 上使 $ON\parallel\pi_0$ 的点 $N$ \key{没有原像}——也组成一条直线（照片上的“地平线”）。
+\end{itemize}
+为了让中心投影成为双射，就得给平面\key{补点}。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+  \fill[defbg] (-4.2,-2.6) rectangle (4.2,0);
+  \fill[intbg] (-4.2,0) rectangle (4.2,1.1);
+  \draw[figgray] (-4.2,0)--(4.2,0) node[right,black] {\small 地平线（无穷远直线的像）};
+  \coordinate (V) at (0.4,0);
+  \draw[thick] (-2.6,-2.6)--(V); \draw[thick] (-0.6,-2.6)--(V);
+  \coordinate (V2) at (3.4,0);
+  \draw[figor,thick] (0.9,-2.6)--(V2); \draw[figor,thick] (2.6,-2.6)--(V2);
+  \fill[figor] (V2) circle (2pt) node[below right=-1pt,figor] {\small $V'$};
+  \foreach \t in {0.0,0.25,0.45,0.6,0.71,0.79,0.85}{
+    \draw[figgray] ($(-2.6,-2.6)!\t!(V)$)--($(-0.6,-2.6)!\t!(V)$);}
+  \fill[keyred] (V) circle (2pt) node[above,keyred] {\small $V$：平行线的公共“交点”};
+  \node[below] at (-1.6,-2.6) {\small 一组平行铁轨};
+  \node[below,figor] at (2.0,-2.6) {\small 另一组平行线交于另一点 $V'$};
+\end{tikzpicture}
+\caption{照片里平行线交于地平线上一点——这就是“无穷远点”的直观来源}
+\end{figure}
+
+\begin{defbox}{无穷远点、无穷远直线、扩大的欧氏平面}
+在欧氏平面 $\pi_0$ 的每条直线上添加一个\key{无穷远点} $P_\infty$：\key{平行的直线有相同的无穷远点}，不平行的直线有不同的无穷远点（于是无穷远点 $\leftrightarrow$ 方向，一一对应）；所有无穷远点组成一条\key{无穷远直线} $\linf$。补充后的平面称为\key{扩大的欧氏平面}，记作 $\pib$。
+\end{defbox}
+
+\begin{intbox}{为什么这样补是“对的”：把 $O$}
+过点 $O$ 的全体直线和平面称为\key{中心为 $O$ 的把}。平面 $\pi_0$ 上的点 $P\mapsto$ 直线 $OP$，直线 $l\mapsto$ 平面 $Ol$（射影）；反过来，把中的直线、平面与 $\pi_0$ 相交（截影）。唯一的“漏洞”是：把中\key{平行于 $\pi_0$ 的直线}与 $\pi_0$ 不相交——这些直线恰好与 $\pi_0$ 上的\key{方向}一一对应；平行于 $\pi_0$ 的那个平面 $\pi_0'$ 对应“所有方向”。所以补上“每个方向一个无穷远点、全体组成一条无穷远直线”之后，$\pib$ 与把 $O$ 就成了\key{保持关联关系的一一对应}。
+\end{intbox}
+
+\subsection{射影平面的定义和几何模型}
+
+我们只关心最简单的位置关系——\key{关联}（点在线上 / 线过点），而不管距离、角度、平行。
+
+\begin{defbox}{定义 1.1（射影平面）}
+由“点”和“线”两类元素组成的集合 $S$，规定了“关联”关系，并且 $S$ 的点、线可以分别与空间中一个把 $O$ 的直线、平面建立\key{保持关联的一一对应}，则称 $S$ 为\key{射影平面}。
+\end{defbox}
+
+\textbf{三个模型}：
+\begin{enumerate}
+\item \textbf{把模型}（例 1.1）：把 $O$ 本身，“点”= 过 $O$ 的直线，“线”= 过 $O$ 的平面。
+\item \textbf{扩大的欧氏平面}（例 1.2）：$\pib$。
+\item \textbf{球面模型}（例 1.3）：球心为 $O$ 的球面，“点”= 一对对径点，“线”= 大圆。（把中直线交球面于一对对径点，平面交球面于大圆。）
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.52\linewidth}\centering
+\begin{tikzpicture}[x={(1cm,0cm)},y={(0.7cm,0.5cm)},z={(0cm,1cm)},scale=0.9]
+  \coordinate (O) at (0,0,0);
+  \fill[defbg] (-2.2,-1.4,1.6)--(2.6,-1.4,1.6)--(2.6,2.2,1.6)--(-2.2,2.2,1.6)--cycle;
+  \draw[defblue] (-2.2,-1.4,1.6)--(2.6,-1.4,1.6)--(2.6,2.2,1.6)--(-2.2,2.2,1.6)--cycle;
+  \node[defblue] at (2.35,1.9,1.6) {\small $x_3=1$};
+  \fill (O) circle (1.4pt) node[below] {$O$};
+  \foreach \p/\c in {{1.5,0.4}/figred,{-1,1.2}/figgreen,{0.3,-0.9}/figpur}{
+     \draw[\c,thick] (O)--($ (0,0,0)!1.45!(\p,1.6) $);
+     \fill[\c] (\p,1.6) circle (1.5pt);}
+  \node[figred,right] at (1.5,0.4,1.6) {\small $(x,y,1)$};
+  \draw[figor,very thick,->] (-2.6,-0.5,0)--(2.9,1,0);
+  \draw[figor,very thick] (0,0,0)--(-2.6,-0.5,0);
+  \node[figor,below,align=center] at (0.6,-0.6,0) {\small 平行于平面的直线 $\leftrightarrow$ 无穷远点 $(x_1,x_2,0)\T$};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.44\linewidth}\centering
+\begin{tikzpicture}[scale=1.05]
+  \draw[thick] (0,0) circle (1.5);
+  \draw[defblue,thick] (-1.5,0) arc (180:360:1.5 and 0.42);
+  \draw[defblue,thick,dashed] (1.5,0) arc (0:180:1.5 and 0.42);
+  \draw[figred,thick] (0,0) ellipse (0.55 and 1.5);
+  \fill (0,0) circle (1.2pt) node[below left=-1pt] {\scriptsize $O$};
+  \draw[figgreen,thick] (-1.06,1.06)--(1.06,-1.06);
+  \fill[figgreen] (-1.06,1.06) circle (1.6pt) (1.06,-1.06) circle (1.6pt);
+  \node[figgreen,above left] at (-1.06,1.06) {\small $A$};
+  \node[figgreen,below right] at (1.06,-1.06) {\small $A'$};
+  \node[figred] at (0.95,1.45) {\small 大圆 = “线”};
+  \node[figgreen,align=center] at (0,-2.05) {\small 对径点 $\{A,A'\}$ = 一个“点”};
+\end{tikzpicture}
+\end{minipage}
+\caption{左：把模型——平面 $x_3=1$ 上的点 $\leftrightarrow$ 过 $O$ 的直线，平行于平面的直线是“无穷远点”；右：球面模型}
+\end{figure}
+
+在射影平面上（以把 $O$ 看最清楚：两条直线确定一个平面，两个平面交于一条直线）：
+\begin{thmbox}{射影平面的基本性质}
+(1) 两个不同的点恰与一条直线关联；\quad (2) 两条不同的直线恰与一个点关联。\\
+所以射影平面上\key{任意两条直线都相交}——“平行”在射影平面上没有意义。
+\end{thmbox}
+
+在 $\pib$ 上验证 (2)：两条射影直线若对应的欧氏直线不平行，交于通常点；若平行，交于它们共同的无穷远点；射影直线与 $\linf$ 交于它的无穷远点。
+
+\begin{intbox}{直觉：射影直线是“封闭”的}
+沿一条直线朝两个相反方向跑向无穷远，在把模型里对应的直线都趋向同一条（与 $l$ 平行的那条），所以\key{两端到达同一个无穷远点}——射影直线像一个圆。同样，射影平面上的一条直线\key{不能把平面分成两块}：从 $\pib$ 挖掉 $\linf$ 剩下的 $\pi_0$ 仍是连通的一整块。
+\end{intbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+  \draw[thick] (-4,0)--(4,0) node[right] {$l$};
+  \draw[thick] (0,1.3) circle (1.3);
+  \coordinate (N) at (0,2.6);
+  \fill[keyred] (N) circle (2pt) node[above,keyred] {$P_\infty$};
+  \foreach \x/\c in {-3.2/figblue,-1.2/figgreen,1.6/figpur,3.4/figor}{
+    \coordinate (X) at (\x,0);
+    \coordinate (I2) at ({\x*6.76/(\x*\x+6.76)},{2.6-2.6*6.76/(\x*\x+6.76)});
+    \draw[\c,dashed] (N)--(X);
+    \fill[\c] (X) circle (1.5pt);
+    \fill[\c] (I2) circle (1.5pt);
+  }
+  \draw[->,figgray] (3.6,-0.35)--(4.2,-0.35) node[right] {\scriptsize 向右跑};
+  \draw[->,figgray] (-3.6,-0.35)--(-4.2,-0.35) node[left] {\scriptsize 向左跑};
+  \node[align=left] at (5.6,1.6) {\small 两端都趋向圆的顶点\\\small $\Rightarrow$ 补一个点，直线闭合成圆};
+\end{tikzpicture}
+\caption{射影直线 = 欧氏直线 + 一个无穷远点，拓扑上是一个圆}
+\end{figure}
+
+\paragraph{线性代数模型 $PG(2,\R)$。}
+把几何空间看成以 $O$ 为起点的向量全体，即 3 维线性空间 $V$：把 $O$ 中的直线 = $V$ 的 1 维子空间，平面 = 2 维子空间。于是规定
+\[
+\text{点}=\spn{\vv\alpha}\ (\vv\alpha\neq\vv0),\qquad \text{线}=\spn{\vv\beta,\vv\gamma},\qquad \spn{\vv\alpha}\text{ 与 }\spn{\vv\beta,\vv\gamma}\text{ 关联}\iff\spn{\vv\alpha}\subseteq\spn{\vv\beta,\vv\gamma},
+\]
+得到\key{实射影平面} $PG(2,\R)$。它的三条性质全是高代：
+
+\begin{thmbox}{性质 1–3（用维数公式证明）}
+\textbf{性质 1} 两个不同的点恰在一条线上：$\vv\alpha,\vv\beta$ 线性无关，$\spn{\vv\alpha,\vv\beta}$ 是唯一含二者的 2 维子空间。\\
+\textbf{性质 2} 两条不同的线恰交于一点：$\dim(U\cap W)=2+2-\dim(U+W)=4-3=1$。\\
+\textbf{性质 3} 存在四个点，其中任意三点不共线：$\spn{\vv\alpha_1},\spn{\vv\alpha_2},\spn{\vv\alpha_3},\spn{\vv\alpha_1+\vv\alpha_2+\vv\alpha_3}$（$\vv\alpha_i$ 是一个基）。
+\end{thmbox}
+
+\begin{defbox}{定义 1.3（射影平面的公理化定义）}
+关联结构 $(V,\mathscr B,I)$ 若满足：(1) 两个不同的点恰在一条线上；(2) 两条不同的线恰交于一点；(3) 存在四个点，任意三点不共线，则称它为\key{射影平面}。今后以定义 1.3 为准。
+\end{defbox}
+
+把 $\R$ 换成任意域 $F$ 就得到 $PG(2,F)$：$PG(2,\C)$ 是\key{复射影平面}；$F$ 为有限域 $F_q$ 时得\key{有限射影平面} $PG(2,q)$。最小的例子 $PG(2,2)$ 只有 7 个点、7 条线（Fano 平面）：$F_2^3$ 有 7 个非零向量，每个生成一个点；每条线 $\{\vv0,\vv\alpha,\vv\beta,\vv\alpha+\vv\beta\}$ 上恰有 3 个点；2 维子空间的个数 $=\frac{7\times6}{3\times2}=7$。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.1]
+  \coordinate (A) at (90:2); \coordinate (B) at (210:2); \coordinate (C) at (330:2);
+  \coordinate (G) at (0,0);
+  \coordinate (AB) at ($(A)!0.5!(B)$); \coordinate (BC) at ($(B)!0.5!(C)$); \coordinate (CA) at ($(C)!0.5!(A)$);
+  \draw[thick] (A)--(B)--(C)--cycle;
+  \draw[thick] (A)--(BC) (B)--(CA) (C)--(AB);
+  \draw[thick,figred] (G) circle (1);
+  \foreach \p in {A,B,C,G,AB,BC,CA} \fill (\p) circle (2.2pt);
+  \node[above] at (A) {\scriptsize $(1,0,0)$};
+  \node[below left] at (B) {\scriptsize $(0,1,0)$};
+  \node[below right] at (C) {\scriptsize $(0,0,1)$};
+  \node[left] at (AB) {\scriptsize $(1,1,0)$};
+  \node[right] at (CA) {\scriptsize $(1,0,1)$};
+  \node[below] at (BC) {\scriptsize $(0,1,1)$};
+  \node[below right=1pt and 3pt] at (G) {\scriptsize $(1,1,1)$};
+\end{tikzpicture}
+\caption{Fano 平面 $PG(2,2)$：7 点 7 线，每线 3 点，每点 3 线（圆也是一条“线”）}
+\end{figure}
+
+\subsection{点的齐次坐标}
+
+\begin{defbox}{定义 1.5（齐次坐标）}
+在 $\pi_0$ 上取仿射标架 $[O_1;\vv d_1,\vv d_2]$，在 $\pi_0$ 外取一点 $O$，令 $\vv d_3=\overrightarrow{OO_1}$。$\pib$ 上任一点 $M$ 在把 $O$ 中对应直线 $l$ 的任一方向向量在 $[O;\vv d_1,\vv d_2,\vv d_3]$ 下的坐标 $(x_1,x_2,x_3)\T$ 称为 $M$ 的\key{齐次坐标}。
+\begin{itemize}
+\item $(x_1,x_2,x_3)\T$ 与 $\lambda(x_1,x_2,x_3)\T$（$\lambda\neq0$）表示同一点；$(0,0,0)\T$ 不表示任何点。
+\item \key{通常点} $(x,y)\T\ \leftrightarrow\ (x,y,1)\T$，反之 $x=\dfrac{x_1}{x_3},\ y=\dfrac{x_2}{x_3}$（$x_3\neq0$）。
+\item \key{无穷远点} $\leftrightarrow$ $x_3=0$：方向 $(u,v)\T$ 的无穷远点是 $(u,v,0)\T$。
+\end{itemize}
+\end{defbox}
+
+\begin{intbox}{一句话记忆}
+“给 $(x,y)$ 后面\key{补一个 1}”就是齐次坐标；“给方向 $(u,v)$ 后面\key{补一个 0}”就是无穷远点。第一章习题 1.2 里“三点共线 $\iff$ 加一行 1 的行列式为 0”的技巧，正是齐次坐标的雏形。
+\end{intbox}
+
+\subsection{直线的齐次坐标方程}
+
+设 $A(a_1,a_2,a_3)\T,\ B(b_1,b_2,b_3)\T$ 是不同两点。$M(x_1,x_2,x_3)\T$ 在 $AB$ 上 $\iff$ 把 $O$ 中对应向量共面：
+\begin{equation}
+\begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}=\lambda\begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix}+\mu\begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}\quad(\lambda,\mu\text{ 不全为零})
+\iff
+\begin{vmatrix}x_1&a_1&b_1\\x_2&a_2&b_2\\x_3&a_3&b_3\end{vmatrix}=0 .
+\end{equation}
+按第一列展开得 $\eta_1x_1+\eta_2x_2+\eta_3x_3=0$，其中
+\[
+\eta_1=\begin{vmatrix}a_2&b_2\\a_3&b_3\end{vmatrix},\quad
+\eta_2=-\begin{vmatrix}a_1&b_1\\a_3&b_3\end{vmatrix},\quad
+\eta_3=\begin{vmatrix}a_1&b_1\\a_2&b_2\end{vmatrix},
+\qquad\text{即}\quad (\eta_1,\eta_2,\eta_3)\T=\vv a\times\vv b .
+\]
+
+\begin{thmbox}{核心公式（全章反复使用）}
+\begin{itemize}
+\item 直线 $\iff$ 三元一次\key{齐次}方程 $\eta_1x_1+\eta_2x_2+\eta_3x_3=0$；$(\eta_1,\eta_2,\eta_3)\T$ 称为直线的\key{齐次坐标}（同样差一个倍数）。
+\item \key{无穷远直线}：$x_3=0$，坐标 $(0,0,1)\T$。欧氏直线 $ax+by+c=0\ \to\ ax_1+bx_2+cx_3=0$，它的无穷远点是 $(b,-a,0)\T$。
+\item 点 $\vv x$ 在线 $\vv\eta$ 上 $\iff \vv\eta\T\vv x=0$（对 $\vv x,\vv\eta$ \key{对称}！）。
+\item \key{两点连线} $=\vv a\times\vv b$；\key{两线交点} $=\vv u\times\vv v$。
+\item 三点共线 $\iff|\vv a\ \vv b\ \vv c|=0$；三线共点 $\iff|\vv u\ \vv v\ \vv w|=0$。
+\end{itemize}
+\end{thmbox}
+
+\noindent 叉积公式（按“去掉一行，交叉相乘”记）：$\vv a\times\vv b=(a_2b_3-a_3b_2,\ a_3b_1-a_1b_3,\ a_1b_2-a_2b_1)\T$。
+
+\begin{mtbox}{例：平行线交于无穷远点}
+$x-2y+3=0$ 与 $2x-4y+1=0$ 平行。齐次化后交点为
+\begin{align*}
+(1,-2,3)\T\times(2,-4,1)\T&=\big((-2)\cdot1-3\cdot(-4),\ 3\cdot2-1\cdot1,\ 1\cdot(-4)-(-2)\cdot2\big)\T\\
+&=(10,5,0)\T\sim(2,1,0)\T,
+\end{align*}
+正是两直线的公共方向 $(2,1)$ 的无穷远点。\gd 解方程组 $\begin{cases}x_1-2x_2+3x_3=0\\2x_1-4x_2+x_3=0\end{cases}$ 的基础解系就是两行的叉积（Cramer 法则）。
+\end{mtbox}
+
+\paragraph{点方程与线方程。}固定直线 $\vv\eta$，$\vv\eta\T\vv x=0$ 是它上面全体点满足的方程（\key{直线的点方程}）；固定点 $\vv x$，同一个式子是过它的全体直线满足的方程（\key{点的线方程}）。点和线在射影平面上地位对称——这就是下一节对偶原理的来源。
+
+% ---------------- 习题 7.1 ----------------
+\xiti{7.1}
+
+\begin{ex}{7.1.1}
+设扩大的欧氏平面 $\pib$ 上两点 $A,B$ 的齐次坐标分别是 $(3,-1,2)\T,(2,0,1)\T$，求：(1) 直线 $AB$ 的齐次坐标方程；(2) 直线 $AB$ 上的无穷远点的齐次坐标。
+\end{ex}
+\jie (1) 用叉积：$\vv a\times\vv b=\big((-1)\cdot1-2\cdot0,\ 2\cdot2-3\cdot1,\ 3\cdot0-(-1)\cdot2\big)\T=(-1,1,2)\T$，所以
+\[
+AB:\ x_1-x_2-2x_3=0 .
+\]
+检验：$A$：$3+1-4=0$；$B$：$2-0-2=0$。\quad(2) 令 $x_3=0$ 得 $x_1=x_2$，无穷远点 $(1,1,0)\T$。
+
+\begin{ckbox}{另两种看法（互相验证）}
+\textbf{仿射法}：$A=(\tfrac32,-\tfrac12)$，$B=(2,0)$，方向 $\overrightarrow{AB}=(\tfrac12,\tfrac12)\sim(1,1)$，补 0 得 $(1,1,0)\T$。\quad
+\textbf{参数法}：$\lambda\vv a+\mu\vv b$ 的第三个分量 $2\lambda+\mu=0$，取 $\lambda=1,\mu=-2$：$(3-4,-1-0,0)\T=(-1,-1,0)\T\sim(1,1,0)\T$。
+\end{ckbox}
+
+\begin{ex}{7.1.2}
+证明 $\pib$ 上三条直线 $x_1+x_2=0,\ 2x_1-x_2+3x_3=0,\ 5x_1+2x_2+3x_3=0$ 共点，并求该点的齐次坐标。
+\end{ex}
+\jie 三线共点 $\iff$ 系数行列式为零：
+\[
+\begin{vmatrix}1&1&0\\2&-1&3\\5&2&3\end{vmatrix}=1\cdot(-3-6)-1\cdot(6-15)+0=-9+9=0 .
+\]
+公共点 $=(1,1,0)\T\times(2,-1,3)\T=(3,-3,-3)\T\sim(-1,1,1)\T$，验证第三条：$-5+2+3=0$。它是通常点 $(-1,1)$。
+
+\begin{intbox}{直觉}
+行列式为零的原因一眼可见：第三行 $=3\times$第一行 $+$ 第二行，$(5,2,3)=3(1,1,0)+(2,-1,3)$。\gd 线性相关的三条“行向量”$\iff$ 三条直线属于同一个线束（见习题 7.2 第 3 题）。
+\end{intbox}
+
+\begin{ex}{7.1.3}
+在 $\pib$ 上，给出 $\pi_0$ 的欧氏直线的仿射坐标方程，求由它确定的射影直线的齐次坐标方程，并求出射影直线上的无穷远点：(1) $x+2y-1=0$；(2) $x=0$；(3) $y=1$；(4) $3x-2y=0$。
+\end{ex}
+\jie 代入 $x=x_1/x_3,\ y=x_2/x_3$ 并乘 $x_3$；无穷远点令 $x_3=0$（或直接用“$ax+by+c=0$ 的无穷远点是 $(b,-a,0)\T$”）：
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{llll}
+\toprule
+& 欧氏直线 & 齐次方程 & 无穷远点\\\midrule
+(1) & $x+2y-1=0$ & $x_1+2x_2-x_3=0$ & $(2,-1,0)\T$\\
+(2) & $x=0$ & $x_1=0$ & $(0,1,0)\T$（$y$ 轴方向）\\
+(3) & $y=1$ & $x_2-x_3=0$ & $(1,0,0)\T$（$x$ 轴方向）\\
+(4) & $3x-2y=0$ & $3x_1-2x_2=0$ & $(2,3,0)\T$\\\bottomrule
+\end{tabular}
+\end{center}
+注意 (4) 过原点、常数项为 0，齐次方程里就没有 $x_3$；(3) 与 $x$ 轴平行，所以无穷远点就是 $x$ 轴的无穷远点 $(1,0,0)\T$。
+
+\begin{ex}{7.1.4}
+在 $PG(2,\R)$ 上，设直线 $l_1,l_2,l_3,l_4$ 的方程依次是 $x_1-x_3=0,\ x_2+x_3=0,\ 2x_1+x_2-x_3=0,\ x_1+x_2+2x_3=0$，又设 $l_1$ 与 $l_2$ 的交点为 $A$，$l_3$ 与 $l_4$ 的交点为 $B$，求直线 $AB$ 的方程。
+\end{ex}
+\jie 全程只用叉积：
+\[
+A=(1,0,-1)\T\times(0,1,1)\T=(1,-1,1)\T,\qquad
+B=(2,1,-1)\T\times(1,1,2)\T=(3,-5,1)\T,
+\]
+\[
+AB=(1,-1,1)\T\times(3,-5,1)\T=(4,2,-2)\T\sim(2,1,-1)\T,\qquad AB:\ 2x_1+x_2-x_3=0 .
+\]
+\begin{intbox}{直觉}
+“线交线得点、点连点得线”用的是\key{同一个运算}——叉积。这正是对偶原理的代数影子：把“点”“线”两个字互换，公式一个字都不用改。
+\end{intbox}
+
+\begin{ex}{7.1.5}
+取一个球面，用经过球心的一个平面 $\pi$ 截它，取其中一个半球面，把这个半球面上的每个点垂直投影到平面 $\pi$ 上，得到一个圆盘。若投影点在圆盘内部，则把这个投影点看成一个“点”；若投影点在圆盘的边界圆上，则把圆的直径的两个端点看成一个“点”。半球面上的大半圆的投影点组成的半椭圆或直径看成“直线”。证明：这样的圆盘是一个实射影平面。
+\end{ex}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \fill[defbg] (0,0) circle (1.8); \draw[thick] (0,0) circle (1.8);
+  \draw[figred,thick,rotate=-30] (-1.8,0) arc[start angle=180,end angle=360,x radius=1.8,y radius=1.25];
+  \draw[figred,thick,rotate=40] (-1.8,0) arc[start angle=180,end angle=0,x radius=1.8,y radius=0.75];
+  \draw[figgreen,thick] (-1.8,0)--(1.8,0);
+  \fill[figgreen] (-1.8,0) circle (1.6pt) (1.8,0) circle (1.6pt);
+  \node[figgreen,left] at (-1.8,0) {\small $Q$}; \node[figgreen,right] at (1.8,0) {\small $Q'$};
+  \fill[figpur] (0.45,0.5) circle (1.6pt) node[above right=-2pt,figpur] {\small 内点};
+  \node[figred] at (-0.3,1.3) {\small 半椭圆};
+  \node[figgreen,below] at (0.2,0) {\small 直径};
+  \node[align=center] at (0,-2.35) {\small 边界上的对径点 $Q,Q'$ 视为同一个“点”};
+\end{tikzpicture}
+\caption{圆盘模型：大圆在上半球的一半投影成半椭圆（平面倾斜）或直径（平面竖直）}
+\end{figure}
+
+\zheng 利用球面模型（例 1.3）：球面上“点”= 一对对径点，“线”= 大圆，它是实射影平面。只需在圆盘与球面模型之间建立保持关联的一一对应。
+
+\textbf{点的对应。}一对对径点 $\{A,A'\}$ 中：若不在截面 $\pi$ 上，则恰有一个在所取（开）半球面上，把它投影得圆盘\key{内部}一点；若都在 $\pi$ 上（赤道），则投影就是边界圆上一对\key{直径端点}，按规定合成一个“点”。反之，圆盘内每点是半球面上唯一点的投影，边界上每对直径端点来自赤道上唯一一对对径点。所以“点”$\leftrightarrow$“点”一一对应。
+
+\textbf{线的对应。}大圆由过球心的平面 $\sigma$ 截出。$\sigma\neq\pi$ 时，大圆在半球面上的部分是一个半圆（两端是赤道上一对对径点），其垂直投影是一个以边界直径为长轴的\key{半椭圆}（$\sigma$ 倾斜）或一条\key{直径}（$\sigma\perp\pi$）；$\sigma=\pi$ 时大圆就是赤道，其投影是边界圆（对径点已粘合）。于是“线”$\leftrightarrow$“线”一一对应。
+
+\textbf{关联保持。}点在大圆上 $\iff$ 它的投影在相应半椭圆（直径、边界圆）上，垂直投影保持“在……上”。
+
+综上，圆盘与球面模型之间存在保持关联的点、线一一对应，而球面模型又与把 $O$ 保持关联地一一对应，所以圆盘是实射影平面。\qed
+
+\begin{intbox}{空间直觉}
+这个圆盘模型说明射影平面 = “圆盘 + 把边界上对径点粘起来”。沿边界走半圈就回到“同一点”——这正是射影平面\key{不可定向}的来源（它含有一条 Möbius 带）。
+\end{intbox}

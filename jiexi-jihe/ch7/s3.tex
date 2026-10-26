@@ -1,0 +1,331 @@
+% ================= §7.3 交比 =================
+\Needspace{12\baselineskip}
+\section{交比}
+
+中心投影不保持分比（中点的像一般不是中点），但有一个由\key{四个}共线点算出的数保持不变——交比。它是射影几何里唯一的“度量”。
+
+\subsection{交比的定义和性质}
+
+\begin{defbox}{定比与交比（定义 3.1）}
+\textbf{定比}：$A,B$ 为通常点，$C\neq B$ 共线。若 $\overrightarrow{AC}=\lambda\overrightarrow{CB}$，记 $(A,B,C)=\lambda=\dfrac{AC}{CB}$（代数长之比）；$C$ 为无穷远点时规定 $(A,B,C)=-1$。\\[2pt]
+\textbf{交比}：$A,B,C,D$ 共线，$A,B$ 为通常点，$A\neq B$，$C\neq B$，$D\neq A,B$，
+\begin{equation}
+(A,B;C,D):=\frac{(A,B,C)}{(A,B,D)}=\frac{AC}{CB}\Big/\frac{AD}{DB}=\frac{AC}{CB}\cdot\frac{DB}{AD}.
+\end{equation}
+$A,B,C$ 各不相同时规定 $D=B$ 时 $(A,B;C,D)=0$。交比也叫\key{二重比}——“两个分比之比”。
+\end{defbox}
+
+\begin{thmbox}{二级结论：数轴坐标公式（最常用）}
+若 $A,B,C,D$ 在一条数轴上的坐标为 $a,b,c,d$，则
+\[
+(A,B;C,D)=\frac{(c-a)(d-b)}{(c-b)(d-a)},\qquad (A,B;C,\infty)=\frac{c-a}{c-b}=\frac{AC}{BC}.
+\]
+\ji “$C$ 减 $A$、$D$ 减 $B$”在分子，“$C$ 减 $B$、$D$ 减 $A$”在分母——\key{分子交叉配对，分母同侧配对}。
+\end{thmbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.15]
+  \draw[->,thick] (-0.6,0)--(5.4,0);
+  \foreach \x/\n in {0/1,1/2,2/3,3/4,4/5}{\draw (\x,0.07)--(\x,-0.07) node[below] {\scriptsize $\n$};}
+  \foreach \x/\p/\c in {0/A/figblue,1/B/figblue,2/C/figred,3/D/figred}{\fill[\c] (\x,0) circle (2pt) node[above=3pt,\c] {$\p$};}
+  \draw[figred,|-|] (0,0.55)--node[above] {\scriptsize $AC=2$} (2,0.55);
+  \draw[figred,|-|] (2,0.95)--node[above] {\scriptsize $CB=-1$} (1,0.95);
+  \node[align=left,right] at (5.5,0.35) {\small $(A,B;C,D)=\dfrac{(3-1)(4-2)}{(3-2)(4-1)}=\dfrac43$};
+\end{tikzpicture}
+\caption{例：坐标 $1,2,3,4$ 的四点，交比为 $\frac43$（注意 $C$ 在线段 $AB$ 外，所以 $(A,B,C)=-2<0$）}
+\end{figure}
+
+\paragraph{共点四线的交比。}设 $l_1,l_2,l_3,l_4$ 过点 $O$，$l_1\neq l_2$。任取一条不过 $O$ 的截线 $l$，交 $l_i$ 于 $A_i$，规定
+\begin{equation}
+(l_1,l_2;l_3,l_4):=(A_1,A_2;A_3,A_4).
+\end{equation}
+这个定义与截线的选取无关：若线坐标满足 $\vv\eta_3=\lambda_1\vv\eta_1+\mu_1\vv\eta_2$，$\vv\eta_4=\lambda_2\vv\eta_1+\mu_2\vv\eta_2$（习题 7.2 第 3 题），则
+\begin{equation}
+(l_1,l_2;l_3,l_4)=\frac{\lambda_2}{\mu_2}\Big/\frac{\lambda_1}{\mu_1},
+\end{equation}
+右端只与四条直线有关。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (0,3.2);
+  \coordinate (T1a) at (-3.5,0.3); \coordinate (T1b) at (3.6,0.3);
+  \coordinate (T2a) at (-3.2,2.0); \coordinate (T2b) at (3.6,1.1);
+  \draw[figblue,thick] (T1a)--(T1b) node[right] {$l$};
+  \draw[figred,thick] (T2a)--(T2b) node[right] {$l'$};
+  \foreach \a/\i in {-125/1,-100/2,-80/3,-55/4}{
+    \coordinate (E) at ($(O)+(\a:4.6)$);
+    \draw[thick] (O)--(E) node[below] {\small $l_\i$};
+    \coordinate (X) at (intersection of O--E and T1a--T1b);
+    \coordinate (Y) at (intersection of O--E and T2a--T2b);
+    \fill[figblue] (X) circle (1.6pt) node[below right=-2pt,figblue] {\scriptsize $A_\i$};
+    \fill[figred] (Y) circle (1.6pt) node[above right=-2pt,figred] {\scriptsize $A'_\i$};}
+  \fill (O) circle (1.8pt) node[above] {$O$};
+\end{tikzpicture}
+\caption{同一线束被两条截线截得的四点交比相等：$(A_1,A_2;A_3,A_4)=(A'_1,A'_2;A'_3,A'_4)$}
+\end{figure}
+
+\begin{thmbox}{交比在中心投影下不变}
+以 $O$ 为中心的中心投影把 $l$ 上的 $A_i$ 投成 $l'$ 上的 $A'_i$，而 $A_i,A_i'$ 都在 $l_i$ 上，所以
+\[
+(A_1,A_2;A_3,A_4)=(l_1,l_2;l_3,l_4)=(A'_1,A'_2;A'_3,A'_4).
+\]
+于是交比的定义可以推广到含无穷远点的情形：总可以先投影成四个通常点再算。
+\end{thmbox}
+
+\begin{thmbox}{定理 3.1（用齐次坐标算交比）}
+$A,B,C$ 各不相同，$D\neq A$。若 $\vv c=\lambda_1\vv a+\mu_1\vv b$，$\vv d=\lambda_2\vv a+\mu_2\vv b$，则
+\begin{equation}
+(A,B;C,D)=\frac{\lambda_2}{\mu_2}\Big/\frac{\lambda_1}{\mu_1}.
+\end{equation}
+\ji “$D$ 的系数比 $\div$ $C$ 的系数比”。注意结果与 $\vv a,\vv b,\vv c,\vv d$ 各自乘什么倍数无关（倍数在比中约掉）。
+\end{thmbox}
+
+\noindent\textbf{验证与数轴公式一致}：$\vv a=(a,1)\T,\vv b=(b,1)\T$，$\vv c=(c,1)\T=\lambda_1\vv a+\mu_1\vv b$ 解得 $\frac{\lambda_1}{\mu_1}=\frac{b-c}{c-a}$，同理 $\frac{\lambda_2}{\mu_2}=\frac{b-d}{d-a}$，相除即得 $\frac{(c-a)(d-b)}{(c-b)(d-a)}$。
+
+\begin{thmbox}{定理 3.2（取同一直线上任意两点作“基”）}
+在此直线上取两点 $P,Q$，设 $\vv a=\lambda_1\vv p+\mu_1\vv q,\ \vv b=\lambda_2\vv p+\mu_2\vv q,\ \vv c=\lambda_3\vv p+\mu_3\vv q,\ \vv d=\lambda_4\vv p+\mu_4\vv q$，记 $[ij]=\begin{vmatrix}\lambda_i&\lambda_j\\\mu_i&\mu_j\end{vmatrix}$，则
+\begin{equation}
+(A,B;C,D)=\frac{[13]\,[24]}{[14]\,[23]} .
+\end{equation}
+\end{thmbox}
+
+\begin{gdbox}{高代联动}
+射影直线 = $\R^2$ 的 1 维子空间全体；点 $\leftrightarrow (\lambda_i:\mu_i)$。$[ij]$ 是 2 阶行列式，换基（可逆线性替换 $H$）时每个 $[ij]$ 都乘同一个 $|H|$，每个向量的倍数也在分子分母中各出现一次——所以交比是\key{射影不变量}。公式与数轴公式同形：$[ij]$ 扮演“$x_j-x_i$”。
+\end{gdbox}
+
+\begin{thmbox}{交比的性质（24 种排列只有 6 个值）}
+(1) $(C,D;A,B)=(A,B;C,D)=(B,A;D,C)$\quad（同时交换两对，值不变）\\
+(2) $(B,A;C,D)=\dfrac{1}{(A,B;C,D)}=(A,B;D,C)$\quad（交换一对中的两点，取倒数）\\
+(3) $(A,C;B,D)=1-(A,B;C,D)$\quad（交换中间两点，取“1 减”）
+\end{thmbox}
+
+\begin{thmbox}{共点四线交比的正弦公式}
+$O$ 为通常点，$\langle l_i,l_j\rangle$ 表示 $l_i$ 绕 $O$ 逆时针转到 $l_j$ 的角，则
+\begin{equation}
+(l_1,l_2;l_3,l_4)=\frac{\sin\langle l_1,l_3\rangle}{\sin\langle l_3,l_2\rangle}\Big/\frac{\sin\langle l_1,l_4\rangle}{\sin\langle l_4,l_2\rangle}.
+\end{equation}
+（证明见习题 7.3 第 8 题。）与点的公式 $\frac{AC}{CB}\big/\frac{AD}{DB}$ 完全同形：\key{“线段”换成“角的正弦”}。
+\end{thmbox}
+
+\subsection{调和点列与调和线束}
+
+\begin{defbox}{定义 3.2（调和）}
+共线四点满足 $(A,B;C,D)=-1$，称为\key{调和点列}，$D$ 称为 $A,B,C$ 的\key{第四调和点}，$C,D$ 关于 $A,B$ \key{调和共轭}。由性质 (1)(2)，此时 $A,B$ 也关于 $C,D$ 调和共轭——两个点偶\key{彼此调和分割}。共点四线 $(l_1,l_2;l_3,l_4)=-1$ 称为\key{调和线束}。
+\end{defbox}
+
+\begin{thmbox}{二级结论：调和点列的几种等价形式}
+\begin{itemize}
+\item 数轴坐标：$(A,B;C,D)=-1\iff 2(ab+cd)=(a+b)(c+d)$。
+\item $A$ 取为原点：$\dfrac{2}{AB}=\dfrac{1}{AC}+\dfrac{1}{AD}$（$AB$ 是 $AC,AD$ 的\key{调和平均}）。
+\item $O$ 为 $AB$ 中点：$OC\cdot OD=OA^2$（Newton 形式）。
+\item \key{中点与无穷远点调和共轭}：$C$ 为 $AB$ 中点 $\iff$ $D=\infty$。（因为 $(A,B;C,\infty)=\frac{AC}{BC}=-1$。）
+\item \key{两直线的两条角平分线}关于这两直线调和共轭（由正弦公式，见下图）。
+\end{itemize}
+\end{thmbox}
+
+\begin{mtbox}{例：求调和共轭点}
+$A=0,\ B=3,\ C=1$，求 $D$ 使 $(A,B;C,D)=-1$。\quad 由 $\frac{2}{3}=\frac11+\frac1d$ 得 $d=-3$。\\
+检验 Newton 形式：中点 $O=1.5$，$OC\cdot OD=(-0.5)(-4.5)=2.25=1.5^2$。 \checkmark
+\end{mtbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.42\linewidth}\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (O) at (0,0);
+  \draw[thick] (200:2.6)--(20:2.6) node[right] {$l_1$};
+  \draw[thick] (-40:2.6)--(140:2.6) node[left] {$l_2$};
+  \draw[figred,thick] (-100:2.2)--(80:2.2) node[above] {$l_3$};
+  \draw[figblue,thick] (170:2.6)--(-10:2.6) node[right] {$l_4$};
+  \draw[figred] (20:0.7) arc (20:80:0.7); \draw[figred] (80:0.8) arc (80:140:0.8);
+  \draw[figblue] (140:1.1) arc (140:170:1.1); \draw[figblue] (170:1.2) arc (170:200:1.2);
+  \fill (O) circle (1.5pt);
+  \node[align=center] at (0,-2.7) {\small $l_3\perp l_4$，都平分 $l_1,l_2$ 的夹角};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{0.55\linewidth}\centering
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (A) at (0,0); \coordinate (B) at (3,0); \coordinate (C) at (1.9,0);
+  \coordinate (S) at (1.2,3.2); \coordinate (G) at ($(S)!0.55!(C)$);
+  \coordinate (E) at (intersection of A--G and S--B);
+  \coordinate (F) at (intersection of B--G and S--A);
+  \coordinate (D) at (intersection of F--E and A--B);
+  \coordinate (H) at (intersection of F--E and S--C);
+  \draw[thick] (-0.4,0)--(7.6,0);
+  \draw (A)--(S)--(B) (S)--(C);
+  \draw[figblue] (A)--(E) (B)--(F);
+  \draw[figred,thick] (F)--(D);
+  \foreach \p/\pos in {A/below,B/below,C/below,S/above,G/left,E/right,F/left,H/above right}{\fill (\p) circle (1.5pt) node[\pos] {\small $\p$};}
+  \fill[keyred] (D) circle (2pt) node[below,keyred] {\small $D$};
+\end{tikzpicture}
+\end{minipage}
+\caption{左：角平分线构成调和线束；右：只用直尺作第四调和点 $D$}
+\end{figure}
+
+\begin{mtbox}{只用直尺作第四调和点（图右）}
+在 $AB$ 外任取一点 $S$，连 $SA,SB,SC$；在 $SC$ 上取一点 $G\ (\neq C,S)$，$AG$ 交 $SB$ 于 $E$，$BG$ 交 $SA$ 于 $F$；则 $FE$ 与 $AB$ 的交点 $D$ 就是 $A,B,C$ 的第四调和点。\\[2pt]
+\textbf{证明}：设 $FE$ 交 $SC$ 于 $H$。先以 $S$ 为中心、再以 $G$ 为中心作投影：
+\[
+(A,B;C,D)\overset{S}{=}(F,E;H,D)\overset{G}{=}(B,A;C,D)=\frac{1}{(A,B;C,D)},
+\]
+所以 $(A,B;C,D)^2=1$。若 $(A,B;C,D)=1$，则 $(A,C;B,D)=0$，推出 $A=B$，矛盾。故 $(A,B;C,D)=-1$。\qed
+\end{mtbox}
+
+\begin{intbox}{直觉：为什么是“$-1$”}
+令 $S$ 跑到无穷远（$SA,SB,SC$ 变成三条平行线），图就成了一个梯形及其对角线：这时 $C$ 若是 $AB$ 中点，$EF\parallel AB$，$D=\infty$——恰好就是“中点 $\leftrightarrow$ 无穷远点”这对调和共轭。一般情形是它的射影像。
+\end{intbox}
+
+% ---------------- 习题 7.3 ----------------
+\xiti{7.3}
+
+\begin{ex}{7.3.1}
+在射影平面 $\pib$ 上，设共线三点 $A,B,C$ 的齐次坐标分别为 $(1,2,5)\T,(1,0,3)\T,(-1,2,-1)\T$，在直线 $AB$ 上求一点 $D$，使得交比 $(A,B;C,D)=5$。
+\end{ex}
+\jie 先把 $\vv c$ 写成 $\vv a,\vv b$ 的组合：$\lambda_1\vv a+\mu_1\vv b=\vv c$，比较第二分量 $2\lambda_1=2$ 得 $\lambda_1=1$，再由第一分量 $1+\mu_1=-1$ 得 $\mu_1=-2$（第三分量 $5-6=-1$ \checkmark）。所以 $\frac{\lambda_1}{\mu_1}=-\frac12$。
+
+由定理 3.1，需 $\frac{\lambda_2}{\mu_2}=5\cdot\left(-\frac12\right)=-\frac52$，取 $\lambda_2=-5,\mu_2=2$：
+\[
+\vv d=-5(1,2,5)\T+2(1,0,3)\T=(-3,-10,-19)\T\sim(3,10,19)\T .
+\]
+
+\begin{ex}{7.3.2}
+在 $\pib$ 上，设三点 $A,B,C$ 的齐次坐标分别为 $(1,4,1)\T,(0,1,1)\T,(2,3,-3)\T$，证明 $A,B,C$ 三点共线，并且求此直线上的一点 $D$，使得 $(A,B;C,D)=-4$。
+\end{ex}
+\jie $\begin{vmatrix}1&0&2\\4&1&3\\1&1&-3\end{vmatrix}=1\cdot(-3-3)-0+2\cdot(4-1)=0$，共线。$\vv c=\lambda_1\vv a+\mu_1\vv b$：第一分量 $\lambda_1=2$，第二分量 $8+\mu_1=3$，$\mu_1=-5$（第三分量 $2-5=-3$ \checkmark），$\frac{\lambda_1}{\mu_1}=-\frac25$。需 $\frac{\lambda_2}{\mu_2}=-4\cdot\left(-\frac25\right)=\frac85$：
+\[
+\vv d=8(1,4,1)\T+5(0,1,1)\T=(8,37,13)\T .
+\]
+
+\begin{ex}{7.3.3}
+在 $\pib$ 上，给了共线的四个通常点的仿射坐标 $A(2,-4)\T,B(-4,5)\T,C(4,-7)\T,D(0,-1)\T$，求它们的交比 $(A,B;C,D)$。
+\end{ex}
+\jie 平行于 $y$ 轴投影到 $x$ 轴不改变分比，所以直接用横坐标 $a=2,b=-4,c=4,d=0$：
+\[
+(A,B;C,D)=\frac{(c-a)(d-b)}{(c-b)(d-a)}=\frac{2\cdot4}{8\cdot(-2)}=-\frac12 .
+\]
+\textbf{按定义验算}：$\overrightarrow{AC}=(2,-3)$，$\overrightarrow{CB}=(-8,12)$，$\frac{AC}{CB}=-\frac14$；$\overrightarrow{AD}=(-2,3)$，$\overrightarrow{DB}=(-4,6)$，$\frac{AD}{DB}=\frac12$；交比 $=-\frac14\big/\frac12=-\frac12$。
+
+\begin{ex}{7.3.4}
+在 $\pib$ 上，设共点于 $O$ 的三条直线 $l_1,l_2,l_3$ 的齐次坐标分别为 $(-1,0,2)\T,(3,1,-2)\T,(1,1,2)\T$，求经过 $O$ 的一条直线 $l_4$，使得交比 $(l_1,l_2;l_3,l_4)=-3$。
+\end{ex}
+\jie 线束里一切照搬点列的公式。$\vv\eta_3=\lambda_1\vv\eta_1+\mu_1\vv\eta_2$：第二分量 $\mu_1=1$，第一分量 $-\lambda_1+3=1$，$\lambda_1=2$（第三分量 $4-2=2$ \checkmark），$\frac{\lambda_1}{\mu_1}=2$。需 $\frac{\lambda_2}{\mu_2}=-3\cdot2=-6$：
+\[
+\vv\eta_4=-6(-1,0,2)\T+(3,1,-2)\T=(9,1,-14)\T,\qquad l_4:\ 9x_1+x_2-14x_3=0 .
+\]
+
+\begin{ex}{7.3.5}
+在 $\pib$ 上，设五个点 $P,A,B,C,D$ 的齐次坐标分别为 $(3,-3,1)\T,(1,0,0)\T,(0,1,0)\T,(0,0,1)\T,(1,-1,1)\T$，求直线 $PA,PB,PC,PD$ 的交比。
+\end{ex}
+\jie 用叉积求四条直线：
+\[
+PA=(0,1,3)\T,\quad PB=(-1,0,3)\T,\quad PC=(-3,-3,0)\T,\quad PD=(-2,-2,0)\T .
+\]
+$PC=-3\cdot PA+3\cdot PB$，$\frac{\lambda_1}{\mu_1}=-1$；$PD=-2\cdot PA+2\cdot PB$，$\frac{\lambda_2}{\mu_2}=-1$。所以
+\[
+(PA,PB;PC,PD)=\frac{-1}{-1}=1 .
+\]
+\begin{intbox}{为什么等于 1？}
+$PC$ 与 $PD$ 的坐标成比例——它们是\key{同一条直线}！事实上 $P=(3,-3)$、$C=(0,0)$、$D=(1,-1)$ 都在直线 $y=-x$ 上。交比 $=1$ 正对应“第三、第四元素重合”（$(A,B;C,C)=1$）。这道题提醒我们：交比为 1 时一定发生了退化。
+\end{intbox}
+
+\begin{ex}{7.3.6}
+设 $A,B,C,D,E$ 是共线的五点，并且两两不同，证明：$(A,B;C,D)\cdot(A,B;D,E)=(A,B;C,E)$。
+\end{ex}
+\zheng 把 $C,D,E$ 都用 $\vv a,\vv b$ 表示：$\vv c=\lambda_C\vv a+\mu_C\vv b$ 等，记 $t_X=\lambda_X/\mu_X$。由 (3.5)，$(A,B;X,Y)=t_Y/t_X$，所以
+\[
+(A,B;C,D)\cdot(A,B;D,E)=\frac{t_D}{t_C}\cdot\frac{t_E}{t_D}=\frac{t_E}{t_C}=(A,B;C,E).\qquad\blacksquare
+\]
+\begin{intbox}{直觉}
+固定 $A,B$ 后，每个点 $X$ 有一个“射影坐标” $t_X$（它取 $0$ 的点是 $B$，取 $\infty$ 的点是 $A$），交比就是两个坐标之比——于是像分数一样可以“约分”：$\frac{t_D}{t_C}\cdot\frac{t_E}{t_D}=\frac{t_E}{t_C}$。
+\end{intbox}
+
+\begin{ex}{7.3.7}
+用交比 $(A,B;C,D)$ 表达 $A,B,C,D$ 四点按任何其他顺序所取的交比。
+\end{ex}
+\jie 四个字母共 $24$ 种排列。由性质 (1)，每个值至少出现 4 次（同时交换两对：$ABCD$、$BADC$、$CDAB$、$DCBA$ 构成 Klein 四元群）；再用 (2)“交换后两个取倒数”和 (3)“交换中间两个取 $1-$”，记 $r=(A,B;C,D)$ 得：
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cl}
+\toprule
+值 & 四种排列\\\midrule
+$r$ & $(A,B;C,D),\ (B,A;D,C),\ (C,D;A,B),\ (D,C;B,A)$\\
+$\dfrac1r$ & $(A,B;D,C),\ (B,A;C,D),\ (C,D;B,A),\ (D,C;A,B)$\\
+$1-r$ & $(A,C;B,D),\ (B,D;A,C),\ (C,A;D,B),\ (D,B;C,A)$\\
+$\dfrac1{1-r}$ & $(A,C;D,B),\ (B,D;C,A),\ (C,A;B,D),\ (D,B;A,C)$\\
+$\dfrac{r-1}{r}$ & $(A,D;B,C),\ (B,C;A,D),\ (C,B;D,A),\ (D,A;C,B)$\\
+$\dfrac{r}{r-1}$ & $(A,D;C,B),\ (B,C;D,A),\ (C,B;A,D),\ (D,A;B,C)$\\\bottomrule
+\end{tabular}
+\end{center}
+例如 $(A,D;C,B)=1-(A,C;D,B)=1-\frac1{1-r}=\frac{r}{r-1}$，再取倒数得 $(A,D;B,C)=\frac{r-1}r$。
+
+\begin{intbox}{记忆：六个值 = 一个“函数群”}
+$r\mapsto\frac1r$、$r\mapsto1-r$ 这两个变换反复复合，恰好生成 6 个函数 $\{r,\frac1r,1-r,\frac1{1-r},\frac{r-1}r,\frac r{r-1}\}$（同构于 $S_3$）。调和时 $r=-1$，六个值只剩 $-1,2,\frac12$ 三个。
+\end{intbox}
+
+\begin{ex}{7.3.8}
+设 $O$ 是 $\pib$ 上的通常点，$l_1,l_2,l_3,l_4$ 是共点于 $O$ 的四条不同的直线，用 $\langle l_i,l_j\rangle$ 表示直线 $l_i$ 绕 $O$ 逆时针转到 $l_j$ 的角度，证明：
+\[
+(l_1,l_2;l_3,l_4)=\frac{\sin\langle l_1,l_3\rangle}{\sin\langle l_3,l_2\rangle}\Big/\frac{\sin\langle l_1,l_4\rangle}{\sin\langle l_4,l_2\rangle}.
+\]
+\end{ex}
+\zheng 以 $O$ 为原点，取一条不过 $O$ 的截线 $l$ 交 $l_i$ 于 $A_i$。记 $[X,Y]=\det(\overrightarrow{OX},\overrightarrow{OY})$（有向面积的 2 倍）。
+
+\textbf{引理}：$X,Y,Z$ 在 $l$ 上，则 $\dfrac{XY}{YZ}=\dfrac{[X,Y]}{[Y,Z]}$。因为设 $\vv e$ 为 $l$ 的单位方向向量，$[X,Y]=\det(\overrightarrow{OX},\overrightarrow{OX}+XY\,\vv e)=XY\cdot\det(\overrightarrow{OX},\vv e)$，而 $\det(\overrightarrow{OX},\vv e)=h$ 对 $l$ 上所有点都一样（$O$ 到 $l$ 的有向距离），同理 $[Y,Z]=YZ\cdot h$。
+
+设 $\overrightarrow{OA_i}=t_i\vv e_i$，$\vv e_i$ 为 $l_i$ 的单位方向向量，则 $[A_i,A_j]=t_it_j\sin\langle l_i,l_j\rangle$。于是
+\[
+\frac{A_1A_3}{A_3A_2}=\frac{t_1t_3\sin\langle l_1,l_3\rangle}{t_3t_2\sin\langle l_3,l_2\rangle}=\frac{t_1\sin\langle l_1,l_3\rangle}{t_2\sin\langle l_3,l_2\rangle},\qquad
+\frac{A_1A_4}{A_4A_2}=\frac{t_1\sin\langle l_1,l_4\rangle}{t_2\sin\langle l_4,l_2\rangle}.
+\]
+相除，$t_1,t_2$ 约掉，即得结论。\qed
+
+\begin{ckbox}{细节：公式与方向向量的取法无关}
+直线的转角只确定到 $\pi$ 的整数倍，$\sin$ 会变号。但每条 $l_i$ 在分子、分母里各出现一次（如 $l_1$ 出现在 $\sin\langle l_1,l_3\rangle$ 和 $\sin\langle l_1,l_4\rangle$），变号互相抵消，所以公式是良定义的。教材提示用正弦定理：在 $\triangle OA_1A_3$ 中 $\frac{A_1A_3}{\sin\angle A_1OA_3}=\frac{OA_1}{\sin\angle OA_3A_1}$，各三角形中 $\sin\angle OA_iA_j$ 都是 $l$ 与 $l_i$ 的夹角，最后同样约掉——与上面的面积法本质相同。
+\end{ckbox}
+
+\begin{ex}{7.3.9}
+若 $l_1,l_2,l_3,l_4$ 是 $\pib$ 上的调和线束，并且 $l_3$ 与 $l_4$ 互相垂直，证明：$l_3$ 是 $l_1$ 与 $l_2$ 的夹角的角平分线。
+\end{ex}
+\zheng 记 $\alpha=\langle l_1,l_3\rangle$，$\beta=\langle l_3,l_2\rangle$。因 $l_4\perp l_3$：
+\[
+\langle l_1,l_4\rangle=\alpha+90^\circ,\qquad \langle l_4,l_2\rangle=\beta-90^\circ .
+\]
+代入第 8 题公式：
+\[
+-1=\frac{\sin\alpha}{\sin\beta}\Big/\frac{\sin(\alpha+90^\circ)}{\sin(\beta-90^\circ)}=\frac{\sin\alpha}{\sin\beta}\cdot\frac{-\cos\beta}{\cos\alpha}=-\frac{\tan\alpha}{\tan\beta},
+\]
+故 $\tan\alpha=\tan\beta$，$\alpha\equiv\beta\pmod{180^\circ}$，即 $\langle l_1,l_3\rangle=\langle l_3,l_2\rangle$：$l_3$ 平分 $l_1$ 与 $l_2$ 的一个夹角（$l_4$ 平分另一个）。\qed
+
+\begin{intbox}{应用}
+三角形 $ABC$ 中，$\angle A$ 的内角平分线和外角平分线交 $BC$ 于 $D,E$，则 $(B,C;D,E)=-1$——这就是“内外角平分线定理” $\frac{BD}{DC}=\frac{AB}{AC}=-\frac{BE}{EC}$ 的射影说法。
+\end{intbox}
+
+\begin{ex}{7.3.10}
+证明：在欧氏平面 $\pi_0$ 上，已给一个圆上任意四个不同的固定点 $A_1,A_2,A_3,A_4$，则它们到圆上任意第五点 $P$ 的连线的交比 $(PA_1,PA_2;PA_3,PA_4)$ 是常数，与 $P$ 在圆上的位置无关。
+\end{ex}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.25]
+  \draw[thick] (0,0) circle (1.6);
+  \foreach \a/\i in {-20/1,30/2,75/3,120/4}{\coordinate (A\i) at (\a:1.6);}
+  \coordinate (P) at (215:1.6); \coordinate (Q) at (260:1.6);
+  \foreach \i in {1,2,3,4}{\draw[figblue] (P)--(A\i); \draw[figred,dashed] (Q)--(A\i);}
+  \foreach \i/\pos in {1/right,2/above right,3/above,4/above left}{\fill (A\i) circle (1.5pt) node[\pos] {\small $A_\i$};}
+  \fill[figblue] (P) circle (1.7pt) node[left,figblue] {$P$};
+  \fill[figred] (Q) circle (1.7pt) node[below,figred] {$P'$};
+\end{tikzpicture}
+\caption{同弧所对圆周角相等 $\Rightarrow$ 两组连线的夹角相同 $\Rightarrow$ 交比相同}
+\end{figure}
+
+\zheng 由圆周角定理（用有向角写，模 $180^\circ$）：对圆上任意一点 $P\neq A_i,A_j$，
+\[
+\langle PA_i,PA_j\rangle\equiv\tfrac12\angle A_iOA_j\pmod{180^\circ}
+\]
+（$O$ 为圆心），即这些角与 $P$ 无关。由第 8 题，$(PA_1,PA_2;PA_3,PA_4)$ 只由 $\langle PA_1,PA_3\rangle$、$\langle PA_3,PA_2\rangle$、$\langle PA_1,PA_4\rangle$、$\langle PA_4,PA_2\rangle$ 决定，而第 8 题后面已说明公式对“模 $180^\circ$”良定义，所以交比与 $P$ 无关。\qed
+
+\begin{intbox}{伏笔}
+这就是 \S7.6 \key{Steiner 定理}在圆上的特例：对任意非退化二次曲线（椭圆、双曲线、抛物线都是圆的射影像），从曲线上一点看四个定点的交比都是常数。
+\end{intbox}

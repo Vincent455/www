@@ -1,0 +1,129 @@
+% ===== 丘维声《解析几何》讲解 · 统一样式（与第 1–5 批一致） =====
+\usepackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.5cm,right=2.5cm,headheight=15pt]{geometry}
+\setCJKmainfont{Noto Serif CJK SC}[BoldFont={Noto Serif CJK SC Bold}]
+\setCJKsansfont{Noto Sans CJK SC}[BoldFont={Noto Sans CJK SC Bold}]
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm,mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections,arrows.meta,positioning,decorations.markings,shapes.geometric,through,3d,perspective,patterns}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks,bookmarksnumbered,bookmarksopen]{hyperref}
+
+% ---------- 颜色 ----------
+\definecolor{mainblue}{HTML}{1F5FA8}
+\definecolor{defblue}{HTML}{2E6DB4}   \definecolor{defbg}{HTML}{EEF3FA}
+\definecolor{thmred}{HTML}{B03A2E}    \definecolor{thmbg}{HTML}{FBEFEE}
+\definecolor{intor}{HTML}{C8691C}     \definecolor{intbg}{HTML}{FBF4EC}
+\definecolor{gdpur}{HTML}{6C4F9E}     \definecolor{gdbg}{HTML}{F4F0F9}
+\definecolor{mteal}{HTML}{1E7B6E}     \definecolor{mtbg}{HTML}{EAF5F3}
+\definecolor{ckgray}{HTML}{E2E2E2}    \definecolor{ckbg}{HTML}{F7F7F7}
+\definecolor{exslate}{HTML}{34495E}   \definecolor{exbg}{HTML}{F4F6F8}
+\definecolor{solgreen}{HTML}{2E8B57}
+\definecolor{keyred}{HTML}{C0392B}
+\definecolor{figblue}{HTML}{2E6DB4}   \definecolor{figred}{HTML}{C0392B}
+\definecolor{figgreen}{HTML}{2E8B57}  \definecolor{figor}{HTML}{D9822B}
+\definecolor{figpur}{HTML}{7D5BA6}    \definecolor{figgray}{HTML}{7F8C8D}
+
+% ---------- 标题样式 ----------
+\ctexset{
+  chapter={
+    name={}, number={第\arabic{chapter}章},
+    format=\centering,
+    nameformat=\sffamily\bfseries\Large\color{mainblue},
+    titleformat=\sffamily\bfseries\Huge\color{mainblue},
+    aftername=\par\vspace{0.8em},
+    beforeskip=10pt, afterskip=22pt,
+    aftertitle={\par\vspace{6pt}{\color{mainblue}\rule{\textwidth}{0.8pt}}},
+  },
+  section={
+    format=\sffamily\bfseries\Large\color{mainblue}\raggedright,
+    name={\S,}, number=\thechapter.\arabic{section},
+    aftername=\enspace, beforeskip=18pt, afterskip=10pt,
+  },
+  subsection={
+    format=\sffamily\bfseries\large\color{mainblue!85!black}\raggedright,
+    number=\thechapter.\arabic{section}.\arabic{subsection},
+    aftername=\enspace, beforeskip=12pt, afterskip=6pt,
+  },
+}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\captionsetup{labelsep=quad,font=small,labelfont={color=black}}
+
+% 习题详解标题（不编号，进目录与书签）
+\newcommand{\xiti}[1]{%
+  \vspace{8pt}\phantomsection
+  \addcontentsline{toc}{section}{习题 #1 详解}%
+  {\noindent\sffamily\bfseries\Large\color{mainblue}习题 #1\ 详解\par}\vspace{8pt}}
+\newcommand{\zongjie}[1]{%
+  \vspace{8pt}\phantomsection
+  \addcontentsline{toc}{section}{#1}%
+  {\noindent\sffamily\bfseries\Large\color{mainblue}#1\par}\vspace{8pt}}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 高等代数 · 二次型图解}
+\fancyhead[R]{\small 第\thechapter 章\quad\leftmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- 彩色框 ----------
+\tcbset{
+  basebox/.style={enhanced,breakable,arc=2mm,boxrule=0.6pt,
+    left=6pt,right=6pt,top=4pt,bottom=4pt,
+    fonttitle=\sffamily\bfseries,coltitle=white,
+    before skip=8pt,after skip=8pt},
+}
+\newtcolorbox{defbox}[1]{basebox,colframe=defblue,colback=defbg,colbacktitle=defblue,title={#1}}
+\newtcolorbox{thmbox}[1]{basebox,colframe=thmred,colback=thmbg,colbacktitle=thmred,title={#1}}
+\newtcolorbox{intbox}[1]{basebox,colframe=intor,colback=intbg,colbacktitle=intor,title={#1}}
+\newtcolorbox{gdbox}[1]{basebox,colframe=gdpur,colback=gdbg,colbacktitle=gdpur,title={#1}}
+\newtcolorbox{mtbox}[1]{basebox,colframe=mteal,colback=mtbg,colbacktitle=mteal,title={#1}}
+\newtcolorbox{ckbox}[1]{basebox,colframe=ckgray,colback=ckbg,colbacktitle=ckgray,coltitle=black,title={#1}}
+
+% 习题题干框：深色题号标签
+\newtcolorbox{ex}[1]{enhanced,breakable,arc=2mm,boxrule=0.6pt,
+  colframe=exslate,colback=exbg,
+  left=6pt,right=6pt,top=6pt,bottom=4pt,
+  attach boxed title to top left={xshift=4mm,yshift*=-\tcboxedtitleheight/2},
+  boxed title style={colback=exslate,colframe=exslate,sharp corners,boxrule=0pt,left=8pt,right=8pt,top=2pt,bottom=2pt},
+  fonttitle=\sffamily\bfseries,coltitle=white,
+  title={#1},before skip=14pt,after skip=4pt}
+
+\newcommand{\jie}{\noindent{\color{solgreen}\sffamily\bfseries【解】}}
+\newcommand{\zheng}{\noindent{\color{solgreen}\sffamily\bfseries【证】}}
+\newcommand{\fenxi}{\noindent{\color{solgreen}\sffamily\bfseries【分析】}}
+\newcommand{\gd}{{\color{gdpur}\sffamily\bfseries【高代】}}
+\newcommand{\ji}{{\color{intor}\sffamily\bfseries【记】}}
+\newcommand{\key}[1]{\leavevmode{\color{keyred}\bfseries #1}}
+\renewcommand{\qed}{\hfill$\blacksquare$}
+
+% ---------- 数学记号 ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\pib}{\overline{\pi}_0}
+\newcommand{\Sb}{\overline{S}}
+\newcommand{\linf}{l_\infty}
+\newcommand{\T}{^{\mathsf T}}
+\newcommand{\cro}[4]{(#1,#2;#3,#4)}
+\newcommand{\vv}[1]{\boldsymbol{#1}}
+\newcommand{\pt}[3]{(#1,#2,#3)\T}
+\newcommand{\spn}[1]{\langle #1\rangle}
+\setlist{nosep,leftmargin=2em}
+\setlength{\parindent}{2em}
+\linespread{1.25}
